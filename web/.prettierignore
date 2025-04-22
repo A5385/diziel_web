@@ -1,0 +1,10 @@
+# Ignore common build-related folders
+node_modules
+.next
+.turbo
+
+# Ignore environment files
+*.env.local
+*.env.development
+*.env.production
+
