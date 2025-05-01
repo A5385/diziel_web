@@ -1,3 +1,5 @@
+// api\src\config\cache.config.ts
+
 // import { CacheModuleAsyncOptions } from '@nestjs/cache-manager';
 // import { Logger } from '@nestjs/common';
 // import { memoryStore } from 'cache-manager'; // In-memory cache fallback
@@ -8,7 +10,7 @@
 
 // const logger = new Logger('CacheConfig');
 
-// export const cacheConfig: CacheModuleAsyncOptions = {
+// export const cache: CacheModuleAsyncOptions = {
 //     isGlobal: true,
 //     useFactory: async () => {
 //         try {

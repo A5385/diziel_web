@@ -1,0 +1,48 @@
+{
+    "success": {
+        "login": "تم تسجيل الدخول بنجاح.",
+        "logout": "تم تسجيل الخروج بنجاح.",
+        "create": "تم إنشاء {name} {context} بنجاح.",
+        "update": "تم تحديث {context} برقم التعريف {id} بنجاح.",
+        "delete": "تم حذف {context} برقم التعريف {id} بنجاح.",
+        "findById": "تم جلب {context} برقم التعريف {id}.",
+        "findBy": "تم جلب {context} بواسطة {by}: {key}.",
+        "findAll": "تم جلب جميع {context}ين.",
+        "sendEmail": "تم إرسال بريد إلكتروني {type} إلى {to} {object} بنجاح.",
+        "assign": "تم تعيين {assigner} (رقم التعريف: {assignerId}) إلى {assignTo} (رقم التعريف: {assignToId}) بنجاح.",
+        "makePayment": "تم معالجة دفعة بقيمة {amount} من {payer} إلى {payee} بنجاح.",
+        "saveFile": "تم حفظ {fileDescription} في {filePath} بنجاح.",
+        "deleteFile": "تم حذف {fileDescription} من {filePath} بنجاح.",
+        "validationError": "فشل التحقق.",
+        "unauthorizedRoute": "غير مصرح لك بالوصول إلى هذا الرابط."
+    },
+    "error": {
+        "login": "فشل في تسجيل الدخول.",
+        "logout": "فشل في تسجيل الخروج.",
+        "create": "فشل في إنشاء {name} {context}.",
+        "update": "فشل في تحديث {context} برقم التعريف {id}.",
+        "delete": "فشل في حذف {context} برقم التعريف {id}.",
+        "findById": "فشل في جلب {context} برقم التعريف {id}.",
+        "findBy": "فشل في جلب {context} بواسطة {by}: {key}.",
+        "findAll": "فشل في جلب جميع {context}.",
+        "sendEmail": "فشل في إرسال بريد إلكتروني {type} إلى {to} {object}.",
+        "assign": "فشل في تعيين {assigner} (رقم التعريف: {assignerId}) إلى {assignTo} (رقم التعريف: {assignToId}).",
+        "makePayment": "فشل في معالجة دفعة بقيمة {amount} من {payer} إلى {payee}.",
+        "saveFile": "فشل في حفظ {fileDescription} في {filePath}.",
+        "deleteFile": "فشل في حذف {fileDescription} من {filePath}.",
+        "validationError": "فشل التحقق.",
+        "unauthorizedRoute": "غير مصرح لك بالوصول إلى هذا الرابط."
+    },
+    "prismaErrors": {
+        "P2002": "انتهاك قيود الفريدة. يجب أن يكون الحقل فريدًا.",
+        "P2025": "السجل غير موجود. يرجى التحقق من الإدخال.",
+        "P2016": "السجل غير صالح أو غير موجود. يرجى التحقق من الإدخال.",
+        "P2003": "فشل قيد المفتاح الخارجي.",
+        "default": "حدث خطأ غير معروف في قاعدة البيانات."
+    },
+    "context": {
+        "user": "مستخدم",
+        "auth": "مصادقة"
+      
+    }
+}

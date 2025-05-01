@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString } from 'class-validator';
 
 export class CommonInputDto {
     @IsEmail()
@@ -8,6 +8,11 @@ export class CommonInputDto {
     @ApiProperty()
     @Transform(({ value }) => (value as string)?.toLowerCase())
     email!: string;
+
+    @IsPhoneNumber()
+    @IsNotEmpty()
+    @ApiProperty()
+    phone!: string;
 
     @ApiProperty()
     @IsString()
@@ -28,11 +33,6 @@ export class CommonInputDto {
     @IsString()
     @IsNotEmpty()
     name!: string;
-
-    @ApiProperty()
-    @IsString()
-    @IsNotEmpty()
-    phone!: string;
 
     @IsString()
     @ApiProperty()

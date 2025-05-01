@@ -1,0 +1,54 @@
+{
+    "success": {
+        "login": "You Are Successfully logged in.",
+        "logout": "You Are Successfully logged out.",
+        "create": "{context} Successfully created.",
+        "update": "{context} Successfully updated.",
+        "delete": "{context} Successfully deleted.",
+        "findById": "Successfully fetched {context} with ID: {id}.",
+        "findBy": "Successfully fetched {context} by {key}: {value}.",
+        "findAll": "Successfully fetched all {context}s.",
+        "sendEmail": "Successfully sent {type} email to {email}.",
+        "sendSMS": "Successfully sent {type} email to {phone}.",
+        "assign": "Successfully assigned {assigner} (ID: {assignerId}) to {assignTo} (ID: {assignToId}).",
+        "makePayment": "Successfully processed payment of {amount} from {payer} to {payee}.",
+        "saveFile": "Successfully saved {fileDescription} at {filePath}.",
+        "deleteFile": "Successfully deleted {fileDescription} from {filePath}.",
+        "validationError": "Validation failed.",
+        "unauthorizedRoute": "You are not authorized to access this route.",
+        "db-connect": "Prisma client connected",
+        "token":"New {token} Generated Successfully"
+    },
+    "error": {
+        "login": "Failed to log in.",
+        "logout": "Failed to log out.",
+        "create": "Failed to create {name} {context}.",
+        "update": "Failed to update {context} with ID: {id}.",
+        "delete": "Failed to delete {context} with ID: {id}.",
+        "findById": "Failed to fetch {context} with ID: {id}.",
+        "findBy": "Failed to fetch {context} by {key}: {value}.",
+        "findAll": "Failed to fetch all {context}s.",
+        "sendEmail": "Failed to send {type} email to {to} {object}.",
+        "sendSMS": "Failed to send {type} SMS to phone number {number}.",
+        "assign": "Failed to assign {assigner} (ID: {assignerId}) to {assignTo} (ID: {assignToId}).",
+        "makePayment": "Failed to process payment of {amount} from {payer} to {payee}.",
+        "saveFile": "Failed to save {fileDescription} at {filePath}.",
+        "deleteFile": "Failed to delete {fileDescription} from {filePath}.",
+        "validationError": "Validation failed.",
+        "unauthorizedRoute": "You are not authorized to access this route.",
+        "db-connect": "Error initializing Prisma client",
+        "token":"Failed to generate new {token}."
+    },
+    "prismaErrors": {
+        "P2002": "Unique constraint violation. The field must be unique.",
+        "P2025": "Record not found. Please check the input.",
+        "P2016": "Invalid or nonexistent record. Please verify your input.",
+        "P2003": "Foreign key constraint failed.",
+        "default": "An unknown database error occurred."
+    },
+    "context": {
+        "user": "User",
+        "auth": "Auth"
+      
+    }
+}
