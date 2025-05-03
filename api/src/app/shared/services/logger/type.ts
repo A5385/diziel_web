@@ -30,6 +30,9 @@ export type LoggerTypeMap = {
     makePayment: CommonLoggerProps & { amount: number; payer: string; payee: string };
     'db-connect': CommonLoggerProps;
     token: CommonLoggerProps & { token: 'access' | 'refresh' };
+    'verify-phone': CommonLoggerProps & { phone: string };
+    'verify-otp': CommonLoggerProps & { phone: string };
+    'set-password': CommonLoggerProps & { phone: string };
 };
 
 export type LoggerType<T extends OperationType> = T extends 'create'
@@ -60,4 +63,10 @@ export type LoggerType<T extends OperationType> = T extends 'create'
                             ? LoggerTypeMap['db-connect']
                             : T extends 'token'
                               ? LoggerTypeMap['token']
-                              : never;
+                              : T extends 'verify-phone'
+                                ? LoggerTypeMap['verify-phone']
+                                : T extends 'verify-otp'
+                                  ? LoggerTypeMap['verify-otp']
+                                  : T extends 'set-password'
+                                    ? LoggerTypeMap['set-password']
+                                    : never;

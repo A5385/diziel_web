@@ -85,11 +85,13 @@ type GenerateDataFilterResponseParams<
     TModel extends keyof PrismaService,
     TFindManyArgs extends object = object,
     TInclude extends object = object,
+    TSelect extends object = object,
 > = PaginateResult & {
     model: TModel;
     where: TFindManyArgs;
     prisma: PrismaService;
     include?: TInclude;
+    select?: TSelect;
 };
 
 export const generateDataFilterResponse = async <
@@ -104,6 +106,7 @@ export const generateDataFilterResponse = async <
     limit = 10,
     orderBy,
     include,
+    select,
 }: GenerateDataFilterResponseParams<TModel, TFindManyArgs, TInclude>) => {
     const modelDelegate = prisma[model] as any; // still can't infer findMany dynamically in TS yet, it's fine in one place
 
@@ -113,6 +116,7 @@ export const generateDataFilterResponse = async <
         take: limit,
         orderBy: orderBy ?? [{ createdAt: 'desc' }],
         ...(include && { include }),
+        ...(select && { select }),
     });
 
     const total = await modelDelegate.count();

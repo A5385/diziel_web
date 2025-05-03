@@ -22,9 +22,12 @@ export type I18nTranslations = {
             "deleteFile": string;
             "validationError": string;
             "unauthorizedRoute": string;
-            "sendSMS": string;
             "db-connect": string;
             "token": string;
+            "verify-phone": string;
+            "verify-otp": string;
+            "set-password": string;
+            "sendSMS": string;
         };
         "error": {
             "login": string;
@@ -42,6 +45,10 @@ export type I18nTranslations = {
             "deleteFile": string;
             "validationError": string;
             "unauthorizedRoute": string;
+            "not-fount": string;
+            "invalid-otp": string;
+            "record-exists": string;
+            "set-password": string;
             "sendSMS": string;
             "db-connect": string;
             "token": string;
@@ -54,8 +61,25 @@ export type I18nTranslations = {
             "default": string;
         };
         "context": {
-            "user": string;
             "auth": string;
+            "user": string;
+            "users": string;
+            "car": string;
+            "cars": string;
+            "agency": string;
+            "agencies": string;
+            "driver": string;
+            "drivers": string;
+            "employee": string;
+            "employees": string;
+            "complain": string;
+            "complains": string;
+            "trailer": string;
+            "trailers": string;
+            "request": string;
+            "requests": string;
+            "profile": string;
+            "profiles": string;
         };
     };
 };

@@ -16,7 +16,10 @@ export type OperationType =
     | 'login'
     | 'logout'
     | 'db-connect'
-    | 'token';
+    | 'token'
+    | 'verify-phone'
+    | 'verify-otp'
+    | 'set-password';
 
 export type ApiResponseType<T> = {
     ok: boolean; // Indicates success or failure
@@ -25,7 +28,7 @@ export type ApiResponseType<T> = {
     error?: {
         // Error details
         message: string; // Error message
-        error: string; // Actual error object
+        error: string | string[]; // Actual error object
     };
     data?: T; // Response payload
 };

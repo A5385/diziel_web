@@ -5,11 +5,18 @@ export const FormatError = (stack?: string | string[]): string[] => {
 
     // Check if the stack is already an array and format each line
     if (Array.isArray(stack)) {
-        return stack.map((line) => formatLine(line));
+        return (
+            stack.map((line) => formatLine(line)).filter(Boolean) || ['No stack trace available']
+        );
     }
 
     // Otherwise, it's a string, so split by new lines and format each line
-    return stack?.split('\n')?.map((line) => formatLine(line));
+    return (
+        stack
+            ?.split('\n')
+            ?.map((line) => formatLine(line))
+            .filter(Boolean) || ['No stack trace available']
+    );
 };
 
 // Helper function to clean up each line of the stack trace

@@ -1,11 +1,25 @@
+import { BadRequestException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { I18nService } from 'nestjs-i18n';
 import { LoggerType } from 'src/app/shared/services/logger/type';
-import { ApiResponseType, OperationType } from 'src/types/response';
+import { FormatError } from 'src/helper/FormatError';
+import { localeHelper } from 'src/helper/locale-helper';
+import { ApiResponseType, LocaleType, OperationType } from 'src/types/response';
 import { mapStatusCode } from './status.code';
-import { HandleRequestProps } from './type';
+import { ContextType, HandleRequestProps } from './type';
 
 export function generateResponse<T>({ ok, status, message, error, data }: ApiResponseType<T>) {
     return { ok, status, message, error: error ?? undefined, data: data ?? undefined };
 }
+
+type CommonType = {
+    context: ContextType;
+    i18n?: I18nService<Record<string, unknown>>;
+    locale: LocaleType;
+};
+
+const transContext = ({ context, i18n, locale }: CommonType) =>
+    localeHelper({ path: `context.${context}`, i18n, locale });
 
 export async function RequestHandler<T, V extends OperationType>({
     fn,
@@ -16,87 +30,101 @@ export async function RequestHandler<T, V extends OperationType>({
     i18n,
     ...loggerProps
 }: HandleRequestProps<T, V>): Promise<ApiResponseType<T>> {
-    const trasContext = i18n?.t(`index.context.${context}`, {
-        lang: locale,
-    });
+    const translatedContext = transContext({ context, i18n, locale });
+
     try {
         const result = await fn();
 
-        const payload = {
+        logger.success<V>(method, {
             context,
             ...loggerProps,
-        };
-        logger.success<V>(method, payload as unknown as LoggerType<V>);
-
-        const message: string = i18n
-            ? i18n.t(`index.success.${method}`, {
-                  lang: locale,
-                  args: { ...loggerProps, context: trasContext },
-              })
-            : `Success: ${method}`;
+        } as unknown as LoggerType<V>);
 
         return generateResponse({
             ok: true,
             status: mapStatusCode.success[method] || 200,
             data: result,
-            message,
+            message: i18n?.t(`index.success.${method}`, {
+                lang: locale,
+                args: { ...loggerProps, context: translatedContext },
+            }),
         });
-    } catch (err) {
-        const error = err as Error;
-        logger.error(method, { error, context, ...loggerProps } as unknown as LoggerType<V> & {
-            error: Error;
-        });
-
-        const message: string = i18n
-            ? i18n.t(`index.success.${method}`, {
-                  args: { ...loggerProps, context: trasContext },
-                  lang: locale,
-              })
-            : `Success: ${method}`;
+    } catch (error) {
+        logger.error(method, {
+            error,
+            context,
+            ...loggerProps,
+        } as unknown as LoggerType<V> & { error: Error });
 
         return generateResponse({
             ok: false,
             status: mapStatusCode.error[method] || 500,
             error: {
-                message: error.message,
-                error: JSON.stringify(error, null, 2),
+                message: formatErrorMessage({ error, context, i18n, locale }),
+                error: FormatError((error as Error).stack),
             },
-            message,
+            message: i18n?.t(`index.error.${method}`, {
+                lang: locale,
+                args: { ...loggerProps, context: translatedContext },
+            }),
         });
     }
 }
 
-// function formatErrorMessage(error: Error, locale: LocaleType): string {
-//     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-//         return formatPrismaError(error, locale);
-//     }
-//     if (error instanceof BadRequestException) {
-//         return formatValidationError(error, locale);
-//     }
-//     return translations[locale]?.success['error'] || 'An unexpected error occurred.';
-// }
+function formatErrorMessage({
+    error,
+    locale,
+    context,
+    i18n,
+}: CommonType & { error: Error }): string {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        return formatPrismaError({ error, i18n, context, locale });
+    }
 
-// function formatPrismaError(
-//     error: Prisma.PrismaClientKnownRequestError,
-//     locale?: LocaleType,
-// ): string {
-//     const messages = translations[locale ?? 'en']?.prismaErrors;
-//     switch (error.code) {
-//         case 'P2002':
-//             return messages.P2002 || 'A unique constraint violation occurred.';
-//         case 'P2025':
-//             return messages.P2025 || 'The record you are trying to find or update does not exist.';
-//         default:
-//             return messages.default || 'An unknown database error occurred.';
-//     }
-// }
+    if (error instanceof BadRequestException) {
+        return formatValidationError({ error, locale, i18n });
+    }
 
-// function formatValidationError(error: BadRequestException, locale: LocaleType): string {
-//     const response = error.getResponse() as { message: string | string[] };
-//     const messages = Array.isArray(response.message)
-//         ? response.message.join(', ')
-//         : response.message;
-//     return `${translations[locale]?.success['validationError'] || 'Validation error'}: ${
-//         messages || ''
-//     }`;
-// }
+    return i18n?.t('index.error.unexpected', { lang: locale }) || 'An unexpected error occurred.';
+}
+
+function formatPrismaError({
+    error,
+    locale,
+    context,
+    i18n,
+}: CommonType & { error: Prisma.PrismaClientKnownRequestError }): string {
+    const translatedContext = transContext({ context, i18n, locale });
+
+    switch (error.code) {
+        case 'P2002':
+        case 'P2025':
+            return (
+                i18n?.t(`index.prismaErrors.${error.code}`, {
+                    lang: locale,
+                    args: { context: translatedContext },
+                }) ?? error.message
+            );
+        default:
+            return (
+                i18n?.t('index.prismaErrors.default', {
+                    lang: locale,
+                    args: { context: translatedContext },
+                }) ?? error.message
+            );
+    }
+}
+
+function formatValidationError({
+    error,
+    locale,
+    i18n,
+}: Omit<CommonType, 'context'> & { error: BadRequestException }): string {
+    const response = error.getResponse() as { message: string | string[] };
+    const messages = Array.isArray(response.message)
+        ? response.message.join(', ')
+        : response.message;
+
+    const baseMsg = i18n?.t('index.error.validationError', { lang: locale }) ?? 'Validation failed';
+    return `${baseMsg}: ${messages}`;
+}

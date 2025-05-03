@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ProfileService } from './profile.service';
+import { TranslateService } from 'src/app/shared/services/locale.service';
 import { ProfileController } from './profile.controller';
+import { ProfileService } from './profile.service';
 
 @Module({
     controllers: [ProfileController],
-    providers: [ProfileService],
+    providers: [ProfileService, TranslateService],
 })
 export class ProfileModule {}

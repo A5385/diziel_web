@@ -15,6 +15,8 @@ import { I18nService } from 'nestjs-i18n';
 import { generateResponse } from 'src/handlers/request-handler/request.handler';
 import { mapStatusCode } from 'src/handlers/request-handler/status.code';
 import { ContextType } from 'src/handlers/request-handler/type';
+import { LocaleType } from 'src/types/response';
+import { RegisterUserDto } from '../user/dto/user.dto';
 import { LoginDto } from './dto/login.dto';
 
 @Injectable()
@@ -29,18 +31,19 @@ export class AuthService {
     ) {}
     private readonly context: ContextType = 'auth';
 
-    async checkEmail(email: string) {
-        const user = await this.userService.findUserByEmail(email);
+    async checkEmail(dto: RegisterUserDto, locale?: LocaleType) {
+        const user = await this.userService.findUserByPhone(dto.phone);
         if (user && user.data) {
             return user;
         } else {
-            return await this.userService.create(email);
+            return await this.userService.register(dto, locale);
         }
     }
+
     async login(dto: LoginDto, req: Request) {
-        const email = dto.email;
+        const phone = dto.phone;
         const password = dto.password;
-        const isUserValid = await this.validateUser(email, password);
+        const isUserValid = await this.validateUser(phone, password);
         // console.log('🚀 >  AuthService >  login >  isUserValid:', isUserValid);
 
         if (isUserValid?.blocked)
@@ -53,16 +56,17 @@ export class AuthService {
 
             const lastLoginDevice = req.headers['user-agent'] || 'unknown';
 
-            const updateUser = await this.prisma.loginInfo.update({
+            const loginInfo = await this.prisma.loginInfo.update({
                 where: { userId: isUserValid.id },
                 data: {
                     lastLogin: new Date(),
                     lastLoginIp,
                     lastLoginDevice,
+                    lastLoginAttempt: new Date(),
                 },
             });
 
-            if (updateUser) {
+            if (loginInfo) {
                 const accessToken = this.issueAccessToken({
                     payload: isUserValid,
                 });

@@ -7,7 +7,7 @@
         "delete": "{context} Successfully deleted.",
         "findById": "Successfully fetched {context} with ID: {id}.",
         "findBy": "Successfully fetched {context} by {key}: {value}.",
-        "findAll": "Successfully fetched all {context}s.",
+        "findAll": "Successfully fetched all {context}.",
         "sendEmail": "Successfully sent {type} email to {email}.",
         "sendSMS": "Successfully sent {type} email to {phone}.",
         "assign": "Successfully assigned {assigner} (ID: {assignerId}) to {assignTo} (ID: {assignToId}).",
@@ -17,7 +17,10 @@
         "validationError": "Validation failed.",
         "unauthorizedRoute": "You are not authorized to access this route.",
         "db-connect": "Prisma client connected",
-        "token":"New {token} Generated Successfully"
+        "token": "New {token} Generated Successfully",
+        "verify-phone": "Phone number:{phone} is verified successfully.",
+        "verify-otp": "OTP is verified successfully.",
+        "set-password": "User with phone:{phone} has set a new password successfully."
     },
     "error": {
         "login": "Failed to log in.",
@@ -37,18 +40,38 @@
         "validationError": "Validation failed.",
         "unauthorizedRoute": "You are not authorized to access this route.",
         "db-connect": "Error initializing Prisma client",
-        "token":"Failed to generate new {token}."
+        "token": "Failed to generate new {token}.",
+        "not-fount": "{context} not found.",
+        "invalid-otp": "{context} OTP does not match.",
+        "record-exists": "{context} already exists.",
+        "set-password": "Failed to set new password for user with phone:{phone}."
     },
     "prismaErrors": {
-        "P2002": "Unique constraint violation. The field must be unique.",
-        "P2025": "Record not found. Please check the input.",
+        "P2002": "{context} already exists. Must be unique.",
+        "P2025": "{context} not found. Please check the input.",
         "P2016": "Invalid or nonexistent record. Please verify your input.",
         "P2003": "Foreign key constraint failed.",
         "default": "An unknown database error occurred."
     },
     "context": {
-        "user": "User",
-        "auth": "Auth"
-      
+        "auth": "AUTH",
+        "user": "USER",
+        "users": "USERS",
+        "car": "Car",
+        "cars": "Cars",
+        "agency": "Agency",
+        "agencies": "Agencies",
+        "driver": "Driver",
+        "drivers": "Drivers",
+        "employee": "Employee",
+        "employees": "Employees",
+        "complain": "Complain",
+        "complains": "Complains",
+        "trailer": "Trailer",
+        "trailers": "Trailers",
+        "request": "Request",
+        "requests": "Requests",
+        "profile": "Profile",
+        "profiles": "Profiles"
     }
 }

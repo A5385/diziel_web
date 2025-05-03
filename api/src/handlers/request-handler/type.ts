@@ -11,5 +11,5 @@ export type HandleRequestProps<T, V extends OperationType> = LoggerType<V> & {
     method: V;
     logger: LoggerService;
     locale?: LocaleType;
-    i18n?: I18nService<Record<string, unknown>>;
+    i18n: I18nService<Record<string, unknown>>;
 };

@@ -7,14 +7,19 @@
         "delete": "تم حذف {context} برقم التعريف {id} بنجاح.",
         "findById": "تم جلب {context} برقم التعريف {id}.",
         "findBy": "تم جلب {context} بواسطة {by}: {key}.",
-        "findAll": "تم جلب جميع {context}ين.",
+        "findAll": "تم جلب جميع {context}.",
         "sendEmail": "تم إرسال بريد إلكتروني {type} إلى {to} {object} بنجاح.",
         "assign": "تم تعيين {assigner} (رقم التعريف: {assignerId}) إلى {assignTo} (رقم التعريف: {assignToId}) بنجاح.",
         "makePayment": "تم معالجة دفعة بقيمة {amount} من {payer} إلى {payee} بنجاح.",
         "saveFile": "تم حفظ {fileDescription} في {filePath} بنجاح.",
         "deleteFile": "تم حذف {fileDescription} من {filePath} بنجاح.",
         "validationError": "فشل التحقق.",
-        "unauthorizedRoute": "غير مصرح لك بالوصول إلى هذا الرابط."
+        "unauthorizedRoute": "غير مصرح لك بالوصول إلى هذا الرابط.",
+        "db-connect": "تم الاتصال بعميل Prisma",
+        "token": "تم إنشاء {token} جديد بنجاح",
+        "verify-phone": "تم التحقق من رقم الهاتف: {phone} بنجاح.",
+        "verify-otp": "تم التحقق من OTP بنجاح.",
+        "set-password": "قام المستخدم برقم الهاتف: {phone} بتعيين كلمة مرور جديدة بنجاح."
     },
     "error": {
         "login": "فشل في تسجيل الدخول.",
@@ -31,18 +36,40 @@
         "saveFile": "فشل في حفظ {fileDescription} في {filePath}.",
         "deleteFile": "فشل في حذف {fileDescription} من {filePath}.",
         "validationError": "فشل التحقق.",
-        "unauthorizedRoute": "غير مصرح لك بالوصول إلى هذا الرابط."
+        "unauthorizedRoute": "غير مصرح لك بالوصول إلى هذا الرابط.",
+        "not-fount": "{context} غير موجود.",
+        "invalid-otp": "{context} OTP لا يتطابق.",
+        "record-exists": "{context} موجود بالفعل.",
+        "set-password": "فشل في تعيين كلمة مرور جديدة للمستخدم برقم الهاتف: {phone}."
     },
     "prismaErrors": {
-        "P2002": "انتهاك قيود الفريدة. يجب أن يكون الحقل فريدًا.",
-        "P2025": "السجل غير موجود. يرجى التحقق من الإدخال.",
-        "P2016": "السجل غير صالح أو غير موجود. يرجى التحقق من الإدخال.",
+        "P2002":" {context} مكرر يجب أن يكون فريدًا.",
+        "P2025": "{context} غير موجود. يرجى التحقق من الإدخال.",
+        "P2016": "{context} غير صالح أو غير موجود. يرجى التحقق من الإدخال.",
         "P2003": "فشل قيد المفتاح الخارجي.",
         "default": "حدث خطأ غير معروف في قاعدة البيانات."
     },
     "context": {
-        "user": "مستخدم",
-        "auth": "مصادقة"
+        "auth": "المصادقة",
+        "user": "المستخدم",
+        "users": "المستخدمون",
+        "car": "السيارة",
+        "cars": "السيارات",
+        "agency": "الوكالة",
+        "agencies": "الوكالات",
+        "driver": "السائق",
+        "drivers": "السائقون",
+        "employee": "موظف",
+        "employees": "موظفين",
+        "complain": "شكوى",
+        "complains": "شكاوى",
+        "trailer": "مقطورة",
+        "trailers": "مقطورات",
+        "request": "طلب",
+        "requests": "طلبات",
+        "profile": "المف الشخصي",
+        "profiles": "الملفات الشخصية"
+        
       
     }
 }

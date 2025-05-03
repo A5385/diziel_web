@@ -74,25 +74,25 @@ model User {
   updatedEmployee              Employee[]              @relation("updated")
   deletedEmployee              Employee[]              @relation("deleted")
   /////////////////////////////
-  createdCar                   Car[]                   @relation("created")
-  updatedCar                   Car[]                   @relation("updated")
-  deletedCar                   Car[]                   @relation("deleted")
+  createdTruck                   Truck[]                   @relation("created")
+  updatedTruck                   Truck[]                   @relation("updated")
+  deletedTruck                   Truck[]                   @relation("deleted")
   /////////////////////////////
-  createdCarImage              CarImage[]              @relation("created")
-  updatedCarImage              CarImage[]              @relation("updated")
-  deletedCarImage              CarImage[]              @relation("deleted")
+  createdTruckImage              TruckImage[]              @relation("created")
+  updatedTruckImage              TruckImage[]              @relation("updated")
+  deletedTruckImage              TruckImage[]              @relation("deleted")
   /////////////////////////////
-  createdCarLicense            CarLicense[]            @relation("created")
-  updatedCarLicense            CarLicense[]            @relation("updated")
-  deletedCarLicense            CarLicense[]            @relation("deleted")
+  createdTruckLicense            TruckLicense[]            @relation("created")
+  updatedTruckLicense            TruckLicense[]            @relation("updated")
+  deletedTruckLicense            TruckLicense[]            @relation("deleted")
   /////////////////////////////
-  createdCarOwnership          CarOwnership[]          @relation("created")
-  updatedCarOwnership          CarOwnership[]          @relation("updated")
-  deletedCarOwnership          CarOwnership[]          @relation("deleted")
+  createdTruckOwnership          TruckOwnership[]          @relation("created")
+  updatedTruckOwnership          TruckOwnership[]          @relation("updated")
+  deletedTruckOwnership          TruckOwnership[]          @relation("deleted")
   /////////////////////////////
-  createdDriverCar             DriverCar[]             @relation("created")
-  updatedDriverCar             DriverCar[]             @relation("updated")
-  deletedDriverCar             DriverCar[]             @relation("deleted")
+  createdDriverTruck             DriverTruck[]             @relation("created")
+  updatedDriverTruck             DriverTruck[]             @relation("updated")
+  deletedDriverTruck             DriverTruck[]             @relation("deleted")
   /////////////////////////////
   createdDelegation            Delegation[]            @relation("created")
   updatedDelegation            Delegation[]            @relation("updated")
@@ -153,7 +153,7 @@ model Profile {
   user            User               @relation(references: [id], fields: [userId], onDelete: Cascade, onUpdate: Cascade)
   userId          String             @unique
   /////////////////////////////
-  carOwner        CarOwnership[]
+  carOwner        TruckOwnership[]
   trailerOwner    TrailerOwnership[]
   driver          Driver?            @relation()
   agencyAgent     AgencyAgent?       @relation()
@@ -192,7 +192,7 @@ model NationalIdentity {
   face             String?
   back             String?
   /////////////////////////////
-  profile          Profile? @relation(fields: [profileId], references: [id])
+  profile          Profile? @relation(fields: [profileId], references: [id],onDelete: Cascade,onUpdate: Cascade)
   profileId        String?  @unique
 }
 
@@ -210,7 +210,7 @@ model Driver {
   /////////////////////////////
   profile         Profile          @relation(fields: [profileId], references: [id])
   profileId       String           @unique
-  driverCar       DriverCar[]
+  driverTruck       DriverTruck[]
   // audit fields
   createdAt       DateTime         @default(now())
   createdBy       User?            @relation("created", fields: [creatorId], references: [id])
@@ -426,11 +426,11 @@ model Employee {
 }
 
 /**
- * car info
+ * truck info
  * trailer info
  */
 
-model Car {
+model Truck {
   id              String        @id @default(cuid())
   plateNumber     String        @unique
   type            String
@@ -442,12 +442,12 @@ model Car {
   safetyEquipment String?
   chassisNumber   String?
   engineNumber    String?
-  owner           CarOwnership? @relation()
-  images          CarImage?     @relation()
-  license         CarLicense?   @relation()
+  owner           TruckOwnership? @relation()
+  images          TruckImage?     @relation()
+  license         TruckLicense?   @relation()
   /////////////////////////////
   complaints      Complaint[]
-  drivers         DriverCar[]
+  drivers         DriverTruck[]
   // audit fields
   createdAt       DateTime      @default(now())
   createdBy       User?         @relation("created", fields: [creatorId], references: [id])
@@ -460,14 +460,14 @@ model Car {
   archivedById    String?
 }
 
-model CarImage {
+model TruckImage {
   id           String    @id @default(cuid())
   front        String?
   back         String?
   left         String?
   right        String?
   /////////////////////////////
-  car          Car       @relation(references: [id], fields: [carId], onDelete: Cascade, onUpdate: Cascade)
+  truck          Truck       @relation(references: [id], fields: [carId], onDelete: Cascade, onUpdate: Cascade)
   carId        String    @unique
   // audit fields
   createdAt    DateTime  @default(now())
@@ -481,12 +481,12 @@ model CarImage {
   archivedById String?
 }
 
-model CarLicense {
+model TruckLicense {
   id           String    @id @default(cuid())
   number       String?   @unique
   face         String?
   back         String?
-  car          Car       @relation(references: [id], fields: [carId], onDelete: Cascade, onUpdate: Cascade)
+  truck          Truck       @relation(references: [id], fields: [carId], onDelete: Cascade, onUpdate: Cascade)
   carId        String    @unique
   // audit fields
   createdAt    DateTime  @default(now())
@@ -500,13 +500,13 @@ model CarLicense {
   archivedById String?
 }
 
-model CarOwnership {
+model TruckOwnership {
   id             String    @id @default(cuid())
   ownershipProof String?
   utilityBill    String?
   profile        Profile   @relation(fields: [profileId], references: [id])
   profileId      String    @unique
-  car            Car       @relation(references: [id], fields: [carId], onDelete: Cascade, onUpdate: Cascade)
+  truck            Truck       @relation(references: [id], fields: [carId], onDelete: Cascade, onUpdate: Cascade)
   carId          String    @unique
   // audit fields
   createdAt      DateTime  @default(now())
@@ -520,11 +520,11 @@ model CarOwnership {
   archivedById   String?
 }
 
-model DriverCar {
+model DriverTruck {
   id           String      @id @default(cuid())
   driver       Driver      @relation(fields: [driverId], references: [id])
   driverId     String
-  car          Car         @relation(fields: [carId], references: [id])
+  truck          Truck         @relation(fields: [carId], references: [id])
   carId        String
   delegation   Delegation? @relation(fields: [delegationId], references: [id])
   delegationId String?     @unique
@@ -543,7 +543,7 @@ model DriverCar {
 
 model Delegation {
   id           String     @id @default(cuid())
-  DriverCar    DriverCar?
+  DriverTruck    DriverTruck?
   active       Boolean    @default(true)
   // audit fields
   createdAt    DateTime   @default(now())
@@ -704,7 +704,7 @@ model Complaint {
   id           String          @id @default(cuid())
   raisedBy     User            @relation(fields: [raisedById], references: [id])
   raisedById   String
-  relatedCar   Car?            @relation(fields: [carId], references: [id])
+  relatedTruck   Truck?            @relation(fields: [carId], references: [id])
   carId        String?
   description  String
   status       ComplaintStatus @default(open)

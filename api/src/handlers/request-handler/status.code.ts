@@ -17,6 +17,9 @@ export const mapStatusCode = {
         sendSMS: 200,
         'db-connect': 200,
         token: 200,
+        'verify-phone': 200,
+        'verify-otp': 200,
+        'set-password': 200,
     } satisfies Record<OperationType, number>,
     error: {
         create: 400, // Bad Request
@@ -34,5 +37,8 @@ export const mapStatusCode = {
         sendSMS: 500,
         'db-connect': 500,
         token: 401,
+        'verify-phone': 401,
+        'verify-otp': 401,
+        'set-password': 401,
     } satisfies Record<OperationType, number>,
 };

@@ -2,6 +2,9 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { MailerAsyncOptions } from '@nestjs-modules/mailer/dist/interfaces/mailer-async-options.interface';
 import { join } from 'path';
 
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 export const MailConfig: MailerAsyncOptions = {
     useFactory: () => ({
         transport: {
