@@ -1,5 +1,5 @@
 'use client';
-import constants from '@/constants/constants';
+import constants from '@/constants/AppSettings';
 import { TanstackTableProps } from '@/types/ui';
 import {
     ColumnPinningState,

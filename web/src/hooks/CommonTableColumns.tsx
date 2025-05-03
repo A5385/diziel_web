@@ -160,22 +160,22 @@ export const useCommonTableColumns = <T extends object>({
         cell: ({ row }) => {
             const createdAt = format(
                 (row?.getValue('createdAt') as Date)?.toString(),
-                'dd-MM-yyyy mm-hh',
+                'dd/MM/yyyy • hh:mm a',
             ); // Format date as needed
-            return <div>{createdAt}</div>;
+            return <p className='tabular-nums'>{createdAt ?? '-'}</p>;
         },
         enableColumnFilter: false,
     };
 
     const createdBy: ColumnDef<T> = {
         accessorKey: 'createdBy',
-        header: () => <p>{g('created-at')}</p>,
+        header: () => <p>{g('created-by')}</p>,
         enableColumnFilter: false,
         cell: ({ row }) => {
             const name: string = getUserName(
                 (row?.original as T & { createdBy: UserSchema })?.createdBy,
             );
-            return <p>{name}</p>;
+            return <p>{name ?? '-'}</p>;
         },
     };
 

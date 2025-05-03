@@ -1,5 +1,5 @@
 'use client';
-import constants from '@/constants/constants';
+import constants from '@/constants/AppSettings';
 import { Toaster, ToasterProps } from 'sonner';
 
 export const ToasterProvider = ({ ...props }: ToasterProps) => {

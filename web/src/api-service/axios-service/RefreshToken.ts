@@ -1,8 +1,9 @@
-import constants from '@/constants/constants';
+import constants from '@/constants/AppSettings';
 import { TokenService } from '@/helpers/local-storage-service';
 import axios from 'axios';
 
-const { serverUrl, apiKey } = constants;
+const serverUrl = constants.api.serverUrl;
+const apiKey = constants.api.apiKey;
 
 // Refresh the access token using the refresh token
 export const refreshWebAccessToken = async (refreshToken: string): Promise<string | null> => {

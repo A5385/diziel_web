@@ -67,7 +67,11 @@ const DashboardSidebar = () => {
                                 {open && t(nav.title)}
                             </p>
                             {active && open && (
-                                <ChevronRight size={iconProps.size} color={'white'} />
+                                <ChevronRight
+                                    size={iconProps.size}
+                                    color={'white'}
+                                    className={ar ? 'rotate-180' : ''}
+                                />
                             )}
                         </Link>
                     );

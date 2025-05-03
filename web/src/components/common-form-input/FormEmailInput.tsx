@@ -24,7 +24,6 @@ export const FormEmailInput = <T extends FieldValues>({
             placeholder={g('email-ph')}
             required
             disabled={disabled}
-            span={span}
             desc={desc}
         />
     );

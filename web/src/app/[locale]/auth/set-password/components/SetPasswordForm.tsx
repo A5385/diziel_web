@@ -8,7 +8,7 @@ import { AKForm } from '@/components/my-components/AKForm';
 import { FormCriteria } from '@/components/password-component/FormCriteria';
 import { GeneratePasswordButton } from '@/components/password-component/GeneratePasswordButton';
 import { PasswordStrengthBar } from '@/components/password-component/PasswordStrengthBar';
-import constants from '@/constants/constants';
+import constants from '@/constants/AppSettings';
 import { Routes } from '@/constants/route';
 import { useCheckCriteria } from '@/hooks/useCheckCriteria';
 import { zodResolver } from '@hookform/resolvers/zod';

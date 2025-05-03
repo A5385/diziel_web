@@ -1,6 +1,6 @@
 'use client';
 
-import constants from '@/constants/constants';
+import constants from '@/constants/AppSettings';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 

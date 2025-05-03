@@ -2,7 +2,7 @@
 import { VerifyOtp } from '@/api-service/data-service/UserService';
 import { AKForm } from '@/components/my-components/AKForm';
 import { AKFormInput2 } from '@/components/my-components/AKFormInput2';
-import constants from '@/constants/constants';
+import constants from '@/constants/AppSettings';
 import { Routes } from '@/constants/route';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';

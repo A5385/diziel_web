@@ -32,7 +32,6 @@ export const DashboardTitle: React.FC<DashboardTypeProps> = ({
                 })}
             <div>
                 <h2 className={cn(titleClassName, 'text-2xl font-bold text-purple-700')}>
-                    {' '}
                     {t(title)}
                 </h2>
                 {children}

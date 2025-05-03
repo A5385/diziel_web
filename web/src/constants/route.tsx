@@ -1,10 +1,14 @@
-import { DashboardIcon } from '@/styles/icons';
+import { DashboardIcon, RequestIcon, TrailerIcon, TruckIcon, UsersIcon } from '@/styles/icons';
 import { Route } from 'next';
 import { ReactNode } from 'react';
 
 // 1. Enum for Route Keys
 export enum RoutesEnum {
     DASHBOARD = 'dashboard',
+    USERS = 'users',
+    TRUCKS = 'truckS',
+    TRAILERS = 'trailers',
+    REQUEST = 'request',
 
     LOGIN = 'login',
     REGISTRATION = 'registration',
@@ -34,6 +38,30 @@ export const Routes: RoutesPropsType = {
         title: 'dashboard',
         url: '/',
         icon: <DashboardIcon {...iconProps} />,
+    },
+    [RoutesEnum.USERS]: {
+        id: '2',
+        title: 'users',
+        url: '/users',
+        icon: <UsersIcon {...iconProps} />,
+    },
+    [RoutesEnum.TRUCKS]: {
+        id: '3',
+        title: 'trucks',
+        url: '/trucks',
+        icon: <TruckIcon {...iconProps} />,
+    },
+    [RoutesEnum.TRAILERS]: {
+        id: '4',
+        title: 'trailers',
+        url: '/trailers',
+        icon: <TrailerIcon  {...iconProps} />,
+    },
+    [RoutesEnum.REQUEST]: {
+        id: '5',
+        title: 'requests',
+        url: '/requests',
+        icon: <RequestIcon {...iconProps} />,
     },
 
     [RoutesEnum.LOGIN]: {

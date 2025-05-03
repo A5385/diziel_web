@@ -1,9 +1,11 @@
-import constants from '@/constants/constants';
+import constants from '@/constants/AppSettings';
 import { isWebTokenExpired, TokenService } from '@/helpers/local-storage-service';
 import axios, { AxiosError } from 'axios';
 import { refreshWebAccessToken } from './RefreshToken';
 
-const { serverUrl, apiKey } = constants;
+const serverUrl = constants.api.serverUrl;
+const apiKey = constants.api.apiKey;
+console.log('🚀 >  apiKey:', apiKey);
 
 export const axiosInstance = axios.create({
     baseURL: serverUrl,

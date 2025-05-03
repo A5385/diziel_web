@@ -8,6 +8,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { iconProps } from '@/constants/route';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { DashboardIcon } from '@radix-ui/react-icons';
 import { ChevronRight } from 'lucide-react';
@@ -21,6 +22,7 @@ const MobileMenu = () => {
     const t = useTranslations();
     const pathname = usePathname();
     const locale = useLocale();
+    const mobile = useIsMobile()
 
     const activeNav = (url: string) => {
         if (url === '/' && pathname === '/') return true;
@@ -28,11 +30,11 @@ const MobileMenu = () => {
         else return false;
     };
     return (
-        <DropdownMenu>
+        <DropdownMenu >
             <DropdownMenuTrigger className='block md:hidden' asChild>
                 <AKButton variant={'outline'} size='icon' icon={<DashboardIcon />} type='button' />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align={locale === 'ar' ? 'end' : 'start'}>
+            <DropdownMenuContent align={locale === 'ar' ? 'end' : 'start'} className='block md:hidden'>
                 {NavList.map((nav) => {
                     const active = activeNav(nav.url);
                     return (

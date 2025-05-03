@@ -1,8 +1,9 @@
 // local-storage-service.ts
-import constants from '@/constants/constants';
+import constants from '@/constants/AppSettings';
+import { UserRole } from '@/types/prisma';
 import { jwtDecode } from 'jwt-decode';
 
-const { accessTokenKey, emailKey, refreshTokenKey } = constants.keys;
+const { accessTokenKey, phoneKey, refreshTokenKey, roleKey } = constants.keys;
 
 // LocalStorage utility function (singleton)
 export const getLocalStorage = () => {
@@ -31,10 +32,15 @@ export const TokenService = {
         set: (token: string) => LocalStorage.set(refreshTokenKey, token),
         remove: () => LocalStorage.remove(refreshTokenKey),
     },
-    email: {
-        get: (): localStorageReturnType<string> => LocalStorage.get<string>(emailKey),
-        set: (email: string) => LocalStorage.set(emailKey, email),
-        remove: () => LocalStorage.remove(emailKey),
+    phone: {
+        get: (): localStorageReturnType<string> => LocalStorage.get<string>(phoneKey),
+        set: (phone: string) => LocalStorage.set(phoneKey, phone),
+        remove: () => LocalStorage.remove(phoneKey),
+    },
+    role: {
+        get: (): localStorageReturnType<string> => LocalStorage.get<string>(roleKey),
+        set: (role: UserRole) => LocalStorage.set(roleKey, role as string),
+        remove: () => LocalStorage.remove(roleKey),
     },
 };
 
@@ -64,5 +70,6 @@ export const handleLogout = () => {
     TokenService.accessToken.remove();
     TokenService.refreshToken.remove();
 
-    TokenService.email.remove();
+    TokenService.phone.remove();
+    TokenService.role.remove();
 };

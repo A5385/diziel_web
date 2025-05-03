@@ -1,3 +1,4 @@
+import AppSettings from '@/constants/AppSettings';
 import { ApiResponseType, MethodType } from '@/types/backend';
 import { AxiosError, AxiosResponse } from 'axios';
 import notify from './AxiosNotify';
@@ -40,16 +41,29 @@ export const handleAxiosResponse = async <T>({
         }>;
 
         if (axiosError.response) {
-            const { error: errorDetail } = axiosError.response.data?.error || {
-                message: 'An unexpected error occurred.',
-                error: 'Unknown error',
-            };
+            const { status } = axiosError.response;
 
-            if (notifyEnabled && method !== 'get') {
-                notify({
-                    message: `Error: ${errorDetail}`,
-                    type: 'error',
-                });
+            if (status >= 500 && status < 600) {
+                // Handle server errors (5xx)
+                if (notifyEnabled) {
+                    notify({
+                        message: 'Server error occurred. Please try again later.',
+                        type: 'error',
+                    });
+                }
+            } else if (status >= 400 && status < 500) {
+                // Handle client errors (4xx)
+                const { error: errorDetail } = axiosError.response.data?.error || {
+                    message: 'An unexpected error occurred.',
+                    error: 'Unknown error',
+                };
+
+                if (notifyEnabled && method !== 'get') {
+                    notify({
+                        message: `Error: ${errorDetail}`,
+                        type: 'error',
+                    });
+                }
             }
         } else if (axiosError.request) {
             if (notifyEnabled) {
@@ -67,7 +81,8 @@ export const handleAxiosResponse = async <T>({
             }
         }
 
-        console.error('Axios Error:', JSON.stringify(axiosError, null, 2));
+        !AppSettings.isProduction &&
+            console.error('Axios Error:', JSON.stringify(axiosError, null, 2));
 
         return undefined;
     }

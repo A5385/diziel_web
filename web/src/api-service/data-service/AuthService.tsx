@@ -1,4 +1,4 @@
-import { User, UserRole } from '@/types/client';
+import { User, UserRole } from '@/types/prisma';
 import { useMutationPost } from '../react-query-service/mutate-service';
 
 export const HandleLogin = () =>
@@ -6,7 +6,7 @@ export const HandleLogin = () =>
         accessToken: string;
         refreshToken: string;
         id: string;
-        email: string;
+        phone: string;
         role: UserRole;
         blocked: boolean;
         verified: Date | null;

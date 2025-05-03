@@ -2,7 +2,7 @@
 import { CheckEmail } from '@/api-service/data-service/AuthService';
 import { FormEmailInput } from '@/components/common-form-input/FormEmailInput';
 import { AKForm } from '@/components/my-components/AKForm';
-import constants from '@/constants/constants';
+import constants from '@/constants/AppSettings';
 import { Routes } from '@/constants/route';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';

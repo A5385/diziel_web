@@ -4,11 +4,12 @@ import { notFound } from 'next/navigation';
 
 import { routing } from '@/i18n/routing';
 import GlobalProviders from '@/providers/GlobalProviders';
-import { geistMono, geistSans } from '@/styles/fonts';
+import { cairo, geistMono, geistSans } from '@/styles/fonts';
 import { ChildrenType } from '@/types/general';
 
-import constants from '@/constants/constants';
+import constants from '@/constants/AppSettings';
 import { LocaleType } from '@/constants/types';
+import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ type RootLayoutProps = ChildrenType & {
 
 export default async function RootLayout({ children, params }: Readonly<RootLayoutProps>) {
     const { locale } = await params;
+
     if (!hasLocale(routing.locales, locale)) {
         notFound();
     }
@@ -29,7 +31,13 @@ export default async function RootLayout({ children, params }: Readonly<RootLayo
         <html lang={locale} suppressHydrationWarning>
             <body
                 dir={locale === 'ar' ? 'rtl' : 'ltr'}
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={cn(
+                    cairo.variable,
+                    geistSans.variable,
+                    geistMono.variable,
+                    locale === 'ar' ? 'font-cairo' : 'font-sans',
+                    'antialiased',
+                )}
             >
                 <GlobalProviders>{children}</GlobalProviders>
             </body>

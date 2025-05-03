@@ -1,6 +1,6 @@
 'use client';
 
-import constants from '@/constants/constants';
+import constants from '@/constants/AppSettings';
 import { SpanType } from '@/constants/types';
 import { SwitchProps } from '@radix-ui/react-switch';
 import React from 'react';
@@ -16,6 +16,7 @@ import { AKSelect, AKSelectProps } from './AKSelect';
 import { AKSwitch, AKSwitchProps } from './AKSwitch';
 import { AKTextarea, AKTextAreaProps } from './AKTextarea';
 import { AKAttachmentProps, AKUploadAttachments } from './AKUploadAttachments';
+import { AKPhoneInput, AKPhoneInputProps } from './phone-input';
 // import { AKUploadFile, AKUploadProps } from './AKUploadImage';
 
 export type FieldType2 =
@@ -29,7 +30,8 @@ export type FieldType2 =
     | 'date'
     | 'switch'
     | 'upload-file'
-    | 'attachments';
+    | 'attachments'
+    | 'phone-input';
 
 export type FormInput2PropsType<T extends FieldType2> = T extends 'input'
     ? AKInputProps
@@ -49,11 +51,11 @@ export type FormInput2PropsType<T extends FieldType2> = T extends 'input'
                   ? AKDatePickerProps
                   : T extends 'switch'
                     ? AKSwitchProps
-                    : // : T extends 'upload-file'
-                      //   ? AKUploadProps
-                      T extends 'attachments'
-                      ? AKAttachmentProps
-                      : never;
+                    : T extends 'phone-input'
+                      ? AKPhoneInputProps
+                      : T extends 'attachments'
+                        ? AKAttachmentProps
+                        : never;
 
 export type AKFormInput2Type<T extends FieldType2, V extends FieldValues> = Omit<
     FormInput2PropsType<T>,
@@ -171,6 +173,9 @@ export const AKFormInput2 = <T extends FieldType2, V extends FieldValues>({
                         {...field}
                     />
                 );
+            case 'phone-input':
+                return <AKPhoneInput {...inputProps} {...field} errors={form.formState.errors} />;
+
             default:
                 return <p>Invalid input field type</p>;
         }

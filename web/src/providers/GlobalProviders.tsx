@@ -1,4 +1,4 @@
-import constants from '@/constants/constants';
+import constants from '@/constants/AppSettings';
 import { ChildrenType } from '@/types/general';
 import { NextIntlClientProvider } from 'next-intl';
 import { DialogProvider } from './DialogProvider';

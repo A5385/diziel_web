@@ -1,0 +1,61 @@
+'use client';
+
+import { useDialog } from '@/providers/DialogProvider';
+import { DialogType } from '@/types/dialog';
+import { DataType } from '@/types/ui';
+import { useTranslations } from 'next-intl';
+import { lazy, ReactNode } from 'react';
+
+const ConfirmationMsg = lazy(() => import('../ConfirmationMsg'));
+const UserForm = lazy(
+    () => import('@/app/[locale]/(dashboard)/(home)/users/components/forms/UserForm'),
+);
+
+type ModuleModalProps<TData> = {
+    confirmDelete?: () => Promise<void>;
+    confirmDeleteMany?: () => Promise<void>;
+    data: DataType<TData>;
+};
+
+const ModuleModal = <TData,>({
+    confirmDelete,
+    confirmDeleteMany,
+
+    data,
+}: ModuleModalProps<TData>) => {
+    const g = useTranslations();
+    const { dialogType } = useDialog();
+
+    const content: Record<DialogType, ReactNode> = {
+        '': undefined,
+        delete: (
+            <ConfirmationMsg
+                title={g('delete-title')}
+                msg={g('delete-msg')}
+                confirmLabel={g('yes-delete')}
+                confirmColor='red'
+                confirmAction={confirmDelete}
+                cancelLabel={g('no-keep')}
+                cancelColor='green'
+            />
+        ),
+        'delete-many': (
+            <ConfirmationMsg
+                title={g('delete-title')}
+                msg={g('delete-msg')}
+                confirmLabel={g('yes-delete')}
+                confirmColor='red'
+                confirmAction={confirmDeleteMany}
+                cancelLabel={g('no-keep')}
+                cancelColor='green'
+            />
+        ),
+
+        'new-user': <UserForm />,
+        'edit-user': <UserForm data={data ?? undefined} />,
+    };
+
+    return content[dialogType ?? ''];
+};
+
+export default ModuleModal;

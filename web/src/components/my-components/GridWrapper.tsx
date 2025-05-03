@@ -1,4 +1,4 @@
-import constants from '@/constants/constants';
+import constants from '@/constants/AppSettings';
 import { ColsType } from '@/constants/types';
 import { cn } from '@/lib/utils';
 import { ChildrenType } from '@/types/general';
