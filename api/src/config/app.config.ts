@@ -2,6 +2,7 @@
 import * as dotenv from 'dotenv';
 
 dotenv.config();
+type ImageFolderType = 'profileImage' | 'nationalId';
 type AppConfigType = {
     production: boolean;
     name: string;
@@ -10,6 +11,8 @@ type AppConfigType = {
     prefix: string;
     authMethod: 'mobile' | 'email' | 'both' | 'none';
     databaseUrl: string;
+    uploadFolder: string;
+    imageFolder: Record<ImageFolderType, string>;
 };
 
 export const AppConfig: AppConfigType = {
@@ -20,6 +23,11 @@ export const AppConfig: AppConfigType = {
     prefix: process.env.SERVER_PREFIX || 'api',
     authMethod: 'mobile',
     databaseUrl: process.env.DATABASE_URL || '',
+    uploadFolder: 'uploads',
+    imageFolder: {
+        profileImage: 'profile-image',
+        nationalId: 'national-identity',
+    },
 };
 
 export const serverUrl = `${AppConfig.host}:${AppConfig.port}/${AppConfig.prefix}`;

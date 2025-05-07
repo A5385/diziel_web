@@ -28,6 +28,13 @@ import { ConfigModuleOption } from './config/config.config';
         ConfigModule.forRoot(ConfigModuleOption),
         I18nModule.forRootAsync(localeConfig),
         JwtModule.register({}),
+        // ServeStaticModule.forRoot({
+        //     rootPath: join(__dirname, '..', 'upload'),
+        //     exclude: ['/api/{*test}'],
+        //     serveStaticOptions: {
+        //         fallthrough: false,
+        //     },
+        // }),
         UserModule,
         AuthModule,
         SharedModule,

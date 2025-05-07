@@ -3,6 +3,7 @@ import { UserRole } from '@prisma/client';
 import * as fs from 'fs';
 import * as multer from 'multer';
 import { extname } from 'path';
+import { AppConfig } from 'src/config';
 
 type ValidateFilePropsType = {
     file;
@@ -20,6 +21,7 @@ export const ValidateFile = ({ file, type }: ValidateFilePropsType): boolean => 
 
 export type MulterOptionPropsType = {
     type: 'image' | 'file';
+    folder?: string;
 };
 
 export interface RequestUser {
@@ -43,14 +45,11 @@ export const GenerateFileName = ({ file }: GenerateFileNamePropsType): string =>
     return filename;
 };
 
-export const GenerateMulterOption = ({ type }: MulterOptionPropsType): MulterOptions => {
+export const GenerateMulterOption = ({ type, folder }: MulterOptionPropsType): MulterOptions => {
     const options: MulterOptions = {
         storage: multer.diskStorage({
             destination: (req, file, cb) => {
-                const user = req['user'] as RequestUser;
-                const role = user?.role;
-                // console.log(user);
-                const url = `./upload/${role.toLowerCase()}`;
+                const url = `${AppConfig.uploadFolder}/${folder && folder}`;
 
                 if (!fs.existsSync(url)) {
                     fs.mkdirSync(url, { recursive: true });

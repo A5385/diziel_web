@@ -22,4 +22,5 @@ export const Context = {
     requests: 'Requests',
     profile: 'Profile',
     profiles: 'Profiles',
+    address: 'Address',
 };

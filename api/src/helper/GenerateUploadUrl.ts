@@ -1,5 +1,4 @@
-import { join } from 'path';
-import { serverUrl } from 'src/config';
+import { AppConfig, serverUrl } from 'src/config';
 
 export type getUploadUrlPropsType = {
     folder: string;
@@ -7,6 +6,7 @@ export type getUploadUrlPropsType = {
 };
 
 export const GenerateUploadUrl = ({ folder, fileName }: getUploadUrlPropsType): string => {
-    const url = join(serverUrl, folder, fileName);
+    // Correcting URL concatenation and removing unnecessary quotes
+    const url = `${serverUrl}/${AppConfig.uploadFolder}/${folder}/${fileName}`;
     return url;
 };

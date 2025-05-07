@@ -3,21 +3,21 @@ import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
+import * as express from 'express';
 import { join } from 'path';
 import { AppModule } from './app.module';
 import { AppConfig, Cors, serverUrl, ValidationPipeConfig } from './config';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { PrismaClientExceptionFilter } from './filters/prisma-client-exception.filter';
 
+const { prefix, uploadFolder, name } = AppConfig;
+
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
     app.use(cookieParser());
     app.enableCors(Cors);
-    app.useStaticAssets(join(__dirname, '..', '..', '..', 'uploads'), {
-        index: false,
-        prefix: '/api/uploads/',
-    });
+    app.use(`/${prefix}/${uploadFolder}`, express.static(join(process.cwd(), uploadFolder)));
 
     app.useGlobalPipes(new ValidationPipe(ValidationPipeConfig));
 
@@ -28,8 +28,8 @@ async function bootstrap() {
     app.setGlobalPrefix(AppConfig.prefix);
 
     const config = new DocumentBuilder()
-        .setTitle(AppConfig.name)
-        .setDescription(`${AppConfig.name} API documentation`)
+        .setTitle(name)
+        .setDescription(`${name} API documentation`)
         .setVersion('1.0')
         .addTag('')
         .addApiKey({ type: 'apiKey', name: 'x-api-key', in: 'header' })

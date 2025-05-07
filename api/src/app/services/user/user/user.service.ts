@@ -17,6 +17,7 @@ import { ContextType } from 'src/handlers/request-handler/type';
 import { GenerateOTP } from 'src/helper/GenerateOTP';
 import { LocaleType } from 'src/types/response';
 import { RegisterUserDto, SetPasswordDto, VerifyOtpDto, VerifyPhoneDto } from './dto/user.dto';
+import { UserRegisterResponse } from './user.type';
 
 @Injectable()
 export class UserService {
@@ -29,7 +30,7 @@ export class UserService {
 
     private readonly context: ContextType = 'user';
 
-    async register({ phone, role }: RegisterUserDto, locale?: LocaleType) {
+    async register({ phone, role, nationalIdNumber }: RegisterUserDto, locale?: LocaleType) {
         const res = await this.findUserByPhone(phone, locale);
         const user = res?.data;
         if (user) {
@@ -42,25 +43,44 @@ export class UserService {
             );
         }
 
-        return await RequestHandler({
+        return await RequestHandler<UserRegisterResponse | undefined, 'create'>({
             context: this.context,
             logger: this.logger,
             i18n: this.i18n,
             locale,
             method: 'create',
             fn: async () => {
-                return await this.prisma.user.create({
+                const newUser = await this.prisma.user.create({
                     data: {
                         phone,
                         role,
                         profile: {
                             create: {
-                                national: {},
+                                national: nationalIdNumber ? { create: { nationalIdNumber } } : {},
                             },
                         },
                         loginInfo: { create: {} },
                     },
+                    select: {
+                        id: true,
+                        phone: true,
+                        profile: {
+                            select: {
+                                id: true,
+                                national: { select: { nationalIdNumber: true, id: true } },
+                            },
+                        },
+                    },
                 });
+                if (newUser) {
+                    return {
+                        id: newUser?.id,
+                        phone: newUser?.id,
+                        profileId: newUser?.profile?.id,
+                        nationalId: newUser?.profile?.national?.id,
+                        nationalIdNumber: newUser?.profile?.national?.nationalIdNumber,
+                    };
+                }
             },
         });
     }
@@ -225,9 +245,10 @@ export class UserService {
             i18n: this.i18n,
             locale: req.cookies[localeKey],
             fn: async () => {
-                const { queries, startDate, endDate, limit, page, orderBy } =
-                    ExtractAllFromReq<User>(req, ['id', 'phone', 'role']);
-                const { phone, id, role } = queries;
+                const { queries, startDate, endDate, limit, page, orderBy } = ExtractAllFromReq<
+                    User & { fullName: string }
+                >(req, ['id', 'phone', 'role', 'fullName']);
+                const { phone, id, role, fullName } = queries;
 
                 const where: Prisma.UserWhereInput = {
                     ...(phone && {
@@ -238,6 +259,11 @@ export class UserService {
                     }),
                     ...(role && {
                         role: { equals: role as UserRole },
+                    }),
+                    ...(fullName && {
+                        profile: {
+                            fullName: { contains: fullName, mode: 'insensitive' },
+                        },
                     }),
 
                     ...((startDate || endDate) && {

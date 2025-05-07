@@ -1,7 +1,11 @@
 import { PartialType, PickType } from '@nestjs/swagger';
 import { CommonInputDto } from 'src/common/common.dto';
 
-export class RegisterUserDto extends PickType(CommonInputDto, ['phone', 'role']) {}
+export class RegisterUserDto extends PickType(CommonInputDto, [
+    'phone',
+    'role',
+    'nationalIdNumber',
+]) {}
 
 export class VerifyPhoneDto extends PickType(CommonInputDto, ['phone']) {}
 
