@@ -4,7 +4,13 @@ import constants from '@/constants/AppSettings';
 import { SpanType } from '@/constants/types';
 import { SwitchProps } from '@radix-ui/react-switch';
 import React from 'react';
-import { FieldPath, FieldValues, UseFormReturn } from 'react-hook-form';
+import {
+    ControllerRenderProps,
+    FieldPath,
+    FieldValues,
+    Path,
+    UseFormReturn,
+} from 'react-hook-form';
 import { cn } from '../../lib/utils';
 import { FormControl, FormDescription, FormField, FormItem, FormMessage } from '../ui/form';
 import { AKCheckBox, AKCheckBoxProps } from './AKCheckbox';
@@ -15,11 +21,11 @@ import { AKRadioGroup, AKRadioGroupProps } from './AKRadioGroup';
 import { AKSelect, AKSelectProps } from './AKSelect';
 import { AKSwitch, AKSwitchProps } from './AKSwitch';
 import { AKTextarea, AKTextAreaProps } from './AKTextarea';
-import { AKAttachmentProps, AKUploadAttachments } from './AKUploadAttachments';
+import { AKUploadFile, AKUploadProps } from './AKUploadImage';
 import { AKPhoneInput, AKPhoneInputProps } from './phone-input';
 // import { AKUploadFile, AKUploadProps } from './AKUploadImage';
 
-export type FieldType2 =
+export type FieldType =
     | 'input'
     | 'text-area'
     | 'check-box'
@@ -33,32 +39,30 @@ export type FieldType2 =
     | 'attachments'
     | 'phone-input';
 
-export type FormInput2PropsType<T extends FieldType2> = T extends 'input'
+export type FormInputPropsType<T extends FieldType, V extends FieldValues> = T extends 'input'
     ? AKInputProps
     : T extends 'select'
-      ? AKSelectProps
+      ? AKSelectProps<V>
       : T extends 'text-area'
-        ? AKTextAreaProps
+        ? AKTextAreaProps<V>
         : T extends 'check-box'
-          ? AKCheckBoxProps
+          ? AKCheckBoxProps<V>
           : T extends 'group-check-box'
-            ? AKCheckBoxProps
+            ? AKCheckBoxProps<V>
             : T extends 'radio-group'
-              ? AKRadioGroupProps
-              : T extends 'combo-box'
-                ? AKComboboxProps
-                : T extends 'date'
-                  ? AKDatePickerProps
-                  : T extends 'switch'
-                    ? AKSwitchProps
-                    : T extends 'phone-input'
-                      ? AKPhoneInputProps
-                      : T extends 'attachments'
-                        ? AKAttachmentProps
-                        : never;
+              ? AKRadioGroupProps<V>
+              : T extends 'date'
+                ? AKDatePickerProps
+                : T extends 'switch'
+                  ? AKSwitchProps
+                  : T extends 'phone-input'
+                    ? AKPhoneInputProps
+                    : T extends 'upload-file'
+                      ? AKUploadProps<V>
+                      : never;
 
-export type AKFormInput2Type<T extends FieldType2, V extends FieldValues> = Omit<
-    FormInput2PropsType<T>,
+export type AKFormInputType<T extends FieldType, V extends FieldValues> = Omit<
+    FormInputPropsType<T, V>,
     'form'
 > & {
     span?: SpanType;
@@ -70,7 +74,7 @@ export type AKFormInput2Type<T extends FieldType2, V extends FieldValues> = Omit
     descStyle?: React.HTMLAttributes<HTMLParagraphElement>['className'];
 };
 
-export const AKFormInput2 = <T extends FieldType2, V extends FieldValues>({
+export const AKFormInput = <T extends FieldType, V extends FieldValues>({
     inputType,
     span = 1,
     desc,
@@ -79,12 +83,14 @@ export const AKFormInput2 = <T extends FieldType2, V extends FieldValues>({
     form,
     descStyle,
     ...inputProps
-}: AKFormInput2Type<T, V>) => {
+}: AKFormInputType<T, V>) => {
     const width = constants.span[span];
-    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { value: v, onChange: on, ...restOfProps } = inputProps as AKInputProps;
 
-    const renderInput = (field: any) => {
+    const renderInput = (
+        field: ControllerRenderProps<V, (FormInputPropsType<T, V>['name'] | undefined) & Path<V>>,
+    ) => {
         const { value, onChange, ...restOfField } = field;
 
         switch (inputType) {
@@ -94,7 +100,7 @@ export const AKFormInput2 = <T extends FieldType2, V extends FieldValues>({
                         {...inputProps}
                         {...field}
                         value={String(field.value)}
-                        onChange={(event) => field.onChange(+event.target.value)}
+                        onChange={(event) => onChange(+event.target.value)}
                         errors={form.formState.errors}
                     />
                 ) : (
@@ -103,7 +109,7 @@ export const AKFormInput2 = <T extends FieldType2, V extends FieldValues>({
             case 'select':
                 return (
                     <AKSelect
-                        {...(restOfProps as unknown as AKSelectProps)}
+                        {...(restOfProps as unknown as AKSelectProps<V>)}
                         onValueChange={onChange}
                         value={value}
                         {...restOfField}
@@ -113,7 +119,7 @@ export const AKFormInput2 = <T extends FieldType2, V extends FieldValues>({
             case 'text-area':
                 return (
                     <AKTextarea
-                        {...(restOfProps as AKTextAreaProps)}
+                        {...(restOfProps as AKTextAreaProps<V>)}
                         {...field}
                         errors={form.formState.errors}
                     />
@@ -122,7 +128,7 @@ export const AKFormInput2 = <T extends FieldType2, V extends FieldValues>({
             case 'group-check-box':
                 return (
                     <AKCheckBox
-                        {...(restOfProps as AKCheckBoxProps)}
+                        {...(restOfProps as AKCheckBoxProps<V>)}
                         {...field}
                         errors={form.formState.errors}
                     />
@@ -130,7 +136,7 @@ export const AKFormInput2 = <T extends FieldType2, V extends FieldValues>({
             case 'radio-group':
                 return (
                     <AKRadioGroup
-                        {...(restOfProps as AKRadioGroupProps)}
+                        {...(restOfProps as AKRadioGroupProps<V>)}
                         onValueChange={(v) => onChange(v)}
                         {...restOfField}
                         errors={form.formState.errors}
@@ -139,7 +145,7 @@ export const AKFormInput2 = <T extends FieldType2, V extends FieldValues>({
             case 'combo-box':
                 return (
                     <AKCombobox
-                        {...(restOfProps as unknown as AKComboboxProps)}
+                        {...(restOfProps as unknown as AKComboboxProps<V>)}
                         {...field}
                         errors={form.formState.errors}
                     />
@@ -153,26 +159,23 @@ export const AKFormInput2 = <T extends FieldType2, V extends FieldValues>({
                         {...restOfField}
                     />
                 );
-            case 'date':
+            case 'date': {
+                /* tell TS we really are in “single” mode */
+                type Single = AKDatePickerProps & { mode: 'single' };
+
                 return (
                     <AKDatePicker
-                        value={value}
-                        mode='single'
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        {...restOfField}
-                        {...(restOfProps as unknown as AKDatePickerProps)}
+                        {...(restOfProps as Single)} // ✓ mode = 'single'
+                        selected={value as Date | undefined}
+                        onSelect={onChange} // ✓ (Date | undefined) -> void
                     />
                 );
-            // case 'upload-file':
-            //     return <AKUploadFile {...(restOfProps as unknown as AKUploadProps)} {...field} />;
-            case 'attachments':
+            }
+            case 'upload-file':
                 return (
-                    <AKUploadAttachments
-                        {...(restOfProps as unknown as AKAttachmentProps)}
-                        {...field}
-                    />
+                    <AKUploadFile {...(restOfProps as unknown as AKUploadProps<V>)} {...field} />
                 );
+
             case 'phone-input':
                 return <AKPhoneInput {...inputProps} {...field} errors={form.formState.errors} />;
 

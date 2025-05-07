@@ -11,7 +11,7 @@ import { ColumnsProps } from '@/types/ui';
 import { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
 
-const UserColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserSchema>[] => {
+const DriversColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserSchema>[] => {
     const t = useTranslations();
 
     const { selectColumn, idColumn, ...commonColumns } = useCommonTableColumns<UserSchema>({
@@ -23,22 +23,25 @@ const UserColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserSche
     //     await toggleBlock.mutateAsync({ id: userId });
 
     return [
-        // selectColumn,
+        selectColumn,
         idColumn,
         {
             accessorKey: 'phone',
             header: t('phone'),
             cell: ({ row }) => {
                 return (
-                    <div className='flex flex-col font-medium tabular-nums' dir='ltr'>
+                    <div
+                        className='flex flex-col font-semibold text-neutral-700 tabular-nums'
+                        dir='ltr'
+                    >
                         {formatPhone(row.getValue('phone'))}
                     </div>
                 );
             },
         },
         {
-            accessorKey: 'name',
-            header: t('name'),
+            accessorKey: 'fullName',
+            header: t('fullName'),
             cell: ({ row }) => {
                 const name = row.original?.profile?.fullName;
                 const profileComplete = row?.original?.profile?.profileComplete;
@@ -119,4 +122,4 @@ const UserColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserSche
     ];
 };
 
-export default UserColumns;
+export default DriversColumns;

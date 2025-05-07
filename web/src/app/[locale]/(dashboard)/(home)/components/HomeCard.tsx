@@ -1,6 +1,5 @@
 import { cn } from '@/lib/utils';
 import { Route } from 'next';
-import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 export type HomeCardProps = {
     title: string;
@@ -9,7 +8,6 @@ export type HomeCardProps = {
     url?: Route;
 };
 const HomeCard = ({ title, count, bg, url }: HomeCardProps) => {
-    const t = useTranslations();
     return (
         <Link
             href={url ?? '/'}

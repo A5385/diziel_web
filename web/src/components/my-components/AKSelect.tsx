@@ -1,6 +1,6 @@
 import { SelectContentProps, SelectProps, SelectTriggerProps } from '@radix-ui/react-select';
 import * as React from 'react';
-import { FieldErrors } from 'react-hook-form';
+import { FieldErrors, FieldValues } from 'react-hook-form';
 import { useDebounce } from '../../hooks/useDebounce';
 import { cn } from '../../lib/utils';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
@@ -15,7 +15,7 @@ export type ItemType = {
     label: string;
 };
 
-export type AKSelectProps = SelectProps & {
+export type AKSelectProps<T extends FieldValues> = SelectProps & {
     selectItems: ItemType[];
     triggerProps?: SelectTriggerProps;
     selectContentProps?: SelectContentProps;
@@ -27,7 +27,7 @@ export type AKSelectProps = SelectProps & {
     placeholder?: string;
     labelProps?: Omit<LabelProps, 'label'>;
     containerProps?: ContainerProps;
-    errors?: FieldErrors<any>;
+    errors?: FieldErrors<T>;
     loadMore?: () => void;
     loadLess?: () => void;
     showSearchDataLimit?: number;
@@ -37,7 +37,7 @@ export type AKSelectProps = SelectProps & {
     loading?: boolean; // Loading state
 };
 
-export const AKSelect = ({
+export const AKSelect = <T extends FieldValues>({
     selectItems = [],
     triggerProps,
     selectContentProps,
@@ -58,9 +58,7 @@ export const AKSelect = ({
     value, // Get value from props
     onValueChange, // Get onValueChange from props
     ...props
-}: AKSelectProps) => {
-    console.log('🚀 >  value:', value);
-
+}: AKSelectProps<T>) => {
     const [localSearch, setLocalSearch] = React.useState(search || '');
 
     const debouncedSearch = useDebounce(localSearch, debounceTime);

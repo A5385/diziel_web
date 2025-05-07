@@ -11,8 +11,14 @@ type UserEndpoints =
     | 'user/toggle-block'
     | 'user/delete';
 
+type ProfileEndpoints =
+    | 'profile/update'
+    | 'profile/upload-profile-image'
+    | 'profile/update-profile-address'
+    | 'profile/upload-national-images';
+
 type CountEndpoint = '';
 
 export interface EndpointsType {
-    endpoint: AuthEndpoints | UserEndpoints | CountEndpoint;
+    endpoint: AuthEndpoints | UserEndpoints | CountEndpoint | ProfileEndpoints;
 }

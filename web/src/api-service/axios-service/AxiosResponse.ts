@@ -81,9 +81,9 @@ export const handleAxiosResponse = async <T>({
             }
         }
 
-        !AppSettings.isProduction &&
+        if (AppSettings.isProduction) {
             console.error('Axios Error:', JSON.stringify(axiosError, null, 2));
-
+        }
         return undefined;
     }
 };

@@ -39,7 +39,7 @@ const ProtectionLayout = ({ children }: { children: ReactNode }) => {
                         // Successfully refreshed, stay authenticated
                         setAuthenticated(true);
                     }
-                } catch (error) {
+                } catch {
                     // If refresh token fails or some other error occurs, log out
                     setAuthenticated(false);
                     handleLogout();

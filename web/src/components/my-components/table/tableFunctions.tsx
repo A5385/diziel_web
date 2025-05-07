@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FilterFn, SortingFn } from '@tanstack/react-table';
 
 export const getNestedValue = (obj: unknown, path: string): unknown => {

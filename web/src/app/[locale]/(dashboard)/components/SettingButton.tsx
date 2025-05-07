@@ -7,7 +7,7 @@ const SettingButton = () => {
     const { push } = useRouter();
     return (
         <Button variant={'outline'} size={'icon'} onClick={() => push('/')}>
-            <SettingIcon />
+            <SettingIcon color='gray' />
         </Button>
     );
 };

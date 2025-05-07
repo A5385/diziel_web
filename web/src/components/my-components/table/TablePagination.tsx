@@ -46,27 +46,27 @@ export function TablePagination<TData>({ table, total }: TablePaginationProps<TD
 
     return (
         <div className='flex items-center gap-4'>
-            <div className='flex items-center gap-4'>
+            <div className='flex items-center gap-4 text-sm'>
                 <AKInput
                     type='number'
                     value={pageSizeValue}
                     onChange={(e) => handlePageSizeChange(e.target.value)}
-                    className='w-16'
+                    // className='w-16'
                     min={1}
                     max={total}
                 />
-                <p className='text-nowrap'>
+                <p className='text-sm text-nowrap'>
                     {`${t('page')} ${table.getState().pagination.pageIndex + 1} ${t('of')} ${table.getPageCount()}`}
                 </p>
             </div>
             <span>|</span>
-            <span className='flex items-center gap-1 text-nowrap'>
+            <span className='flex items-center gap-1 text-sm text-nowrap'>
                 {`${t('go-to-page')}`}
                 <AKInput
                     type='number'
                     value={pageIndexValue}
                     onChange={(e) => handlePageIndexChange(e.target.value)}
-                    className='w-16'
+                    // className='w-fit'
                     min={1}
                     max={table.getPageCount()}
                 />

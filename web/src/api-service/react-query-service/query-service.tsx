@@ -2,8 +2,14 @@ import { QueryPropsType } from '@/types/service';
 import { QueryKey, useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 import { AxiosService } from '../axios-service/CRUD';
 
-const buildQueryKey = (queryKey: QueryKey, options: Record<string, any> = {}) => {
-    return [...queryKey, options];
+/* utils ----------------------------------------------------------------- */
+const buildQueryKey = (base: QueryKey, extras: Record<string, unknown> = {}): QueryKey => {
+    return [
+        ...base,
+        ...Object.entries(extras)
+            .filter(([, v]) => v !== undefined)
+            .map(([k, v]) => ({ [k]: v })),
+    ];
 };
 
 export const useQueryData = <T,>({
@@ -12,7 +18,7 @@ export const useQueryData = <T,>({
     queryKey,
     queryParams,
     ...props
-}: QueryPropsType<T> & Omit<UseQueryOptions<T, Error>, 'queryFn'>): UseQueryResult<T> => {
+}: QueryPropsType & Omit<UseQueryOptions<T, Error>, 'queryFn'>): UseQueryResult<T> => {
     return useQuery<T>({
         queryKey: buildQueryKey(queryKey, { id, queryParams }),
         queryFn: async () => {

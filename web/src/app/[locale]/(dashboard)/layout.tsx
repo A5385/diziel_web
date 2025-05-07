@@ -10,7 +10,7 @@ const DashboardLayout = ({ children }: ChildrenType) => {
                 <DashboardSidebar />
                 <div className='flex w-full flex-col gap-4'>
                     <DashboardHeader />
-                    <div className='h-full w-full overflow-auto rounded-2xl bg-slate-100 p-4 dark:bg-slate-800'>
+                    <div className='h-full w-full overflow-auto rounded-2xl bg-slate-100 p-4 shadow-md dark:bg-slate-800'>
                         {children}
                     </div>
                 </div>

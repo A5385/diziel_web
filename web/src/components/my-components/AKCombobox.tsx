@@ -2,7 +2,7 @@
 
 import { Check, ChevronsUpDown } from 'lucide-react';
 import * as React from 'react';
-import { FieldErrors } from 'react-hook-form';
+import { FieldErrors, FieldValues } from 'react-hook-form';
 import { cn } from '../../lib/utils';
 import { Button } from '../ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '../ui/command';
@@ -14,13 +14,13 @@ type ComboboxItem = {
     label: string;
 };
 
-export type AKComboboxProps = {
+export type AKComboboxProps<T extends FieldValues> = {
     items: ComboboxItem[];
     label?: string;
-    errors?: FieldErrors<any>;
+    errors?: FieldErrors<T>;
 };
 
-export const AKCombobox = ({ items, label }: AKComboboxProps) => {
+export const AKCombobox = <T extends FieldValues>({ items, label }: AKComboboxProps<T>) => {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState('');
 

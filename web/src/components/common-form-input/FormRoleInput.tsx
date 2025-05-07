@@ -1,12 +1,19 @@
 import { roleList } from '@/app/[locale]/(dashboard)/(home)/users/components/role-list';
 import { useTranslations } from 'next-intl';
-import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
-import { AKFormInput2 } from '../my-components/AKFormInput2';
+import { FieldValues, Path } from 'react-hook-form';
+import { AKFormInput } from '../my-components/AKFormInput';
+import { CommonFormInput } from './type';
 
-const FormRoleInput = <T extends FieldValues>({ form }: { form: UseFormReturn<T> }) => {
+const FormRoleInput = <T extends FieldValues>({
+    form,
+    span,
+    disabled,
+    desc,
+    required = true,
+}: CommonFormInput<T>) => {
     const t = useTranslations();
     return (
-        <AKFormInput2
+        <AKFormInput
             form={form}
             inputType='select'
             name={'role' as Path<T>}
@@ -16,6 +23,11 @@ const FormRoleInput = <T extends FieldValues>({ form }: { form: UseFormReturn<T>
                 label: t(item.toLowerCase()),
                 value: item,
             }))}
+            ////
+            required={required}
+            desc={desc}
+            span={span}
+            disabled={disabled}
         />
     );
 };

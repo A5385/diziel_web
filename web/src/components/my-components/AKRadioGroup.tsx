@@ -1,6 +1,7 @@
 import { RadioGroupProps } from '@radix-ui/react-radio-group';
-import { useLocale, useTranslations } from 'next-intl';
-import { FC, ReactNode } from 'react';
+import { useLocale } from 'next-intl';
+import { ReactNode } from 'react';
+import { FieldErrors, FieldValues } from 'react-hook-form';
 import { cn } from '../../lib/utils';
 import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
@@ -12,7 +13,7 @@ type RadioFieldProps = {
     name: string;
     value: string;
 };
-export type AKRadioGroupProps = RadioGroupProps & {
+export type AKRadioGroupProps<T extends FieldValues> = RadioGroupProps & {
     cb?: ReactNode;
     direction?: 'horizontal' | 'vertical';
     radioFields?: RadioFieldProps[];
@@ -21,8 +22,9 @@ export type AKRadioGroupProps = RadioGroupProps & {
     containerProps?: ContainerProps;
     fieldStyle?: string;
     customField?: ReactNode;
+    errors?: FieldErrors<T>;
 };
-export const AKRadioGroup: FC<AKRadioGroupProps> = ({
+export const AKRadioGroup = <T extends FieldValues>({
     cb,
     direction,
     className,
@@ -33,8 +35,7 @@ export const AKRadioGroup: FC<AKRadioGroupProps> = ({
     fieldStyle,
     customField,
     ...props
-}) => {
-    const t = useTranslations();
+}: AKRadioGroupProps<T>) => {
     const l = useLocale();
     const customProps = {
         className: cn(

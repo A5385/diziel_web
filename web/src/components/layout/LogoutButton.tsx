@@ -2,7 +2,8 @@
 import { Routes } from '@/constants/route';
 import { handleLogout } from '@/helpers/local-storage-service';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { LogOutIcon } from 'lucide-react';
+import { useArabic } from '@/hooks/useArabic';
+import { LogoutIcon } from '@/styles/icons';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
@@ -11,6 +12,7 @@ const LogoutButton = () => {
     const { push } = useRouter();
     const t = useTranslations();
     const mobile = useIsMobile();
+    const ar = useArabic();
     return (
         <Button
             className='cursor-pointer'
@@ -21,7 +23,7 @@ const LogoutButton = () => {
                 push(Routes.login.url);
             }}
         >
-            <LogOutIcon />
+            <LogoutIcon color='black' className={ar ? 'rotate-180' : ''} />
 
             {!mobile && t('logout')}
         </Button>

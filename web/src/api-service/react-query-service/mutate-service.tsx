@@ -16,7 +16,6 @@ const BuildQueryKey = async (queryKeys: QueryKey[], queryClient: QueryClient) =>
     await Promise.all(queryKeys.map((key) => queryClient.invalidateQueries({ queryKey: [key] })));
 };
 
-// eslint-disable-next-line no-unused-vars
 export type MutationFnType<T, Variables> = (variables: Variables) => Promise<T>;
 
 export const createMutation = <T, Variables>(

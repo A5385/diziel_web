@@ -14,13 +14,8 @@ type ALDialogContentProps<T> = {
     data?: DataType<T>;
 };
 
-const AKDialogContent = <T,>({
-    confirmDelete,
-    confirmDeleteMany,
-    data,
-}: ALDialogContentProps<T>) => {
+const AKDialogContent = <T,>({ confirmDelete, confirmDeleteMany }: ALDialogContentProps<T>) => {
     const g = useTranslations();
-    const t = useTranslations('dashboard');
     const { dialogType } = useDialog();
 
     const content: Record<DialogType, ReactNode> = {
@@ -47,6 +42,8 @@ const AKDialogContent = <T,>({
                 cancelColor='green'
             />
         ),
+        'new-user': undefined,
+        'edit-user': undefined,
     };
 
     return content[dialogType ?? ''];

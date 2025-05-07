@@ -2,24 +2,20 @@ import { DashboardIcon, RequestIcon, TrailerIcon, TruckIcon, UsersIcon } from '@
 import { Route } from 'next';
 import { ReactNode } from 'react';
 
-// 1. Enum for Route Keys
-export enum RoutesEnum {
-    DASHBOARD = 'dashboard',
-    USERS = 'users',
-    TRUCKS = 'truckS',
-    TRAILERS = 'trailers',
-    REQUEST = 'request',
+export type RoutesType =
+    | 'dashboard'
+    | 'users'
+    | 'trucks'
+    | 'trailers'
+    | 'request'
+    | 'login'
+    | 'drivers'
+    | 'owners'
+    | 'agencies'
+    | 'clients';
 
-    LOGIN = 'login',
-    REGISTRATION = 'registration',
-    VERIFY_EMAIL = 'verifyEmail',
-    SET_PASSWORD = 'setPassword',
-}
+export const iconProps = { size: 14, color: '#1447e6' };
 
-// 2. Default Icon Props
-export const iconProps = { size: 14, color: 'purple' };
-
-// 3. Route Type
 export interface RouteProps {
     id: string;
     title: string;
@@ -28,65 +24,67 @@ export interface RouteProps {
     access?: string[];
 }
 
-// 4. Routes Record Type
-export type RoutesPropsType = Record<RoutesEnum, RouteProps>;
+export type RoutesPropsType = Record<RoutesType, RouteProps>;
 
-// 5. Centralized Routes Definition
 export const Routes: RoutesPropsType = {
-    [RoutesEnum.DASHBOARD]: {
+    ['dashboard']: {
         id: '1',
         title: 'dashboard',
         url: '/',
         icon: <DashboardIcon {...iconProps} />,
     },
-    [RoutesEnum.USERS]: {
+    ['users']: {
         id: '2',
-        title: 'users',
+        title: 'all-users',
         url: '/users',
         icon: <UsersIcon {...iconProps} />,
     },
-    [RoutesEnum.TRUCKS]: {
+    ['drivers']: {
         id: '3',
+        title: 'drivers',
+        url: '/users/drivers',
+        icon: <UsersIcon {...iconProps} />,
+    },
+    ['owners']: {
+        id: '4',
+        title: 'owners',
+        url: '/users/owners',
+        icon: <UsersIcon {...iconProps} />,
+    },
+    ['agencies']: {
+        id: '5',
+        title: 'agencies',
+        url: '/users/agencies',
+        icon: <UsersIcon {...iconProps} />,
+    },
+    ['clients']: {
+        id: '6',
+        title: 'clients',
+        url: '/users/clients',
+        icon: <UsersIcon {...iconProps} />,
+    },
+    ['trucks']: {
+        id: '7',
         title: 'trucks',
         url: '/trucks',
         icon: <TruckIcon {...iconProps} />,
     },
-    [RoutesEnum.TRAILERS]: {
-        id: '4',
+    ['trailers']: {
+        id: '8',
         title: 'trailers',
         url: '/trailers',
-        icon: <TrailerIcon  {...iconProps} />,
+        icon: <TrailerIcon {...iconProps} />,
     },
-    [RoutesEnum.REQUEST]: {
-        id: '5',
+    ['request']: {
+        id: '9',
         title: 'requests',
         url: '/requests',
         icon: <RequestIcon {...iconProps} />,
     },
 
-    [RoutesEnum.LOGIN]: {
-        id: '9',
+    ['login']: {
+        id: '10',
         title: 'login',
         url: '/auth/login',
     },
-    [RoutesEnum.REGISTRATION]: {
-        id: '10',
-        title: 'registration',
-        url: '/auth/registration',
-    },
-    [RoutesEnum.VERIFY_EMAIL]: {
-        id: '11',
-        title: 'verifyEmail',
-        url: '/auth/verify-email',
-    },
-    [RoutesEnum.SET_PASSWORD]: {
-        id: '12',
-        title: 'setPassword',
-        url: '/auth/set-password',
-    },
-};
-
-// 6. Dynamic Generator for Subset of Routes
-export const GenerateRouterList = (routerList: RoutesEnum[]): RouteProps[] => {
-    return routerList.map((routeKey) => Routes[routeKey]);
 };

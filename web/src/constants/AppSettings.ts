@@ -1,8 +1,7 @@
 import { ThemeProviderProps } from 'next-themes';
 import { ToasterProps } from 'sonner';
 import { ColsType, FormSettings, LocaleSetting, SpanType } from './types';
-
-export default {
+const AppSettings = {
     /// production
     isProduction: process.env.NODE_ENV === 'production',
     /// backend settings
@@ -84,3 +83,5 @@ export default {
         12: ' md:col-span-12',
     } satisfies Record<SpanType, string>,
 };
+
+export default AppSettings;

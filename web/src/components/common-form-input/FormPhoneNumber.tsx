@@ -1,23 +1,20 @@
 import { useArabic } from '@/hooks/useArabic';
 import { useTranslations } from 'next-intl';
-import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
-import { AKFormInput2 } from '../my-components/AKFormInput2';
+import { FieldValues, Path } from 'react-hook-form';
+import { AKFormInput } from '../my-components/AKFormInput';
+import { CommonFormInput } from './type';
 
 export const FormPhoneInput = <T extends FieldValues>({
     form,
     span,
     disabled,
     desc,
-}: {
-    form: UseFormReturn<T>;
-    span?: number | undefined;
-    disabled?: boolean | undefined;
-    desc?: string | undefined;
-}) => {
+    required = true,
+}: CommonFormInput<T>) => {
     const g = useTranslations();
     const ar = useArabic();
     return (
-        <AKFormInput2
+        <AKFormInput
             dir='ltr'
             className={ar ? 'text-right' : 'text-left'}
             inputType='input'
@@ -26,10 +23,12 @@ export const FormPhoneInput = <T extends FieldValues>({
             type='text'
             label={g('phone')}
             placeholder={'+2010xxxxxxxx'}
-            required
-            disabled={disabled}
-            desc={desc}
             maxLength={13}
+            ////
+            required={required}
+            desc={desc}
+            span={span}
+            disabled={disabled}
         />
     );
 };

@@ -3,7 +3,6 @@
 import { useDialog } from '@/providers/DialogProvider';
 import { QueryVariablesType } from '@/types/service';
 import { UseMutationResult } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
 import { useCallback, useMemo } from 'react';
 
 export const useEntityActions = <T,>({
@@ -27,7 +26,6 @@ export const useEntityActions = <T,>({
     data?: T[] | undefined;
 }) => {
     const { editItemId, handleCloseDialog } = useDialog();
-    const g = useTranslations();
 
     const confirmDelete = useCallback(async () => {
         if (deleteEntityFn) {
@@ -42,41 +40,47 @@ export const useEntityActions = <T,>({
                 },
             });
         }
-    }, [deleteEntityFn, editItemId, g, handleCloseDialog]);
+    }, [deleteEntityFn, editItemId, handleCloseDialog, successActions]);
 
     const editEntity: T | undefined = useMemo(() => {
         return data?.find((entity) => (entity as T & { id: string })?.id === editItemId);
     }, [data, editItemId]);
 
-    const createEntity = useCallback(async (variables: { data: object }) => {
-        if (createEntityFn) {
-            const res = await createEntityFn.mutateAsync(variables);
-            if (res) {
-                if (successActions && successActions.length > 0) {
-                    for (const action of successActions) {
-                        action();
+    const createEntity = useCallback(
+        async (variables: { data: object }) => {
+            if (createEntityFn) {
+                const res = await createEntityFn.mutateAsync(variables);
+                if (res) {
+                    if (successActions && successActions.length > 0) {
+                        for (const action of successActions) {
+                            action();
+                        }
                     }
+                    handleCloseDialog();
+                    return res;
                 }
-                handleCloseDialog();
-                return res;
             }
-        }
-    }, []);
+        },
+        [createEntityFn, handleCloseDialog, successActions],
+    );
 
-    const updateEntity = useCallback(async (variables: QueryVariablesType) => {
-        if (updateEntityFn) {
-            const res = await updateEntityFn.mutateAsync(variables);
-            if (res) {
-                if (successActions && successActions.length > 0) {
-                    for (const action of successActions) {
-                        action();
+    const updateEntity = useCallback(
+        async (variables: QueryVariablesType) => {
+            if (updateEntityFn) {
+                const res = await updateEntityFn.mutateAsync(variables);
+                if (res) {
+                    if (successActions && successActions.length > 0) {
+                        for (const action of successActions) {
+                            action();
+                        }
                     }
+                    handleCloseDialog();
+                    return res;
                 }
-                handleCloseDialog();
-                return res;
             }
-        }
-    }, []);
+        },
+        [handleCloseDialog, successActions, updateEntityFn],
+    );
 
     return {
         moduleAction: {

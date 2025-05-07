@@ -4,13 +4,7 @@ import { AKInputContainer } from './AKInputContainer';
 import { AKLabel, LabelProps } from './AKLabel';
 
 export type AKPhoneInputProps = PhoneInputProps & { label?: string; labelProps?: LabelProps };
-export const AKPhoneInput = ({
-    label,
-    labelProps,
-    className,
-    defaultValue,
-    ...props
-}: AKPhoneInputProps) => {
+export const AKPhoneInput = ({ label, labelProps, className, ...props }: AKPhoneInputProps) => {
     return (
         <AKInputContainer>
             {label && (

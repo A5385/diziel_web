@@ -1,10 +1,25 @@
-import { EyeIcon, PauseCircle, PlayCircle, PlusCircle, SettingsIcon, TrashIcon, UserIcon } from 'lucide-react';
+import {
+    EyeIcon,
+    PauseCircle,
+    PlayCircle,
+    PlusCircle,
+    SettingsIcon,
+    TrashIcon,
+    UserIcon,
+} from 'lucide-react';
 import { MouseEventHandler } from 'react';
-import { BiPauseCircle, BiReset } from 'react-icons/bi';
+import { BiLogOut, BiPauseCircle, BiReset } from 'react-icons/bi';
 import { BsFiletypeXlsx, BsUpload } from 'react-icons/bs';
-import { CiCircleInfo, CiDeliveryTruck, CiEdit, CiExport, CiImport, CiStickyNote } from 'react-icons/ci';
+import {
+    CiCircleInfo,
+    CiDeliveryTruck,
+    CiEdit,
+    CiExport,
+    CiImport,
+    CiStickyNote,
+} from 'react-icons/ci';
 import { FaAngleDown, FaCheck, FaStoreAlt, FaTrailer } from 'react-icons/fa';
-import { FaListCheck } from "react-icons/fa6";
+import { FaListCheck } from 'react-icons/fa6';
 import { FcTodoList } from 'react-icons/fc';
 import { GrStorage } from 'react-icons/gr';
 import { HiOutlinePlayCircle } from 'react-icons/hi2';
@@ -29,7 +44,8 @@ type IconsType = {
 };
 
 const defaultSize = 16;
-const defaultColor = 'gray';
+const defaultColor = 'white';
+
 export const DashboardIcon = ({
     size = defaultSize,
     color = defaultColor,
@@ -38,6 +54,15 @@ export const DashboardIcon = ({
 }: IconsType) => {
     const IconProps = { size, color, className, rest };
     return <MdDashboard {...IconProps} />;
+};
+export const LogoutIcon = ({
+    size = defaultSize,
+    color = defaultColor,
+    className = '',
+    ...rest
+}: IconsType) => {
+    const IconProps = { size, color, className, rest };
+    return <BiLogOut {...IconProps} />;
 };
 
 export const GoBackIcon = ({
@@ -359,7 +384,7 @@ export const TruckIcon = ({
     ...rest
 }: IconsType) => {
     const IconProps = { size, color, className, rest };
-    return <CiDeliveryTruck  {...IconProps} />;
+    return <CiDeliveryTruck {...IconProps} />;
 };
 export const TrailerIcon = ({
     size = defaultSize,
@@ -368,7 +393,7 @@ export const TrailerIcon = ({
     ...rest
 }: IconsType) => {
     const IconProps = { size, color, className, rest };
-    return <FaTrailer   {...IconProps} />;
+    return <FaTrailer {...IconProps} />;
 };
 export const RequestIcon = ({
     size = defaultSize,
@@ -377,5 +402,5 @@ export const RequestIcon = ({
     ...rest
 }: IconsType) => {
     const IconProps = { size, color, className, rest };
-    return <FaListCheck    {...IconProps} />;
+    return <FaListCheck {...IconProps} />;
 };

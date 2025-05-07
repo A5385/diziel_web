@@ -5,7 +5,6 @@ import { refreshWebAccessToken } from './RefreshToken';
 
 const serverUrl = constants.api.serverUrl;
 const apiKey = constants.api.apiKey;
-console.log('🚀 >  apiKey:', apiKey);
 
 export const axiosInstance = axios.create({
     baseURL: serverUrl,

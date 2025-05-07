@@ -56,7 +56,7 @@ export function TableFilters<TData>({
                                 key={header.id}
                                 label={`${flexRender(header.column.columnDef.header, header.getContext())}`}
                                 type='search'
-                                placeholder={`Filter ${flexRender(header.column.columnDef.header, header.getContext())} ...`}
+                                placeholder={`${g('search')} ${flexRender(header.column.columnDef.header, header.getContext())} ...`}
                                 value={(header.column.getFilterValue() as string) || ''}
                                 onChange={(e) => header.column.setFilterValue(e.target.value)}
                             />

@@ -23,13 +23,11 @@ export type ActionSectionProps<T> = {
     refetch?: () => void;
     impX?: {
         data: T[];
-        // eslint-disable-next-line no-unused-vars
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
         resetFileInput: () => void;
         key: number;
         tempLink: string;
     };
-    // eslint-disable-next-line no-unused-vars
     handleExport?: (type: 'excel' | 'pdf') => void;
     handleImport?: () => Promise<void>;
     loading?: boolean;
@@ -70,7 +68,7 @@ const ModuleActionSection = <T,>({
     newDialogSize = '5xl',
     // extraElement,
     children,
-    disableAddNew: disbaleAddNew,
+    disableAddNew: disableAddNew,
     reset,
     openFilter,
     setOpenFilter,
@@ -199,7 +197,7 @@ ActionSectionProps<T>) => {
                                 itemId: entityId,
                             })
                         }
-                        disabled={disbaleAddNew}
+                        disabled={disableAddNew}
                         title={g('add-new')}
                         iconAfter={<AddNewIcon {...iconProps} />}
                     />

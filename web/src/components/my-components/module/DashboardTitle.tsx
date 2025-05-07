@@ -28,10 +28,10 @@ export const DashboardTitle: React.FC<DashboardTypeProps> = ({
             {React.isValidElement<IconBaseProps>(icon) &&
                 cloneElement<IconBaseProps>(icon, {
                     size: iconSize,
-                    className: cn(iconClassName, 'text-purple-700 size-8'),
+                    className: cn(iconClassName, 'text-blue-700 size-8'),
                 })}
             <div>
-                <h2 className={cn(titleClassName, 'text-2xl font-bold text-purple-700')}>
+                <h2 className={cn(titleClassName, 'text-2xl font-bold text-blue-700')}>
                     {t(title)}
                 </h2>
                 {children}

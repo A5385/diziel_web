@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 
-export const formatDate = (date: Date | string | null | undefined, timeZone?: string) => {
+export const formatDate = (date: Date | string | null | undefined) => {
     if (!date) return '';
 
     try {

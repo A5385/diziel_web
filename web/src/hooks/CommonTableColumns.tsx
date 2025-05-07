@@ -129,18 +129,14 @@ export const useCommonTableColumns = <T extends object>({
         header: () => <p>{g('id')}</p>,
         cell: ({ row }) => {
             const ele = row.original;
-            let id: string | number = '';
+            let id: string = '';
 
             if ('id' in ele) {
-                if (typeof ele.id === 'string') {
-                    id = `${ele?.id?.slice(0, 10)}...`;
-                } else if (typeof ele.id === 'number') {
-                    id = ele?.id;
-                }
+                id = `${(ele?.id as string)?.slice(0, 10)} ...`;
             }
 
             return (
-                <div className='flex items-center justify-start gap-3'>
+                <div className='tabu flex items-center justify-start gap-3'>
                     {id}
                     <button type='button' onClick={() => handleCopyRole(row.getValue('id'))}>
                         <BiCopy className='dark:text-gary-200 text-slate-600' />
@@ -162,7 +158,11 @@ export const useCommonTableColumns = <T extends object>({
                 (row?.getValue('createdAt') as Date)?.toString(),
                 'dd/MM/yyyy • hh:mm a',
             ); // Format date as needed
-            return <p className='tabular-nums'>{createdAt ?? '-'}</p>;
+            return (
+                <p className='tabular-nums' dir='ltr'>
+                    {createdAt ?? '-'}
+                </p>
+            );
         },
         enableColumnFilter: false,
     };

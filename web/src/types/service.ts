@@ -35,7 +35,7 @@ export type PFSProps = {
 export type CommonAxiosType = {
     queryParams?: PFSProps;
     endpoint: EndpointsType['endpoint'];
-    id?: string;
+    id?: string | null;
     data?: object;
     headerType?: HeaderType;
 };
@@ -57,7 +57,7 @@ type CommonProps = {
 };
 export type QueryPropsType = CommonProps & {
     queryParams?: PFSProps;
-    id?: string;
+    id?: string | null;
 };
 
 export type MutatePropsType = CommonProps & {

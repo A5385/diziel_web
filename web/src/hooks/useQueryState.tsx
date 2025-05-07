@@ -17,6 +17,8 @@ export const useQueryState = <T,>() => {
     });
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const filters: ColumnFiltersState = useDebounce(columnFilters, 1000);
+    const [dateFrom, setDateFrom] = useState<Date>();
+    const [dateTo, setDateTo] = useState<Date>();
 
     const resetState = useCallback(() => {
         setSelected([]);
@@ -24,6 +26,8 @@ export const useQueryState = <T,>() => {
         setSortBy([]);
         setColumnFilters([]);
         setPagination({ pageIndex, pageSize });
+        setDateFrom(undefined);
+        setDateTo(undefined);
     }, []);
 
     return {
@@ -48,6 +52,10 @@ export const useQueryState = <T,>() => {
             rowSelection,
             setRowSelection,
         },
+        dateFrom,
+        setDateFrom,
+        dateTo,
+        setDateTo,
         resetState,
         filters,
         selected,

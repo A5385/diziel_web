@@ -1,69 +1,46 @@
-import { CreateUser } from '@/api-service/data-service/UserService';
-import { FormPhoneInput } from '@/components/common-form-input/FormPhoneNumber';
-import FormRoleInput from '@/components/common-form-input/FormRoleInput';
-import { AKForm } from '@/components/my-components/AKForm';
-import AppSettings from '@/constants/AppSettings';
-import { useDialog } from '@/providers/DialogProvider';
-import { UserRole } from '@/types/prisma';
-import { UserSchema } from '@/types/schema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from 'next-intl';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { lazy } from 'react';
+import { UserFormProvider, useUserForm } from './UserFormContext';
 
-type UserFormProps = {
-    data?: UserSchema;
-};
+const RegisterForm = lazy(() => import('./RegisterForm'));
+const ProfileForm = lazy(() => import('./ProfileForm'));
+const AddressForm = lazy(() => import('./AddressForm'));
+const NationalIdForm = lazy(() => import('./NationalIdForm'));
 
-const UserForm = ({ data }: UserFormProps) => {
-    const g = useTranslations();
-    const t = useTranslations('dashboard');
+const DriverForm = lazy(() => import('./DriverForm'));
+const AgencyForm = lazy(() => import('./AgencyForm'));
+const AgencyAgentForm = lazy(() => import('./AgencyAgentForm'));
+const EmployeeForm = lazy(() => import('./EmployeeForm'));
 
-    const { handleCloseDialog, dialogType, editItemId } = useDialog();
-    const schema = z.object({
-        phone: z
-            .string()
-            .regex(
-                /^(?:\+20|0)?(10|11|12|15)\d{8}$/,
-                'Phone number must be a valid Egyptian mobile number (e.g., 01012345678 or +201012345678)',
-            ),
-        role: z.nativeEnum(UserRole),
-    });
-
-    type FormType = z.infer<typeof schema>;
-
-    const form = useForm<FormType>({
-        mode: AppSettings.form.mode,
-        resolver: zodResolver(schema),
-        defaultValues: {
-            phone: data?.phone ?? '',
-            ...(dialogType === 'new-user' && { password: '', confirmPassword: '' }),
-            role: data?.role ?? 'admin',
-        },
-    });
-
-    const createUser = CreateUser();
-    // const updateUser = UpdateUser();
-    const submit: SubmitHandler<FormType> = async (data) => {
-        const res = await createUser.mutateAsync({ data: { dto: { ...data } } });
-        if (res) {
-            handleCloseDialog();
-            form.reset();
-        }
-    };
-
+const UserForm = () => {
     return (
-        <AKForm
-            form={form}
-            submit={submit}
-            actionItemPosition='end'
-            submitButtonTitle={'save'}
-            columns={3}
-        >
-            <FormPhoneInput form={form} />
-            <FormRoleInput form={form} />
-        </AKForm>
+        <UserFormProvider>
+            <RenderForms />
+        </UserFormProvider>
     );
 };
 
 export default UserForm;
+
+const RenderForms = () => {
+    const { step, role } = useUserForm();
+
+    const renderRoleForm = () => {
+        return (
+            <>
+                {role === 'driver' && <DriverForm />}
+                {role === 'agency' && <AgencyForm />}
+                {role === 'agencyAgent' && <AgencyAgentForm />}
+                {role === 'employee' && <EmployeeForm />}
+            </>
+        );
+    };
+    return (
+        <>
+            {step === 1 && <RegisterForm />}
+            {step === 2 && <ProfileForm />}
+            {step === 3 && <AddressForm />}
+            {step === 4 && <NationalIdForm />}
+            {step === 5 && renderRoleForm()}
+        </>
+    );
+};

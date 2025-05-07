@@ -2,11 +2,7 @@ import { User } from '@/types/prisma';
 import { UserSchema } from '@/types/schema';
 import { PFSProps } from '@/types/service';
 import { UseGetTableResponseType } from '@/types/ui';
-import {
-    useMutationDelete,
-    useMutationPost,
-    useMutationUpdate,
-} from '../react-query-service/mutate-service';
+import { useMutationDelete, useMutationPost } from '../react-query-service/mutate-service';
 import { useQueryData } from '../react-query-service/query-service';
 
 export const UserKey = {
@@ -15,25 +11,17 @@ export const UserKey = {
     findById: 'find_by_id',
 };
 
-export const CreateUser = () => {
-    return useMutationPost<UserSchema>({
+export type RegisterUserResponse = {
+    id: string;
+    phone: string;
+    profileId: string | undefined;
+    nationalId: string | undefined;
+    nationalIdNumber: string | undefined;
+};
+export const RegisterNewUser = () => {
+    return useMutationPost<RegisterUserResponse>({
         endpoint: 'user/register',
         queryKey: [UserKey.GetAllUsers],
-    });
-};
-
-export const ToggleBlockUser = () => {
-    return useMutationUpdate<UserSchema>({
-        endpoint: 'user/toggle-block',
-        queryKey: [UserKey.GetAllUsers],
-    });
-};
-export const FindUserByEmail = (email: string) => {
-    return useQueryData<UserSchema>({
-        queryKey: ['FIND_USER_BY_EMAIL'],
-        endpoint: 'user/find-user-by-email',
-        id: email,
-        enabled: !!email,
     });
 };
 
@@ -49,13 +37,14 @@ export const DeleteUser = () =>
         endpoint: 'user/delete',
         queryKey: [UserKey.GetAllUsers],
     });
-export const FindUserByPhone = (phone?: string) =>
+export const FindUserByPhone = (phone: string | null) => {
     useQueryData<UserSchema>({
         endpoint: 'user/find-user-by-phone',
         queryKey: [UserKey.findByPhone],
         enabled: !!phone,
         id: phone,
     });
+};
 export const FindUserById = (id?: string) =>
     useQueryData<UserSchema>({
         endpoint: 'user/find-user-by-id',

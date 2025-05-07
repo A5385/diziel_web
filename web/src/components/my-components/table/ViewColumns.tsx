@@ -1,5 +1,6 @@
 'use client';
 
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { MixerHorizontalIcon } from '@radix-ui/react-icons';
 import { Table } from '@tanstack/react-table';
@@ -17,7 +18,7 @@ import {
 
 interface ViewColumnsProps<TData> {
     table: Table<TData>;
-    t?: any;
+    t?: ReturnType<typeof useTranslations>;
 }
 
 export function ViewColumns<TData>({ table, t }: ViewColumnsProps<TData>) {
@@ -36,34 +37,31 @@ export function ViewColumns<TData>({ table, t }: ViewColumnsProps<TData>) {
                     {g('display-columns')}
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-                align='end'
-                className='scrollbar-hide max-h-[300px] overflow-scroll text-right'
-            >
+            <DropdownMenuContent align='end' className='text-right'>
                 <DropdownMenuLabel className={isRtl ? 'text-right' : 'text-left'}>
                     {g('toggle-columns')}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                {table
-                    .getAllColumns()
-                    .filter(
-                        (column) => typeof column.accessorFn !== 'undefined' && column.getCanHide(),
-                    )
-                    .map((column) => {
-                        return (
-                            <DropdownMenuCheckboxItem
-                                key={column.id}
-                                checked={column.getIsVisible()}
-                                onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                                className={
-                                    (cn(isRtl ? '!flex-row-reverse' : ''),
-                                    'flex justify-start capitalize')
-                                }
-                            >
-                                {t ? t(reformatColumnName(column.id)) : ''}
-                            </DropdownMenuCheckboxItem>
-                        );
-                    })}
+                <ScrollArea className='h-48'>
+                    {table
+                        .getAllColumns()
+                        .filter(
+                            (column) =>
+                                typeof column.accessorFn !== 'undefined' && column.getCanHide(),
+                        )
+                        .map((column) => {
+                            return (
+                                <DropdownMenuCheckboxItem
+                                    key={column.id}
+                                    checked={column.getIsVisible()}
+                                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                                    className={cn('flex justify-start capitalize')}
+                                >
+                                    {t ? t(reformatColumnName(column.id)) : ''}
+                                </DropdownMenuCheckboxItem>
+                            );
+                        })}
+                </ScrollArea>
             </DropdownMenuContent>
         </DropdownMenu>
     );

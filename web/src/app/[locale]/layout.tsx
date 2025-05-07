@@ -37,6 +37,7 @@ export default async function RootLayout({ children, params }: Readonly<RootLayo
                     geistMono.variable,
                     locale === 'ar' ? 'font-cairo' : 'font-sans',
                     'antialiased',
+                    'bg-white dark:bg-slate-900',
                 )}
             >
                 <GlobalProviders>{children}</GlobalProviders>

@@ -62,13 +62,10 @@ export const AKDatePicker: React.FC<AKDatePickerProps> = ({
                 </PopoverTrigger>
                 <PopoverContent className='w-auto p-0' align='start'>
                     <Calendar
-                        {...{
-                            initialFocus: true,
-
-                            disabled: (date) => date > new Date() || date < new Date('1900-01-01'),
-                            captionLayout: 'dropdown-buttons',
-                            ...props,
-                        }}
+                        initialFocus
+                        disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
+                        captionLayout='dropdown-buttons'
+                        {...{ ...props }}
                     />
                 </PopoverContent>
             </Popover>
