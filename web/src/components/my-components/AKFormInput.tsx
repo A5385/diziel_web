@@ -84,7 +84,6 @@ export const AKFormInput = <T extends FieldType, V extends FieldValues>({
     descStyle,
     ...inputProps
 }: AKFormInputType<T, V>) => {
-    const width = constants.span[span];
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { value: v, onChange: on, ...restOfProps } = inputProps as AKInputProps;
 
@@ -159,18 +158,17 @@ export const AKFormInput = <T extends FieldType, V extends FieldValues>({
                         {...restOfField}
                     />
                 );
-            case 'date': {
-                /* tell TS we really are in “single” mode */
-                type Single = AKDatePickerProps & { mode: 'single' };
-
+            case 'date':
                 return (
                     <AKDatePicker
-                        {...(restOfProps as Single)} // ✓ mode = 'single'
-                        selected={value as Date | undefined}
-                        onSelect={onChange} // ✓ (Date | undefined) -> void
+                        value={value}
+                        mode='single'
+                        selected={field.value}
+                        onSelect={onChange}
+                        {...restOfField}
+                        {...(restOfProps as unknown as AKDatePickerProps)}
                     />
                 );
-            }
             case 'upload-file':
                 return (
                     <AKUploadFile {...(restOfProps as unknown as AKUploadProps<V>)} {...field} />
@@ -189,7 +187,7 @@ export const AKFormInput = <T extends FieldType, V extends FieldValues>({
             control={form.control}
             name={name}
             render={({ field }) => (
-                <FormItem className={cn('w-full space-y-1', width, formFieldStyle)}>
+                <FormItem className={cn('w-full', constants.span[span], formFieldStyle)}>
                     <FormControl>{renderInput(field)}</FormControl>
                     {desc && (
                         <FormDescription className={cn(descStyle, 'text-yellow-600')}>

@@ -1,3 +1,4 @@
+'use client';
 import { UploadNationalImages } from '@/api-service/data-service/ProfileService';
 import { AKForm } from '@/components/my-components/AKForm';
 import { AKFormInput } from '@/components/my-components/AKFormInput';

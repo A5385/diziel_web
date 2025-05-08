@@ -1,3 +1,4 @@
+'use client';
 import { RegisterNewUser } from '@/api-service/data-service/UserService';
 import { FormNationalIdNumber } from '@/components/common-form-input/FormNationalIdNumber';
 import { FormPhoneInput } from '@/components/common-form-input/FormPhoneNumber';

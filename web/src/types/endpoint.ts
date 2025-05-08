@@ -18,7 +18,15 @@ type ProfileEndpoints =
     | 'profile/upload-national-images';
 
 type CountEndpoint = '';
+type DriverEndpoints =
+    | 'driver/create'
+    | 'driver/upload-criminal-record'
+    | 'driver/upload-drug-test'
+    | 'driver/upload-driver-license'
+    | 'driver/create-visa'
+    | 'driver/upload-visa-image'
+    | 'driver/upload-driver-passport';
 
 export interface EndpointsType {
-    endpoint: AuthEndpoints | UserEndpoints | CountEndpoint | ProfileEndpoints;
+    endpoint: AuthEndpoints | UserEndpoints | CountEndpoint | ProfileEndpoints | DriverEndpoints;
 }

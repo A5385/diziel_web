@@ -203,7 +203,7 @@ export const AKForm = <T extends FieldValues>({
                                     {/* Submit and Reset Button Section */}
                                     <CardFooter
                                         className={cn(
-                                            'mt-4 flex w-full items-center gap-5',
+                                            'flex w-full items-center gap-5',
                                             itemPosition[actionItemPosition],
                                             !submitButtonFullWidth && 'flex-1',
                                             inline && 'w-fit',

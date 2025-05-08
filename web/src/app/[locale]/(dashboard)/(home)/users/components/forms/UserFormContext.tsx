@@ -1,3 +1,4 @@
+'use client';
 import { UserRole } from '@/types/prisma';
 import React, { createContext, Dispatch, ReactNode, useCallback, useState } from 'react';
 
@@ -23,7 +24,7 @@ const UserFormContext = createContext<UserFormContextProps | null>(null);
 const UserFormProvider = ({ children }: { children: ReactNode }) => {
     const [phone, setPhone] = useState<string | null>(null);
     const [profileId, setProfileId] = useState<string | null>(null);
-    const [role, setRole] = useState<UserRole | null>(null);
+    const [role, setRole] = useState<UserRole | null>('driver');
     const [nationalIdNumber, setNationalIdNumber] = useState<string | null>(null);
     const [step, setStep] = useState(1);
 

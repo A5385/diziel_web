@@ -274,8 +274,8 @@ model DriverLicense {
   number           String?           @unique
   type             DriverLicenseType
   traffic_unit     String?
-  face             String
-  back             String
+  face             String?
+  back             String?
   startDate        DateTime?
   endDate          DateTime?
   /////////////////////////////
@@ -301,8 +301,8 @@ enum DriverLicenseType {
 model Passport {
   id               String          @id @default(cuid())
   number           String          @unique
-  face             String
-  back             String
+  face             String?
+  back             String?
   visas            Visa[]
   /////////////////////////////
   driverDocument   DriverDocuments @relation(references: [id], fields: [driverDocumentId], onDelete: Cascade, onUpdate: Cascade)
@@ -321,10 +321,10 @@ model Passport {
 
 model Visa {
   id           String    @id @default(cuid())
-  image        String
-  startDate    DateTime
-  endDate      DateTime
-  country      String
+  image        String?
+  startDate    DateTime?
+  endDate      DateTime?
+  country      String?
   comments     String?
   /////////////////////////////
   passport     Passport  @relation(references: [id], fields: [passportId], onDelete: Cascade, onUpdate: Cascade)

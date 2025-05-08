@@ -1,3 +1,4 @@
+'use client';
 import { lazy } from 'react';
 import { UserFormProvider, useUserForm } from './UserFormContext';
 
@@ -6,7 +7,7 @@ const ProfileForm = lazy(() => import('./ProfileForm'));
 const AddressForm = lazy(() => import('./AddressForm'));
 const NationalIdForm = lazy(() => import('./NationalIdForm'));
 
-const DriverForm = lazy(() => import('./DriverForm'));
+const DriverForm = lazy(() => import('./driver-form/DriverForm'));
 const AgencyForm = lazy(() => import('./AgencyForm'));
 const AgencyAgentForm = lazy(() => import('./AgencyAgentForm'));
 const EmployeeForm = lazy(() => import('./EmployeeForm'));

@@ -1,3 +1,4 @@
+'use client';
 const AgencyAgentForm = () => {
     return <div>AgencyAgentForm</div>;
 };

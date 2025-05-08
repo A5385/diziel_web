@@ -53,6 +53,7 @@ const useZod = () => {
             nickname,
             address,
             national,
+            fileValidator,
         },
         schemas: {
             loginSchema: z.object({ phone, password }),
