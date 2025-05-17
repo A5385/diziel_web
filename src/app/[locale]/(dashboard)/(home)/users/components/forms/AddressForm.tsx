@@ -2,15 +2,17 @@
 import { UpdateProfileAddress } from '@/api-service/data-service/ProfileService';
 import { AKForm } from '@/components/my-components/AKForm';
 import { AKFormInput } from '@/components/my-components/AKFormInput';
-import AppSettings from '@/constants/AppSettings';
+import AppConfig from '@/constants/AppSettings';
 import useZod from '@/hooks/useZod';
+import { AddressSchema } from '@/types/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import FormNavigation from './FormNavigation';
 import { useUserForm } from './UserFormContext';
 
-const AddressForm = () => {
+const AddressForm = ({ data }: { data?: AddressSchema | undefined }) => {
     const t = useTranslations();
     const { setStep, profileId } = useUserForm();
     const schema = useZod().fields.address;
@@ -19,7 +21,7 @@ const AddressForm = () => {
     // const createUser = UpdateProfile();
 
     const form = useForm<FormType>({
-        mode: AppSettings.form.mode,
+        mode: AppConfig.form.mode,
         resolver: zodResolver(schema),
         defaultValues: {
             line1: '',
@@ -35,7 +37,7 @@ const AddressForm = () => {
     const submit: SubmitHandler<FormType> = async (data) => {
         if (profileId) {
             const res = await updateAddress.mutateAsync({
-                data: { dto: { ...data } },
+                data: { ...data },
                 id: profileId,
             });
             if (res) {
@@ -73,6 +75,7 @@ const AddressForm = () => {
                 <AKFormInput form={form} inputType='input' name='country' label={t('country')} />
                 <AKFormInput form={form} inputType='input' name='city' label={t('city')} />
                 <AKFormInput form={form} inputType='input' name='state' label={t('state')} />
+                <FormNavigation show={data !== undefined} />
             </AKForm>
         </>
     );

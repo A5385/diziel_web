@@ -1,5 +1,5 @@
 import { AKForm, AKFormPropsType } from '@/components/my-components/AKForm';
-import AppSettings from '@/constants/AppSettings';
+import AppConfig from '@/constants/AppSettings';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DefaultValues, useForm } from 'react-hook-form';
 import { TypeOf, ZodObject, ZodRawShape } from 'zod';
@@ -21,7 +21,7 @@ const useGenerateForm = <Schema extends ZodObject<ZodRawShape>>({
     type FormType = TypeOf<Schema>;
 
     const form = useForm<FormType>({
-        mode: AppSettings.form.mode,
+        mode: AppConfig.form.mode,
         resolver: zodResolver(schema),
         defaultValues,
     });

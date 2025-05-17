@@ -1,6 +1,6 @@
 'use client';
+import { Logout } from '@/api-service/data-service/AuthService';
 import { Routes } from '@/constants/route';
-import { handleLogout } from '@/helpers/local-storage-service';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useArabic } from '@/hooks/useArabic';
 import { LogoutIcon } from '@/styles/icons';
@@ -13,16 +13,14 @@ const LogoutButton = () => {
     const t = useTranslations();
     const mobile = useIsMobile();
     const ar = useArabic();
+    const logout = Logout();
+    const handleLogout = async () => {
+        await logout.mutateAsync({ data: {} }).then(() => {
+            push(Routes.login.url);
+        });
+    };
     return (
-        <Button
-            className='cursor-pointer'
-            type='button'
-            variant={'outline'}
-            onClick={() => {
-                handleLogout();
-                push(Routes.login.url);
-            }}
-        >
+        <Button className='cursor-pointer' type='button' variant={'outline'} onClick={handleLogout}>
             <LogoutIcon color='black' className={ar ? 'rotate-180' : ''} />
 
             {!mobile && t('logout')}

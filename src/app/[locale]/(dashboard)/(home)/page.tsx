@@ -1,11 +1,10 @@
-'use client';
-import GridWrapper from '@/components/my-components/GridWrapper';
+import Welcome from './components/Welcome';
 
 const HomePage = () => {
     return (
-        <GridWrapper cols={6} className='flex-1'>
-            HomePage
-        </GridWrapper>
+        <div className='w-full'>
+            <Welcome />
+        </div>
     );
 };
 

@@ -18,15 +18,12 @@ export const useQueryData = <T,>({
     queryKey,
     queryParams,
     ...props
-}: QueryPropsType & Omit<UseQueryOptions<T, Error>, 'queryFn'>): UseQueryResult<T> => {
-    return useQuery<T>({
+}: QueryPropsType & Omit<UseQueryOptions<T | undefined, Error>, 'queryFn'>): UseQueryResult<
+    T | undefined
+> => {
+    return useQuery<T | undefined>({
         queryKey: buildQueryKey(queryKey, { id, queryParams }),
-        queryFn: async () => {
-            const res = await AxiosService.get<T>({ endpoint, id, queryParams });
-            if (res) {
-                return res;
-            } else return {} as T;
-        },
+        queryFn: async () => await AxiosService.get<T>({ endpoint, id, queryParams }),
         ...props,
     });
 };

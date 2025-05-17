@@ -1,4 +1,4 @@
-import AppSettings from '@/constants/AppSettings';
+import AppConfig from '@/constants/AppSettings';
 import { ApiResponseType, MethodType } from '@/types/backend';
 import { AxiosError, AxiosResponse } from 'axios';
 import notify from './AxiosNotify';
@@ -81,7 +81,7 @@ export const handleAxiosResponse = async <T>({
             }
         }
 
-        if (AppSettings.isProduction) {
+        if (AppConfig.isProduction) {
             console.error('Axios Error:', JSON.stringify(axiosError, null, 2));
         }
         return undefined;

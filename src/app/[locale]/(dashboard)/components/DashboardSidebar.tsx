@@ -32,7 +32,6 @@ const DashboardSidebar = () => {
                 size={'icon'}
                 variant={'ghost'}
                 type='button'
-                color='main'
                 className={cn(
                     ar ? '-left-4' : '-right-4',
                     'absolute bottom-[3%] flex flex-col items-center justify-center rounded-full shadow-md',
@@ -81,9 +80,9 @@ const NavMenuItem = ({
             href={nav.url}
             className={cn(
                 className,
-                active ? 'bg-blue-500 text-white shadow-lg hover:bg-blue-700' : 'hover:bg-blue-300',
+                active ? 'bg-main hover:bg-sec text-white shadow-lg' : 'hover:bg-sec',
                 open ? 'justify-between px-4' : 'justify-center px-4',
-                'flex w-full items-center py-2 transition-all duration-300 ease-in-out',
+                'flex w-full items-center py-2 text-base transition-all duration-300 ease-in-out',
             )}
         >
             <p className={open ? 'flex items-center gap-4' : ''}>
@@ -108,16 +107,16 @@ const NavMenuItem = ({
 export const NavMenuItemWithSubmenu = ({ nav, open }: { nav: NavListType; open: boolean }) => {
     const t = useTranslations();
     const pathname = usePathname();
+    const active = nav?.subMenu?.some((link) => pathname.includes(link?.url));
+
     return (
         <Accordion key={nav.id} type='multiple'>
             <AccordionItem value={nav.title}>
                 <AccordionTrigger
                     className={cn(
-                        nav?.subMenu?.some((link) => pathname.includes(link?.url))
-                            ? 'bg-blue-500 text-white shadow-lg hover:bg-blue-700'
-                            : 'hover:bg-blue-300',
+                        active ? 'bg-main hover:bg-sec text-white shadow-lg' : 'hover:bg-sec',
                         open ? 'justify-between px-4' : 'justify-center px-4',
-                        'flex w-full cursor-pointer items-center py-2 transition-all duration-300 ease-in-out',
+                        'flex w-full cursor-pointer items-center py-2 text-base transition-all duration-300 ease-in-out',
                     )}
                 >
                     <p className={open ? 'flex items-center gap-4' : ''}>

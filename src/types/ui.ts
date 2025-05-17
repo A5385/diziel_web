@@ -14,7 +14,7 @@ import { ChangeEvent, Dispatch, MouseEventHandler, ReactNode, SetStateAction } f
 export type IconType = ReactNode;
 export type ChildrenType = { children: ReactNode };
 export type SetStateType<T> = Dispatch<SetStateAction<T>>;
-export type ColorType = 'red' | 'green' | 'orange' | 'gray' | 'main' | 'default' | 'purple';
+export type ColorType = 'red' | 'green' | 'orange' | 'gray' | 'default' | 'purple';
 export type btnType = 'button' | 'reset' | 'submit';
 export type VariantType = 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
 export type BtnSize = 'default' | 'icon' | 'sm' | 'lg';

@@ -2,11 +2,11 @@
 
 import { Checkbox } from '@/components/ui/checkbox';
 import { copyToClipboard } from '@/helpers/copyToClipboard';
+import { formatDate } from '@/helpers/formatDate';
 import { getUserName } from '@/helpers/getUserName';
 import { UserSchema } from '@/types/schema';
 import { SetStateType } from '@/types/ui';
 import { ColumnDef } from '@tanstack/react-table';
-import { format } from 'date-fns';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { BiCopy } from 'react-icons/bi';
@@ -152,12 +152,9 @@ export const useCommonTableColumns = <T extends object>({
 
     const createdAt: ColumnDef<T> = {
         accessorKey: 'createdAt',
-        header: () => <p>{g('created-at')}</p>,
+        header: g('created-at'),
         cell: ({ row }) => {
-            const createdAt = format(
-                (row?.getValue('createdAt') as Date)?.toString(),
-                'dd/MM/yyyy • hh:mm a',
-            ); // Format date as needed
+            const createdAt = formatDate(row?.getValue('createdAt')); // Format date as needed
             return (
                 <p className='tabular-nums' dir='ltr'>
                     {createdAt ?? '-'}

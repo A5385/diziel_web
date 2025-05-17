@@ -15,6 +15,8 @@ export type InputType = DetailedHTMLProps<
     HTMLInputElement
 >;
 
+export type ShapeType = 'circle' | 'square-vertical' | 'square-horizontal';
+
 export type AKUploadProps<T extends FieldValues> = InputType & {
     src?: string;
     inputStyle?: string;
@@ -22,7 +24,7 @@ export type AKUploadProps<T extends FieldValues> = InputType & {
     span?: number;
     divStyle?: string;
     label?: string;
-    shape?: 'circle' | 'square';
+    shape?: ShapeType;
     onChange?: (e: File | undefined) => void;
     control: Control<T>;
     name: Path<T>;
@@ -108,15 +110,11 @@ export const AKUploadFile = <T extends FieldValues>({
         return new File([u8arr], filename, { type: mime });
     };
 
-    let shapeStyle: string;
-    switch (shape) {
-        case 'square':
-            shapeStyle = 'aspect-[2/1] w-36 h-auto rounded-lg';
-            break;
-        default:
-            shapeStyle = 'aspect-square h-auto w-36 rounded-full';
-            break;
-    }
+    const shapeStyle: Record<ShapeType, string> = {
+        circle: 'aspect-square h-auto w-36 rounded-full',
+        'square-horizontal': 'aspect-[5/3] w-36 h-auto rounded-lg',
+        'square-vertical': 'aspect-[4/5] w-36 h-auto rounded-lg',
+    };
 
     const avatarWatch = useWatch({
         control,
@@ -135,8 +133,8 @@ export const AKUploadFile = <T extends FieldValues>({
                 >
                     <div
                         className={cn(
-                            shapeStyle,
-                            isDragActive ? 'border-blue-500' : 'border-gray-300',
+                            shapeStyle[shape],
+                            isDragActive ? 'border-sec' : 'border-gray-300',
                             'relative flex items-center justify-center overflow-hidden border-2 border-dashed',
                             'transition-all duration-300 ease-in-out',
                         )}
@@ -145,14 +143,14 @@ export const AKUploadFile = <T extends FieldValues>({
                             <Image
                                 src={croppedImage}
                                 layout='fill'
-                                className='object-cover'
+                                className='object-contain'
                                 alt='cropped'
                             />
                         ) : imagePreview ? (
                             <Image
                                 src={imagePreview}
                                 layout='fill'
-                                className='object-cover'
+                                className='object-contain'
                                 alt='image'
                             />
                         ) : (

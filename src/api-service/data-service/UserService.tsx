@@ -2,7 +2,11 @@ import { User } from '@/types/prisma';
 import { UserSchema } from '@/types/schema';
 import { PFSProps } from '@/types/service';
 import { UseGetTableResponseType } from '@/types/ui';
-import { useMutationDelete, useMutationPost } from '../react-query-service/mutate-service';
+import {
+    useMutationDelete,
+    useMutationPost,
+    useMutationUpdate,
+} from '../react-query-service/mutate-service';
 import { useQueryData } from '../react-query-service/query-service';
 
 export const UserKey = {
@@ -21,6 +25,13 @@ export type RegisterUserResponse = {
 export const RegisterNewUser = () => {
     return useMutationPost<RegisterUserResponse>({
         endpoint: 'user/register',
+        queryKey: [UserKey.GetAllUsers],
+    });
+};
+
+export const UpdateUser = () => {
+    return useMutationUpdate<RegisterUserResponse>({
+        endpoint: 'user/update',
         queryKey: [UserKey.GetAllUsers],
     });
 };

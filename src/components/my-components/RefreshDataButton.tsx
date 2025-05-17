@@ -13,13 +13,10 @@ export const RefreshDataButton: React.FC<RefreshButtonPropsType> = ({ handleRefr
 
     return (
         <AKButton
-            {...{
-                type: 'button',
-                onClick: handleRefresh,
-                color: 'main',
-                title: t('reload'),
-                iconAfter: <RefreshIcon size={20} />,
-            }}
+            type={'button'}
+            onClick={handleRefresh}
+            title={t('reload')}
+            iconAfter={<RefreshIcon size={20} color={'white'} />}
         />
     );
 };

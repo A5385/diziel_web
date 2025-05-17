@@ -18,13 +18,17 @@ export type UserFormContextProps = {
     step: number | null;
     setStep: Dispatch<React.SetStateAction<number>>;
     reset: () => void;
+    nextStep: () => void;
+    previousStep: () => void;
+    isNextDisabled: boolean;
+    isPreviousDisabled: boolean;
 };
 const UserFormContext = createContext<UserFormContextProps | null>(null);
 
 const UserFormProvider = ({ children }: { children: ReactNode }) => {
     const [phone, setPhone] = useState<string | null>(null);
     const [profileId, setProfileId] = useState<string | null>(null);
-    const [role, setRole] = useState<UserRole | null>('driver');
+    const [role, setRole] = useState<UserRole | null>(null);
     const [nationalIdNumber, setNationalIdNumber] = useState<string | null>(null);
     const [step, setStep] = useState(1);
 
@@ -35,6 +39,13 @@ const UserFormProvider = ({ children }: { children: ReactNode }) => {
         setNationalIdNumber(null);
         setStep(1);
     }, []);
+
+    const nextStep = () => {
+        setStep(step + 1);
+    };
+    const previousStep = () => {
+        setStep(step - 1);
+    };
 
     return (
         <UserFormContext.Provider
@@ -50,6 +61,10 @@ const UserFormProvider = ({ children }: { children: ReactNode }) => {
                 profileId,
                 setProfileId,
                 reset,
+                nextStep,
+                previousStep,
+                isNextDisabled: step === 5,
+                isPreviousDisabled: step === 1,
             }}
         >
             {children}

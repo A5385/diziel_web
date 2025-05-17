@@ -10,6 +10,7 @@ import { UserSchema } from '@/types/schema';
 import { ColumnsProps } from '@/types/ui';
 import { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
+import UserAvatar from '../../components/UserAvatar';
 
 const ClientsColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserSchema>[] => {
     const t = useTranslations();
@@ -25,6 +26,14 @@ const ClientsColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserS
     return [
         selectColumn,
         idColumn,
+        {
+            accessorKey: 'image',
+            header: t('image'),
+            cell: ({ row }) => {
+                const user = row.original;
+                return <UserAvatar user={user} />;
+            },
+        },
         {
             accessorKey: 'phone',
             header: t('phone'),

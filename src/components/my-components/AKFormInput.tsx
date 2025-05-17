@@ -63,7 +63,7 @@ export type FormInputPropsType<T extends FieldType, V extends FieldValues> = T e
 
 export type AKFormInputType<T extends FieldType, V extends FieldValues> = Omit<
     FormInputPropsType<T, V>,
-    'form'
+    'form' | 'onChange' | 'value'
 > & {
     span?: SpanType;
     desc?: string;
@@ -84,8 +84,7 @@ export const AKFormInput = <T extends FieldType, V extends FieldValues>({
     descStyle,
     ...inputProps
 }: AKFormInputType<T, V>) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { value: v, onChange: on, ...restOfProps } = inputProps as AKInputProps;
+    // const { value: v, onChange: on, ...restOfProps } = inputProps as AKInputProps;
 
     const renderInput = (
         field: ControllerRenderProps<V, (FormInputPropsType<T, V>['name'] | undefined) & Path<V>>,
@@ -94,7 +93,7 @@ export const AKFormInput = <T extends FieldType, V extends FieldValues>({
 
         switch (inputType) {
             case 'input':
-                return (restOfProps as AKInputProps).type === 'number' ? (
+                return (inputProps as AKInputProps).type === 'number' ? (
                     <AKInput
                         {...inputProps}
                         {...field}
@@ -108,7 +107,7 @@ export const AKFormInput = <T extends FieldType, V extends FieldValues>({
             case 'select':
                 return (
                     <AKSelect
-                        {...(restOfProps as unknown as AKSelectProps<V>)}
+                        {...(inputProps as unknown as AKSelectProps<V>)}
                         onValueChange={onChange}
                         value={value}
                         {...restOfField}
@@ -118,7 +117,7 @@ export const AKFormInput = <T extends FieldType, V extends FieldValues>({
             case 'text-area':
                 return (
                     <AKTextarea
-                        {...(restOfProps as AKTextAreaProps<V>)}
+                        {...(inputProps as AKTextAreaProps<V>)}
                         {...field}
                         errors={form.formState.errors}
                     />
@@ -127,7 +126,7 @@ export const AKFormInput = <T extends FieldType, V extends FieldValues>({
             case 'group-check-box':
                 return (
                     <AKCheckBox
-                        {...(restOfProps as AKCheckBoxProps<V>)}
+                        {...(inputProps as AKCheckBoxProps<V>)}
                         {...field}
                         errors={form.formState.errors}
                     />
@@ -135,7 +134,7 @@ export const AKFormInput = <T extends FieldType, V extends FieldValues>({
             case 'radio-group':
                 return (
                     <AKRadioGroup
-                        {...(restOfProps as AKRadioGroupProps<V>)}
+                        {...(inputProps as AKRadioGroupProps<V>)}
                         onValueChange={(v) => onChange(v)}
                         {...restOfField}
                         errors={form.formState.errors}
@@ -144,7 +143,7 @@ export const AKFormInput = <T extends FieldType, V extends FieldValues>({
             case 'combo-box':
                 return (
                     <AKCombobox
-                        {...(restOfProps as unknown as AKComboboxProps<V>)}
+                        {...(inputProps as unknown as AKComboboxProps<V>)}
                         {...field}
                         errors={form.formState.errors}
                     />
@@ -152,12 +151,13 @@ export const AKFormInput = <T extends FieldType, V extends FieldValues>({
             case 'switch':
                 return (
                     <AKSwitch
-                        {...(restOfProps as SwitchProps)}
+                        {...(inputProps as SwitchProps)}
                         checked={value}
                         onCheckedChange={onChange}
                         {...restOfField}
                     />
                 );
+
             case 'date':
                 return (
                     <AKDatePicker
@@ -166,13 +166,11 @@ export const AKFormInput = <T extends FieldType, V extends FieldValues>({
                         selected={field.value}
                         onSelect={onChange}
                         {...restOfField}
-                        {...(restOfProps as unknown as AKDatePickerProps)}
+                        {...inputProps}
                     />
                 );
             case 'upload-file':
-                return (
-                    <AKUploadFile {...(restOfProps as unknown as AKUploadProps<V>)} {...field} />
-                );
+                return <AKUploadFile {...(inputProps as unknown as AKUploadProps<V>)} {...field} />;
 
             case 'phone-input':
                 return <AKPhoneInput {...inputProps} {...field} errors={form.formState.errors} />;

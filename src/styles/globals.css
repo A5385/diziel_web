@@ -4,9 +4,23 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-    --color-main: '#1100ff';
-    --color-main-light: '#4761f7';
-    --color-sec: '#a9baca';
+    /* --font-display: "Satoshi", "sans-serif";
+  --breakpoint-3xl: 120rem; */
+    --text-xs: 0.65rem;
+    --text-sm: 0.7rem;
+    --text-base: 0.8125rem;
+    --text-lg: 0.875rem;
+    --text-xl: 0.9375rem;
+    --text-2xl: 1.125rem;
+    --text-3xl: 1.25rem;
+    --text-4xl: 1.375rem;
+    --text-5xl: 1.625rem;
+    --text-6xl: 1.875rem;
+    --text-7xl: 2.25rem;
+
+    --color-main: #4cb3cd; /* #4CB3CD */
+    --color-main-light: #62cfe8; /* #62CFE8 */
+    --color-sec: #3c5962; /* #3C5962 */
 }
 
 @theme inline {

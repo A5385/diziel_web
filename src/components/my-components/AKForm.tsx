@@ -6,12 +6,14 @@ import { FormEventHandler, ReactNode, useMemo } from 'react';
 import { ArrayPath, FieldValues, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { cn } from '../../lib/utils';
 
+import { ColsType } from '@/constants/types';
 import { CancelIcon } from '@/styles/icons';
 import { useTranslations } from 'next-intl';
 import { ResetButton } from '../layout/ResetButton';
 import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '../ui/card';
 import { Form } from '../ui/form';
 import { AKButton } from './AKButton';
+import GridWrapper from './GridWrapper';
 
 export type AKFormPropsType<T extends FieldValues> = {
     title?: string;
@@ -22,7 +24,7 @@ export type AKFormPropsType<T extends FieldValues> = {
     formActions?: ReactNode;
     submitButtonTitle?: string;
     form: UseFormReturn<T>;
-    columns?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+    columns?: ColsType;
     actionItemPosition?: 'start' | 'center' | 'end' | 'evenly';
     cancelButtonTitle?: string;
     showCancelButton?: boolean;
@@ -83,6 +85,7 @@ export const AKForm = <T extends FieldValues>({
     className,
 }: AKFormPropsType<T>) => {
     const t = useTranslations();
+
     const itemPosition = useMemo(
         () => ({
             start: 'justify-start',
@@ -108,25 +111,12 @@ export const AKForm = <T extends FieldValues>({
         full: 'max-w-full',
     };
 
-    const gridList = {
-        1: 'md:grid-cols-1',
-        2: 'md:grid-cols-2',
-        3: 'md:grid-cols-3',
-        4: 'md:grid-cols-4',
-        5: 'md:grid-cols-5',
-        6: 'md:grid-cols-6',
-        7: 'md:grid-cols-7',
-        8: 'md:grid-cols-8',
-        9: 'md:grid-cols-9',
-        10: 'md:grid-cols-10',
-        11: 'md:grid-cols-11',
-        12: 'md:grid-cols-12',
-    };
     const mapPosition = {
         start: 'text-start',
         center: 'text-center',
         end: 'text-end',
     };
+
     return (
         <Card className={cn(className, formWidth[width], 'flex flex-col gap-2 pt-2')}>
             {title && (
@@ -160,17 +150,10 @@ export const AKForm = <T extends FieldValues>({
                         onSubmit={form.handleSubmit(submit as SubmitHandler<FieldValues>)}
                         className={cn(
                             inline ? 'flex flex-col items-end md:flex-row' : 'flex flex-col',
-                            'mx-auto w-full gap-5',
+                            'mx-auto w-full gap-4',
                         )}
                     >
-                        <div
-                            className={cn(
-                                gridList[columns],
-                                'grid w-full grid-cols-1 items-start gap-3',
-                            )}
-                        >
-                            {children}
-                        </div>
+                        <GridWrapper cols={columns}>{children}</GridWrapper>
 
                         <div
                             className={cn(
@@ -179,7 +162,6 @@ export const AKForm = <T extends FieldValues>({
                                 'flex justify-between',
                             )}
                         >
-                            {/* Custom action section or default form action buttons */}
                             {customActionSection || (
                                 <>
                                     {!hideLeftActionSection && (
@@ -195,12 +177,10 @@ export const AKForm = <T extends FieldValues>({
                                                     icon={<CancelIcon size={20} />}
                                                 />
                                             )}
-                                            {/* Additional form actions */}
                                             {formActions}
                                         </div>
                                     )}
 
-                                    {/* Submit and Reset Button Section */}
                                     <CardFooter
                                         className={cn(
                                             'flex w-full items-center gap-5',
@@ -209,31 +189,28 @@ export const AKForm = <T extends FieldValues>({
                                             inline && 'w-fit',
                                         )}
                                     >
-                                        {/* Optional Add More Action */}
                                         {addMoreAction}
 
-                                        {/* Submit Button */}
                                         <AKButton
                                             type='submit'
                                             title={t(submitButtonTitle)}
                                             variant='outline'
-                                            color='main'
+                                            color='default'
                                             disabled={form.formState.isSubmitting}
                                             icon={showActionIcon ? <CheckIcon /> : null}
                                             className={cn(
                                                 submitButtonFullWidth ? 'flex-1' : '',
-                                                'mt-4',
+                                                'bg-main',
                                             )}
                                             loading={form.formState.isSubmitting}
                                         />
 
-                                        {/* Reset Button */}
                                         {showResetButton && (
                                             <ResetButton
                                                 hideResetIcon={hideResetIcon}
                                                 reset={() => {
                                                     form.reset();
-                                                    extraReset(); // Optional extra reset function
+                                                    extraReset();
                                                 }}
                                             />
                                         )}

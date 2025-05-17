@@ -1,7 +1,13 @@
-type AuthEndpoints = 'auth/login' | 'auth/check-email';
+type AuthEndpoints =
+    | 'auth/login'
+    | 'auth/logout'
+    | 'auth/check-email'
+    | 'auth/check-authentication'
+    | 'auth/get-user-session';
 
 type UserEndpoints =
     | 'user/register'
+    | 'user/update'
     | 'user/verify-phone'
     | 'user/verify-otp'
     | 'user/set-password'

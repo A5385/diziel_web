@@ -78,7 +78,7 @@ const UserData = ({
                     setOpenFilter={setOpenFilter}
                     reset={reset}
                     newDialogType={newDialogType}
-                    newDialogSize='md'
+                    newDialogSize='3xl'
                 />
                 <BasicTable
                     t={t}

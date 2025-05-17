@@ -2,6 +2,7 @@
 
 import { useDialog } from '@/providers/DialogProvider';
 import { DialogType } from '@/types/dialog';
+import { UserSchema } from '@/types/schema';
 import { DataType } from '@/types/ui';
 import { useTranslations } from 'next-intl';
 import { lazy, ReactNode } from 'react';
@@ -52,7 +53,7 @@ const ModuleModal = <TData,>({
         ),
 
         'new-user': <UserForm />,
-        'edit-user': <UserForm data={data ?? undefined} />,
+        'edit-user': <UserForm user={data as UserSchema | undefined} />,
     };
 
     return content[dialogType ?? ''];

@@ -1,6 +1,7 @@
 import { DashboardIcon, RequestIcon, TrailerIcon, TruckIcon, UsersIcon } from '@/styles/icons';
 import { Route } from 'next';
 import { ReactNode } from 'react';
+import AppConfig from './AppSettings';
 
 export type RoutesType =
     | 'dashboard'
@@ -14,7 +15,7 @@ export type RoutesType =
     | 'agencies'
     | 'clients';
 
-export const iconProps = { size: 14, color: '#1447e6' };
+export const iconProps = { size: 14, color: AppConfig.colors.secColor };
 
 export interface RouteProps {
     id: string;

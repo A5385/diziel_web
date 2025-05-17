@@ -1,7 +1,6 @@
-import constants from '@/constants/AppSettings';
-import { isWebTokenExpired, TokenService } from '@/helpers/local-storage-service';
+import { default as AppConfig, default as constants } from '@/constants/AppSettings';
+import { getLocale } from '@/helpers/get-locale';
 import axios, { AxiosError } from 'axios';
-import { refreshWebAccessToken } from './RefreshToken';
 
 const serverUrl = constants.api.serverUrl;
 const apiKey = constants.api.apiKey;
@@ -9,27 +8,32 @@ const apiKey = constants.api.apiKey;
 export const axiosInstance = axios.create({
     baseURL: serverUrl,
     timeout: 10000,
+    withCredentials: true,
     headers: {
-        'x-api-key': apiKey,
+        [AppConfig.keys.apiKey]: apiKey,
     },
 });
 axiosInstance.interceptors.request.use(
     async (config) => {
-        let token = TokenService.accessToken.get();
+        // let token = TokenService.accessToken.get();
 
-        if (token) {
-            if (isWebTokenExpired(token)) {
-                const refreshToken = TokenService.refreshToken.get();
-                if (refreshToken) {
-                    const rToken = await refreshWebAccessToken(refreshToken);
-                    if (rToken) {
-                        token = rToken;
-                    }
-                }
-            }
-            config.headers.Authorization = `Bearer ${token}`;
+        // if (token) {
+        //     if (isWebTokenExpired(token)) {
+        //         const refreshToken = TokenService.refreshToken.get();
+        //         if (refreshToken) {
+        //             const rToken = await refreshWebAccessToken(refreshToken);
+        //             if (rToken) {
+        //                 token = rToken;
+        //             }
+        //         }
+        //     }
+
+        //     config.headers.Authorization = `Bearer ${token}`;
+        // }
+        const locale = await getLocale();
+        if (locale) {
+            config.headers[AppConfig.keys.lang] = locale;
         }
-        // console.log('🚀 >  config:', config);
         return config;
     },
     (error) => {

@@ -2,16 +2,18 @@
 import { UploadNationalImages } from '@/api-service/data-service/ProfileService';
 import { AKForm } from '@/components/my-components/AKForm';
 import { AKFormInput } from '@/components/my-components/AKFormInput';
-import AppSettings from '@/constants/AppSettings';
+import AppConfig from '@/constants/AppSettings';
 import useZod from '@/hooks/useZod';
 import { useDialog } from '@/providers/DialogProvider';
+import { NationalIdentitySchema } from '@/types/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import FormNavigation from './FormNavigation';
 import { useUserForm } from './UserFormContext';
 
-const NationalIdForm = () => {
+const NationalIdForm = ({ data }: { data?: NationalIdentitySchema | undefined }) => {
     const { setStep, profileId, role, reset } = useUserForm();
     const { handleCloseDialog } = useDialog();
     const t = useTranslations();
@@ -21,7 +23,7 @@ const NationalIdForm = () => {
     // const createUser = UpdateProfile();
 
     const form = useForm<FormType>({
-        mode: AppSettings.form.mode,
+        mode: AppConfig.form.mode,
         resolver: zodResolver(schema),
         defaultValues: {
             face: undefined,
@@ -64,9 +66,9 @@ const NationalIdForm = () => {
                     form={form}
                     descStyle='text-center'
                     control={form.control}
-                    src='/national-identity-avatar.png'
+                    src='/avatar/national-identity-avatar.png'
                     label={t('national-id-face')}
-                    shape='square'
+                    shape='square-horizontal'
                     accept='.jpeg,.jpg,.png,web'
                     required
                 />
@@ -76,12 +78,13 @@ const NationalIdForm = () => {
                     form={form}
                     descStyle='text-center'
                     control={form.control}
-                    src='/national-identity-avatar.png'
+                    src='/avatar/national-identity-avatar.png'
                     label={t('national-id-back')}
-                    shape='square'
+                    shape='square-horizontal'
                     accept='.jpeg,.jpg,.png,web'
                     required
                 />
+                <FormNavigation show={data !== undefined} />
             </AKForm>
         </>
     );

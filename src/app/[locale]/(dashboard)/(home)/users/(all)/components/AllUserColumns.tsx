@@ -10,7 +10,7 @@ import { UserSchema } from '@/types/schema';
 import { ColumnsProps } from '@/types/ui';
 import { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
+import UserAvatar from '../../components/UserAvatar';
 
 const AllUserColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserSchema>[] => {
     const t = useTranslations();
@@ -30,16 +30,8 @@ const AllUserColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserS
             accessorKey: 'image',
             header: t('image'),
             cell: ({ row }) => {
-                const image = row.original?.profile?.image;
-
-                return (
-                    <Image
-                        src={image ?? '/avatar.png'}
-                        alt={row?.original?.profile?.fullName ?? 'user-image'}
-                        width={50}
-                        height={50}
-                    />
-                );
+                const user = row.original;
+                return <UserAvatar user={user} />;
             },
         },
         {
@@ -130,7 +122,7 @@ const AllUserColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserS
                         commonMenuProps={{
                             itemId: item?.id ?? '',
                             editType: 'edit-user',
-                            dialogSize: '5xl',
+                            dialogSize: '3xl',
                         }}
                     />
                 );

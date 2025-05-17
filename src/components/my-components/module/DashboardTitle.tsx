@@ -1,5 +1,6 @@
 'use client';
 
+import AppConfig from '@/constants/AppSettings';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import React, { cloneElement, ReactNode } from 'react';
@@ -28,12 +29,11 @@ export const DashboardTitle: React.FC<DashboardTypeProps> = ({
             {React.isValidElement<IconBaseProps>(icon) &&
                 cloneElement<IconBaseProps>(icon, {
                     size: iconSize,
-                    className: cn(iconClassName, 'text-blue-700 size-8'),
+                    color: AppConfig.colors.mainColor,
+                    className: cn(iconClassName, ' size-8'),
                 })}
             <div>
-                <h2 className={cn(titleClassName, 'text-2xl font-bold text-blue-700')}>
-                    {t(title)}
-                </h2>
+                <h2 className={cn(titleClassName, 'text-main text-2xl font-bold')}>{t(title)}</h2>
                 {children}
             </div>
         </div>

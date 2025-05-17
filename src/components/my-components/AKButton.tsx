@@ -1,10 +1,10 @@
 'use client';
 
+import AppConfig from '@/constants/AppSettings';
 import { ColorType, IconType } from '@/types/ui';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { VariantProps } from 'class-variance-authority';
 import { forwardRef } from 'react';
-import { useColor } from '../../hooks/useColor';
 import { cn } from '../../lib/utils';
 import { Button, buttonVariants } from '../ui/button';
 
@@ -39,17 +39,15 @@ export const AKButton = forwardRef<HTMLButtonElement, BtnPropsType>(
         },
         ref,
     ) => {
-        const selectedColor = useColor(color);
-
         return (
             <Button
                 ref={ref}
                 variant={variant}
                 className={cn(
                     className,
-                    selectedColor,
+                    AppConfig.color[color],
                     disabled && 'cursor-not-allowed opacity-50',
-                    'item-center easy-in-out flex cursor-pointer justify-center px-3 py-1.5 transition-all duration-300',
+                    'item-center bg-main easy-in-out flex cursor-pointer justify-center px-3 py-1.5 transition-all duration-300',
                 )}
                 disabled={disabled || loading}
                 {...{

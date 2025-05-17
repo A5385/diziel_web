@@ -1,5 +1,8 @@
 'use client';
-const AgencyAgentForm = () => {
+
+import { AgencyAgentSchema } from '@/types/schema';
+
+const AgencyAgentForm = ({ data }: { data?: AgencyAgentSchema | undefined }) => {
     return <div>AgencyAgentForm</div>;
 };
 

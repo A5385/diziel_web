@@ -8,11 +8,7 @@ const GridWrapper = ({
     cols = 1,
     className,
 }: ChildrenType & { cols?: ColsType; className?: string }) => {
-    return (
-        <div className={cn(className, 'grid grid-cols-2 gap-4', constants.grid[cols])}>
-            {children}
-        </div>
-    );
+    return <div className={cn(className, 'grid gap-4', constants.grid[cols])}>{children}</div>;
 };
 
 export default GridWrapper;

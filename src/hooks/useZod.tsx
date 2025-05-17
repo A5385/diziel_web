@@ -13,7 +13,8 @@ const useZod = () => {
             .trim()
             .min(min, { message: t('field-required', { field }) });
     };
-    const phone = z.string().regex(/^(?:\+20|0)?(10|11|12|15)\d{8}$/, t('phone-validation'));
+    const phone = z.string().min(3);
+    // .regex(/^(?:\+20|0)?(10|11|12|15)\d{8}$/, t('phone-validation'));
     const role = z.nativeEnum(UserRole);
     const password = z.string().min(8, { message: 'Password must be at least 8 characters long' });
     const newPassword = z

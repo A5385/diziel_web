@@ -1,5 +1,4 @@
 'use client';
-import { useColor } from '@/hooks/useColor';
 import { cn } from '@/lib/utils';
 import { useDialog } from '@/providers/DialogProvider';
 import { AddNewIcon, ExportIcon, ResetIcon } from '@/styles/icons';
@@ -10,6 +9,7 @@ import { useTranslations } from 'next-intl';
 import React, { Dispatch, ReactNode, SetStateAction } from 'react';
 import { AKButton } from '../../my-components/AKButton';
 // import { ImportButton } from '../../my-components/file-import/ImportButton';
+import AppConfig from '@/constants/AppSettings';
 import { Button } from '../../ui/button';
 import {
     DropdownMenu,
@@ -52,6 +52,7 @@ export type ActionSectionProps<T> = {
 
 const iconProps = {
     size: 20,
+    color: 'white',
 };
 
 const ModuleActionSection = <T,>({
@@ -79,24 +80,22 @@ const ModuleActionSection = <T,>({
 ActionSectionProps<T>) => {
     const g = useTranslations();
     const { handleOpenDialog } = useDialog();
-    const color = useColor('main');
+    const color = AppConfig.color['default'];
     return (
         <section className='flex flex-wrap items-center justify-evenly gap-4 px-8 md:justify-between md:px-0'>
             <div className='flex items-center gap-4'>
                 <AKButton
                     size='icon'
                     type='button'
-                    color='main'
                     variant={'outline'}
-                    icon={<FilterIcon size={20} />}
+                    icon={<FilterIcon {...iconProps} />}
                     onClick={() => setOpenFilter?.(!openFilter)}
                 />
                 {reset && (
                     <AKButton
                         size='icon'
                         type='button'
-                        color='gray'
-                        icon={<ResetIcon size={20} />}
+                        icon={<ResetIcon {...iconProps} />}
                         onClick={reset}
                     />
                 )}
@@ -107,7 +106,7 @@ ActionSectionProps<T>) => {
                         type='button'
                         color='red'
                         disabled={disabled}
-                        icon={<DeleteIcon size={20} />}
+                        icon={<DeleteIcon{...iconProps} />}
                         onClick={() =>
                             handleOpenDialog({
                                 type: 'delete-many',
@@ -189,7 +188,6 @@ ActionSectionProps<T>) => {
                 {newDialogType && (
                     <AKButton
                         type='button'
-                        color='green'
                         onClick={() =>
                             handleOpenDialog({
                                 type: newDialogType,

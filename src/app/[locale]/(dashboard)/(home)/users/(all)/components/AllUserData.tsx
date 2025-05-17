@@ -9,7 +9,7 @@ import { UserRole } from '@/types/prisma';
 import { UserSchema } from '@/types/schema';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
-import { roleList } from '../../components/role-list';
+import { UserRoleList } from '../../../../../../../constants/enum-list';
 import UserData from '../../components/UserData';
 import AllUserColumns from './AllUserColumns';
 
@@ -57,7 +57,7 @@ const AllUserData = () => {
                     noSearch
                     label={t('role')}
                     onValueChange={(e) => setRole(e as UserRole)}
-                    selectItems={roleList.map((item) => ({
+                    selectItems={UserRoleList.map((item) => ({
                         label: t(item.toLowerCase()),
                         value: item,
                     }))}

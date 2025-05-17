@@ -1,7 +1,18 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../../web/src/types/prisma"
+  // previewFeatures = ["queryCompiler", "driverAdapters"]
+
+  // outputs 
+  // web app :
+  output = "../../web/src/types/prisma"
+  // web app :
   // output = "../../app/src/types/prisma"
+
+  // Optional
+  runtime                = "nodejs"
+  moduleFormat           = "esm"
+  generatedFileExtension = "ts"
+  importFileExtension    = "ts"
 }
 
 datasource db {
@@ -145,6 +156,7 @@ model Profile {
   fullName        String?
   nickname        String?
   image           String?
+  otherInfo       String? // added field
   profileComplete DateTime?
   /////////////////////////////
   address         Address?           @relation()
@@ -211,16 +223,26 @@ model Driver {
   profile         Profile          @relation(fields: [profileId], references: [id])
   profileId       String           @unique
   driverTruck     DriverTruck[]
+  /**
+   * add invter can invite other driver
+   */
+
   // audit fields
-  createdAt       DateTime         @default(now())
-  createdBy       User?            @relation("created", fields: [creatorId], references: [id])
-  creatorId       String?
-  updatedAt       DateTime         @updatedAt
-  updatedBy       User?            @relation("updated", fields: [updaterId], references: [id])
-  updaterId       String?
-  archivedAt      DateTime?
-  archivedBy      User?            @relation("deleted", fields: [archivedById], references: [id])
-  archivedById    String?
+  createdAt    DateTime  @default(now())
+  createdBy    User?     @relation("created", fields: [creatorId], references: [id])
+  creatorId    String?
+  updatedAt    DateTime  @updatedAt
+  updatedBy    User?     @relation("updated", fields: [updaterId], references: [id])
+  updaterId    String?
+  archivedAt   DateTime?
+  archivedBy   User?     @relation("deleted", fields: [archivedById], references: [id])
+  archivedById String?
+}
+
+enum DriverType {
+  national
+  international
+  all
 }
 
 enum DriverGrade {
@@ -252,7 +274,7 @@ model DriverDocuments {
 model DrugTest {
   id               String          @id @default(cuid())
   testDate         DateTime?
-  result           String?
+  result           DrugTestResult?
   testImage        String?
   /////////////////////////////
   driverDocuments  DriverDocuments @relation(references: [id], fields: [driverDocumentId], onDelete: Cascade, onUpdate: Cascade)
@@ -267,6 +289,11 @@ model DrugTest {
   archivedAt       DateTime?
   archivedBy       User?           @relation("deleted", fields: [archivedById], references: [id])
   archivedById     String?
+}
+
+enum DrugTestResult {
+  negative
+  positive
 }
 
 model DriverLicense {
@@ -294,7 +321,10 @@ model DriverLicense {
 }
 
 enum DriverLicenseType {
-  business
+  // note
+  first
+  second
+  third
   private
 }
 
@@ -341,12 +371,6 @@ model Visa {
   archivedById String?
 }
 
-enum DriverType {
-  national
-  international
-  all
-}
-
 /**
  * agent agency info
  * agency info
@@ -391,7 +415,9 @@ model Agency {
   id                 String    @id @default(cuid())
   name               String    @unique
   registrationRecord String?
-  phone              String?
+  phone1             String?
+  phone2             String?
+  phone3             String?
   email              String?
   profile            Profile   @relation(fields: [profileId], references: [id])
   profileId          String    @unique
