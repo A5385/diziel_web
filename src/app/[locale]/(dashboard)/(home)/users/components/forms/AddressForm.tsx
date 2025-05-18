@@ -1,10 +1,10 @@
 'use client';
 import { UpdateProfileAddress } from '@/api-service/data-service/ProfileService';
-import { AKForm } from '@/components/my-components/AKForm';
-import { AKFormInput } from '@/components/my-components/AKFormInput';
+import { AKForm } from '@/components/my-components/form/AKForm';
+import { AKFormInput } from '@/components/my-components/form/AKFormInput';
 import AppConfig from '@/constants/AppSettings';
 import useZod from '@/hooks/useZod';
-import { AddressSchema } from '@/types/schema';
+import { ProfileSchema } from '@/types/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -12,7 +12,7 @@ import { z } from 'zod';
 import FormNavigation from './FormNavigation';
 import { useUserForm } from './UserFormContext';
 
-const AddressForm = ({ data }: { data?: AddressSchema | undefined }) => {
+const AddressForm = ({ profileData }: { profileData?: ProfileSchema | undefined }) => {
     const t = useTranslations();
     const { setStep, profileId } = useUserForm();
     const schema = useZod().fields.address;
@@ -24,21 +24,22 @@ const AddressForm = ({ data }: { data?: AddressSchema | undefined }) => {
         mode: AppConfig.form.mode,
         resolver: zodResolver(schema),
         defaultValues: {
-            line1: '',
-            line2: '',
-            country: '',
-            city: '',
-            state: '',
+            line1: profileData?.address?.line1 ?? '',
+            line2: profileData?.address?.line2 ?? '',
+            country: profileData?.address?.country ?? '',
+            city: profileData?.address?.city ?? '',
+            state: profileData?.address?.state ?? '',
         },
     });
 
     const updateAddress = UpdateProfileAddress();
 
     const submit: SubmitHandler<FormType> = async (data) => {
-        if (profileId) {
+        const id = profileData?.id ?? profileId;
+        if (id) {
             const res = await updateAddress.mutateAsync({
                 data: { ...data },
-                id: profileId,
+                id,
             });
             if (res) {
                 setStep(4);
@@ -50,12 +51,19 @@ const AddressForm = ({ data }: { data?: AddressSchema | undefined }) => {
             <AKForm
                 form={form}
                 submit={submit}
-                submitButtonTitle={'next'}
                 columns={3}
-                actionItemPosition='end'
                 title='address-info'
                 className='w-full'
-                submitButtonFullWidth
+                formButtons={
+                    <FormNavigation
+                        show={profileData !== undefined}
+                        submitProps={{
+                            fullWidth: true,
+                            title: profileData ? 'update' : 'next',
+                            form,
+                        }}
+                    />
+                }
             >
                 <AKFormInput
                     form={form}
@@ -75,7 +83,6 @@ const AddressForm = ({ data }: { data?: AddressSchema | undefined }) => {
                 <AKFormInput form={form} inputType='input' name='country' label={t('country')} />
                 <AKFormInput form={form} inputType='input' name='city' label={t('city')} />
                 <AKFormInput form={form} inputType='input' name='state' label={t('state')} />
-                <FormNavigation show={data !== undefined} />
             </AKForm>
         </>
     );

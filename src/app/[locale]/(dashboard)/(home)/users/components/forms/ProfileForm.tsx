@@ -1,8 +1,8 @@
 'use client';
 
 import { UpdateProfile, UploadProfileImage } from '@/api-service/data-service/ProfileService';
-import { AKForm } from '@/components/my-components/AKForm';
-import { AKFormInput } from '@/components/my-components/AKFormInput';
+import { AKForm } from '@/components/my-components/form/AKForm';
+import { AKFormInput } from '@/components/my-components/form/AKFormInput';
 import AppConfig from '@/constants/AppSettings';
 import useZod from '@/hooks/useZod';
 import { ProfileSchema } from '@/types/schema';
@@ -13,7 +13,7 @@ import { z } from 'zod';
 import FormNavigation from './FormNavigation';
 import { useUserForm } from './UserFormContext';
 
-const ProfileForm = ({ data }: { data?: ProfileSchema | undefined }) => {
+const ProfileForm = ({ profileData }: { profileData?: ProfileSchema | undefined }) => {
     const t = useTranslations();
     const { setStep, profileId } = useUserForm();
     const schema = useZod().schemas.profileSchema;
@@ -25,26 +25,28 @@ const ProfileForm = ({ data }: { data?: ProfileSchema | undefined }) => {
         mode: AppConfig.form.mode,
         resolver: zodResolver(schema),
         defaultValues: {
-            email: '',
-            fullName: '',
-            nickname: '',
+            email: profileData?.email ?? '',
+            fullName: profileData?.fullName ?? '',
+            nickname: profileData?.nickname ?? '',
             image: undefined,
         },
     });
+    // console.log('🚀 >  ProfileForm >  form:', form.getValues());
 
     const updateProfile = UpdateProfile();
     const uploadProfileImage = UploadProfileImage();
 
     const submit: SubmitHandler<FormType> = async ({ image, ...data }) => {
-        if (profileId) {
+        const id = profileData?.id ?? profileId;
+        if (id) {
             const res = await updateProfile.mutateAsync({
                 data: { ...data },
-                id: profileId,
+                id,
             });
 
             const upload = await uploadProfileImage.mutateAsync({
                 data: { file: image },
-                id: profileId,
+                id,
             });
 
             if (res || upload) {
@@ -57,11 +59,18 @@ const ProfileForm = ({ data }: { data?: ProfileSchema | undefined }) => {
             <AKForm
                 form={form}
                 submit={submit}
-                submitButtonTitle={'next'}
                 columns={3}
-                actionItemPosition='end'
                 title='profile-info'
-                submitButtonFullWidth
+                formButtons={
+                    <FormNavigation
+                        show={profileData !== undefined}
+                        submitProps={{
+                            fullWidth: true,
+                            title: profileData ? 'update' : 'next',
+                            form,
+                        }}
+                    />
+                }
             >
                 <AKFormInput
                     inputType='upload-file'
@@ -69,7 +78,7 @@ const ProfileForm = ({ data }: { data?: ProfileSchema | undefined }) => {
                     form={form}
                     descStyle='text-center'
                     control={form.control}
-                    src={'/avatar/avatar.png'}
+                    src={profileData?.image ?? '/avatar/avatar.png'}
                     label={t('image')}
                     shape='circle'
                     accept='.jpeg,.jpg,.png,web'
@@ -99,7 +108,6 @@ const ProfileForm = ({ data }: { data?: ProfileSchema | undefined }) => {
                     label={t('nickname')}
                     placeholder={t('nickname-ph')}
                 />
-                <FormNavigation show={data !== undefined} />
             </AKForm>
         </>
     );

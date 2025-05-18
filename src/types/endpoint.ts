@@ -26,10 +26,12 @@ type ProfileEndpoints =
 type CountEndpoint = '';
 type DriverEndpoints =
     | 'driver/create'
+    | 'driver/update'
     | 'driver/upload-criminal-record'
     | 'driver/upload-drug-test'
     | 'driver/upload-driver-license'
     | 'driver/create-visa'
+    | 'driver/update-visa'
     | 'driver/upload-visa-image'
     | 'driver/upload-driver-passport';
 

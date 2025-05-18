@@ -1,6 +1,7 @@
 'use client';
 import { GetAllUsers } from '@/api-service/data-service/UserService';
 import { AKSelect } from '@/components/my-components/AKSelect';
+import { UserRoleList } from '@/constants/enum-list';
 import { Routes } from '@/constants/route';
 import { formatDate } from '@/helpers/formatDate';
 import { useModuleState } from '@/hooks/useModuleState';
@@ -9,7 +10,6 @@ import { UserRole } from '@/types/prisma';
 import { UserSchema } from '@/types/schema';
 import { useTranslations } from 'next-intl';
 import { useCallback, useState } from 'react';
-import { UserRoleList } from '../../../../../../../constants/enum-list';
 import UserData from '../../components/UserData';
 import AllUserColumns from './AllUserColumns';
 

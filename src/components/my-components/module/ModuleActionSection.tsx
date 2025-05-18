@@ -88,14 +88,14 @@ ActionSectionProps<T>) => {
                     size='icon'
                     type='button'
                     variant={'outline'}
-                    icon={<FilterIcon {...iconProps} />}
+                    iconBefore={<FilterIcon {...iconProps} />}
                     onClick={() => setOpenFilter?.(!openFilter)}
                 />
                 {reset && (
                     <AKButton
                         size='icon'
                         type='button'
-                        icon={<ResetIcon {...iconProps} />}
+                        iconBefore={<ResetIcon {...iconProps} />}
                         onClick={reset}
                     />
                 )}

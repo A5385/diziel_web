@@ -1,9 +1,10 @@
 'use client';
 
 import { HandleLogin } from '@/api-service/data-service/AuthService';
-import { FormPasswordInput } from '@/components/common-form-input/FormPasswordInput';
-import { FormPhoneInput } from '@/components/common-form-input/FormPhoneNumber';
-import { AKForm } from '@/components/my-components/AKForm';
+import { AKForm } from '@/components/my-components/form/AKForm';
+import { FormPasswordInput } from '@/components/my-components/form/common-form-input/FormPasswordInput';
+import { FormPhoneInput } from '@/components/my-components/form/common-form-input/FormPhoneNumber';
+import SubmitButton from '@/components/my-components/form/SubmitButton';
 import AppConfig from '@/constants/AppSettings';
 import { Routes } from '@/constants/route';
 import useZod from '@/hooks/useZod';
@@ -42,8 +43,9 @@ const LoginForm = () => {
                 width='sm'
                 className='w-full'
                 desc={'login-desc'}
-                submitButtonTitle={'login'}
-                submitButtonFullWidth
+                formButtons={<SubmitButton form={form} fullWidth title='login' />}
+                // submitButtonTitle={'login'}
+                // submitButtonFullWidth
             >
                 <FormPhoneInput form={form} />
                 <FormPasswordInput form={form} />

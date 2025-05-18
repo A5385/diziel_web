@@ -1,8 +1,12 @@
 import { User, UserRole } from '@/types/prisma';
+import axios from 'axios';
 import { AxiosService } from '../axios-service/CRUD';
 import { useMutationPost } from '../react-query-service/mutate-service';
 import { useQueryData } from '../react-query-service/query-service';
 
+import { default as AppConfig, default as constants } from '@/constants/AppSettings';
+const serverUrl = constants.api.serverUrl;
+const apiKey = constants.api.apiKey;
 export const AuthKey = {
     UserSession: 'USER_SESSION',
     UserAuthenticated: 'USER_AUTHENTICATED',
@@ -13,9 +17,17 @@ export const CheckEmail = () =>
     useMutationPost<User>({ endpoint: 'auth/check-email', queryKey: [] });
 
 export const CheckAuthentication = async () => {
-    const res = await AxiosService.get<boolean>({ endpoint: 'auth/check-authentication' });
-    console.log('🚀 >  CheckAuthentication >  res:', res);
-    return res;
+    try {
+        const res = await axios.get<boolean>(`${serverUrl}/auth/check-authentication`, {
+            withCredentials: true,
+            headers: {
+                [AppConfig.keys.apiKey]: apiKey,
+            },
+        });
+        return res?.data ?? false;
+    } catch {
+        return false;
+    }
 };
 
 export type UserSessionResponse = {
@@ -50,6 +62,7 @@ export const UserAuthenticated = () => {
     return useQueryData<boolean>({
         endpoint: 'auth/check-authentication',
         queryKey: [AuthKey.UserAuthenticated],
+        retry: false,
     });
 };
 

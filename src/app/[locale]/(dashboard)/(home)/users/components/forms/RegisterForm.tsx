@@ -1,8 +1,8 @@
 'use client';
 import { RegisterNewUser, UpdateUser } from '@/api-service/data-service/UserService';
-import { FormPhoneInput } from '@/components/common-form-input/FormPhoneNumber';
-import { AKForm } from '@/components/my-components/AKForm';
-import { AKFormInput } from '@/components/my-components/AKFormInput';
+import { AKForm } from '@/components/my-components/form/AKForm';
+import { AKFormInput } from '@/components/my-components/form/AKFormInput';
+import { FormPhoneInput } from '@/components/my-components/form/common-form-input/FormPhoneNumber';
 import AppConfig from '@/constants/AppSettings';
 import { UserRoleList } from '@/constants/enum-list';
 import useZod from '@/hooks/useZod';
@@ -14,7 +14,7 @@ import { z } from 'zod';
 import FormNavigation from './FormNavigation';
 import { useUserForm } from './UserFormContext';
 
-const RegisterForm = ({ data: userData }: { data?: UserSchema | undefined }) => {
+const RegisterForm = ({ userData }: { userData?: UserSchema | undefined }) => {
     const t = useTranslations();
     const { setPhone, setStep, setRole, setNationalIdNumber, setProfileId } = useUserForm();
     const schema = useZod()?.schemas.userSchema;
@@ -52,11 +52,14 @@ const RegisterForm = ({ data: userData }: { data?: UserSchema | undefined }) => 
             <AKForm
                 form={form}
                 submit={submit}
-                submitButtonTitle={'next'}
                 columns={3}
-                actionItemPosition='end'
                 title='register-user'
-                submitButtonFullWidth
+                formButtons={
+                    <FormNavigation
+                        show={userData !== undefined}
+                        submitProps={{ fullWidth: true, title: userData ? 'update' : 'next', form }}
+                    />
+                }
             >
                 <FormPhoneInput form={form} />
                 <AKFormInput
@@ -79,7 +82,6 @@ const RegisterForm = ({ data: userData }: { data?: UserSchema | undefined }) => 
                     placeholder={t('national-id-number-ph')}
                     maxLength={14}
                 />
-                <FormNavigation show={userData !== undefined} />
             </AKForm>
         </>
     );

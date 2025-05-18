@@ -15,6 +15,7 @@ import '@/styles/globals.css';
 export const metadata: Metadata = {
     title: constants.settings.title,
     description: constants.settings.title,
+    icons: '/logo/icon.png',
 };
 
 type RootLayoutProps = ChildrenType & {

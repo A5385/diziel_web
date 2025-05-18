@@ -1,28 +1,34 @@
 'use client';
 
-import AppConfig from '@/constants/AppSettings';
-import { ColorType, IconType } from '@/types/ui';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { ColorType } from '@/types/ui';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { VariantProps } from 'class-variance-authority';
-import { forwardRef } from 'react';
-import { cn } from '../../lib/utils';
-import { Button, buttonVariants } from '../ui/button';
+import { forwardRef, ReactNode } from 'react';
 
-export type BtnPropsType = React.ComponentProps<'button'> &
+type BtnProps = React.ComponentProps<'button'> &
     VariantProps<typeof buttonVariants> & {
         asChild?: boolean;
-    } & {
-        title?: string | undefined;
-        color?: ColorType | undefined;
-        iconBefore?: IconType | undefined;
-        iconAfter?: IconType | undefined;
-        icon?: IconType | undefined;
-        loading?: boolean | undefined;
+        title?: string;
+        color?: ColorType;
+        iconBefore?: ReactNode;
+        iconAfter?: ReactNode;
+        loading?: boolean;
         loadingText?: string;
         className?: string;
     };
 
-export const AKButton = forwardRef<HTMLButtonElement, BtnPropsType>(
+const colors: Record<ColorType, string> = {
+    red: 'bg-red-500 hover:bg-red-700 text-white',
+    orange: 'bg-orange-500 hover:bg-orange-700 text-white',
+    gray: 'bg-gray-500 hover:bg-gray-700 text-white',
+    green: 'bg-green-500 hover:bg-green-700 text-white',
+    purple: 'bg-purple-500 hover:bg-purple-700 text-white',
+    default: 'bg-main hover:bg-main-light !text-white',
+};
+
+export const AKButton = forwardRef<HTMLButtonElement, BtnProps>(
     (
         {
             title,
@@ -31,41 +37,43 @@ export const AKButton = forwardRef<HTMLButtonElement, BtnPropsType>(
             iconBefore,
             iconAfter,
             loading,
-            icon,
-            loadingText = 'Please wait ...',
+            loadingText = 'Please wait…',
             className,
             disabled,
+            asChild,
             ...rest
         },
         ref,
     ) => {
+        const isDisabled = disabled || loading;
+
         return (
             <Button
                 ref={ref}
+                asChild={asChild}
                 variant={variant}
+                disabled={isDisabled}
+                aria-busy={loading}
+                aria-disabled={isDisabled}
                 className={cn(
                     className,
-                    AppConfig.color[color],
-                    disabled && 'cursor-not-allowed opacity-50',
-                    'item-center bg-main easy-in-out flex cursor-pointer justify-center px-3 py-1.5 transition-all duration-300',
+                    variant === 'outline' ? '' : colors[color],
+                    isDisabled && 'cursor-not-allowed opacity-50',
+                    'flex items-center justify-center gap-3 px-3 py-1.5 transition-all duration-300 ease-in-out',
                 )}
-                disabled={disabled || loading}
-                {...{
-                    ...rest,
-                }}
+                {...rest}
             >
                 {loading ? (
                     <span className='flex items-center gap-2'>
-                        <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
+                        <ReloadIcon className='h-4 w-4 animate-spin' />
                         {loadingText}
                     </span>
                 ) : (
-                    <span className='flex !min-h-[42px] items-center justify-center gap-3'>
-                        {iconBefore && iconBefore}
-                        {icon && icon}
+                    <>
+                        {iconBefore}
                         {title && <span>{title}</span>}
-                        {iconAfter && iconAfter}
-                    </span>
+                        {iconAfter}
+                    </>
                 )}
             </Button>
         );

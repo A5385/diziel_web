@@ -1,4 +1,4 @@
-import { AKForm, AKFormPropsType } from '@/components/my-components/AKForm';
+import { AKForm, AKFormPropsType } from '@/components/my-components/form/AKForm';
 import AppConfig from '@/constants/AppSettings';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DefaultValues, useForm } from 'react-hook-form';

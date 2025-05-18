@@ -25,6 +25,13 @@ export const DashboardTitle: React.FC<DashboardTypeProps> = ({
 }) => {
     const t = useTranslations();
     return (
+        // <div className='w-full space-y-4'>
+        //     <h2 className='text-2xl font-bold text-purple-700'>
+        //         {IconWithProps}
+        //         {`${customTitle ? customTitle : title}`}
+        //     </h2>
+        //     {children}
+        // </div>
         <div className='mb-6 flex items-center gap-4'>
             {React.isValidElement<IconBaseProps>(icon) &&
                 cloneElement<IconBaseProps>(icon, {
@@ -37,12 +44,5 @@ export const DashboardTitle: React.FC<DashboardTypeProps> = ({
                 {children}
             </div>
         </div>
-        // <div className='w-full space-y-4'>
-        //     <h2 className='text-2xl font-bold text-purple-700'>
-        //         {IconWithProps}
-        //         {`${customTitle ? customTitle : title}`}
-        //     </h2>
-        //     {children}
-        // </div>
     );
 };

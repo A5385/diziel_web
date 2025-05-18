@@ -3,9 +3,9 @@ import { FormFullNameInput } from '@/components/common-form-input/FormFullNameIn
 import FormImageInput from '@/components/common-form-input/FormImageInput';
 import { FormNationalIdNumber } from '@/components/common-form-input/FormNationalIdNumber';
 import { FormNicknameInput } from '@/components/common-form-input/FormNicknameInput';
-import { FormPasswordInput } from '@/components/common-form-input/FormPasswordInput';
-import { FormPhoneInput } from '@/components/common-form-input/FormPhoneNumber';
 import FormRoleInput from '@/components/common-form-input/FormRoleInput';
+import { FormPasswordInput } from '@/components/my-components/form/common-form-input/FormPasswordInput';
+import { FormPhoneInput } from '@/components/my-components/form/common-form-input/FormPhoneNumber';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 
 const useFormInput = <T extends FieldValues>({ form }: { form: UseFormReturn<T> }) => {

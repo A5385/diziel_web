@@ -22,13 +22,11 @@ const AppConfig = {
     },
     /// local storage key definition
     keys: {
-        accessTokenKey: '1',
-        refreshTokenKey: '2',
-        phoneKey: '3',
-        roleKey: '4',
-        userIdKey: '5',
-        entityIdKey: '6',
-        profileIdKey: '7',
+        phone: '3',
+        role: '4',
+        userId: '5',
+        profileId: '6',
+        nationalIdNumber: '7',
         apiKey: 'x-api-key',
         lang: 'x-lang',
     },

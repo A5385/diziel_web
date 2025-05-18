@@ -54,6 +54,8 @@
     "amount": "Amount",
     "id": "ID",
     "created-at": "Created At",
+    "updated-at": "Updated At",
+    "archived-at": "Archived At",
     "to": "To",
     "from": "From",
     "reload": "Refresh",
@@ -62,6 +64,8 @@
     "delete-title": "Confirm Delete",
     "delete-msg": "Are you sure to delete?",
     "created-by": "Created By",
+    "updated-by": "Updated By",
+    "archived-by": "Archived By",
     "display-columns": "Display Columns",
     "toggle-columns": "Toggle Columns",
     "loading": "Loading ...",
@@ -150,5 +154,12 @@
     "comments": "Comments",
     "add-another-visa": "Add another visa",
     "national-id-face": "National ID (face)",
-    "national-id-back": "National ID (back)"
+    "national-id-back": "National ID (back)",
+    "driver-info": "Driver Information",
+    "driver-step-basic": "Driver Information",
+    "driver-step-drug": "Drug Test",
+    "driver-step-license": "Driver License",
+    "driver-step-passport": "Driver Passport",
+    "driver-step-visas": "Driver Visas",
+    "audit": "Audit"
 }

@@ -2,7 +2,7 @@
 
 import { AgencySchema } from '@/types/schema';
 
-const AgencyForm = ({ data }: { data?: AgencySchema | undefined }) => {
+const AgencyForm = ({ agencyData }: { agencyData?: AgencySchema | undefined }) => {
     return <div>AgencyForm</div>;
 };
 

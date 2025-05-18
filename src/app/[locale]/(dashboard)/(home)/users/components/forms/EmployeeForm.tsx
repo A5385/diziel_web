@@ -2,7 +2,7 @@
 
 import { EmployeeSchema } from '@/types/schema';
 
-const EmployeeForm = ({ data }: { data?: EmployeeSchema | undefined }) => {
+const EmployeeForm = ({ employeeData }: { employeeData?: EmployeeSchema | undefined }) => {
     return <div>EmployeeForm</div>;
 };
 

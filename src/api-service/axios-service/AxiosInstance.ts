@@ -1,6 +1,7 @@
 import { default as AppConfig, default as constants } from '@/constants/AppSettings';
 import { getLocale } from '@/helpers/get-locale';
 import axios, { AxiosError } from 'axios';
+import { CheckAuthentication } from '../data-service/AuthService';
 
 const serverUrl = constants.api.serverUrl;
 const apiKey = constants.api.apiKey;
@@ -15,21 +16,8 @@ export const axiosInstance = axios.create({
 });
 axiosInstance.interceptors.request.use(
     async (config) => {
-        // let token = TokenService.accessToken.get();
+        await CheckAuthentication();
 
-        // if (token) {
-        //     if (isWebTokenExpired(token)) {
-        //         const refreshToken = TokenService.refreshToken.get();
-        //         if (refreshToken) {
-        //             const rToken = await refreshWebAccessToken(refreshToken);
-        //             if (rToken) {
-        //                 token = rToken;
-        //             }
-        //         }
-        //     }
-
-        //     config.headers.Authorization = `Bearer ${token}`;
-        // }
         const locale = await getLocale();
         if (locale) {
             config.headers[AppConfig.keys.lang] = locale;

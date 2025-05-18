@@ -3,7 +3,7 @@ import { LocaleType, useCustomTranslations } from '@/hooks/useCustomTranslations
 import { cn } from '@/lib/utils';
 import { UploadIcon } from '@/styles/icons';
 import { useLocale } from 'next-intl';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import React, { DetailedHTMLProps, useCallback, useRef, useState } from 'react';
 import Cropper, { ReactCropperElement } from 'react-cropper';
 import { useDropzone } from 'react-dropzone';

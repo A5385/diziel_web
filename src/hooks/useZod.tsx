@@ -1,4 +1,10 @@
-import { UserRole } from '@/types/prisma';
+import {
+    DriverGrade,
+    DriverLicenseType,
+    DriverType,
+    DrugTestResult,
+    UserRole,
+} from '@/types/prisma';
 import { useTranslations } from 'next-intl';
 import { z } from 'zod';
 
@@ -6,6 +12,7 @@ const useZod = () => {
     const t = useTranslations();
 
     const fileValidator = z.custom<File>((v) => v instanceof File).optional();
+    const dateValidator = z.date().optional();
 
     const mandatoryString = (min = 3, field = 'field') => {
         return z
@@ -41,7 +48,56 @@ const useZod = () => {
         face: fileValidator,
         back: fileValidator,
     });
-    const image = fileValidator;
+
+    const driverType = z.nativeEnum(DriverType).optional();
+    const grade = z.nativeEnum(DriverGrade).optional();
+
+    const drugTest = z
+        .object({
+            testDate: dateValidator,
+            result: z.nativeEnum(DrugTestResult),
+            testImage: fileValidator,
+        })
+        .optional();
+
+    const license = z
+        .object({
+            number: z.string().optional(),
+            type: z.nativeEnum(DriverLicenseType).optional(),
+            traffic_unit: z.string().optional(),
+            face: fileValidator,
+            back: fileValidator,
+            startDate: dateValidator,
+            endDate: dateValidator,
+        })
+        .optional();
+
+    const visa = z
+        .object({
+            id: z.string().optional(),
+            image: fileValidator,
+            startDate: dateValidator,
+            endDate: dateValidator,
+            country: z.string().optional(),
+            comments: z.string().optional(),
+        })
+        .optional();
+
+    const passport = z
+        .object({
+            number: z.string().optional(),
+            face: fileValidator,
+            back: fileValidator,
+            visas: z.array(visa).optional(),
+        })
+        .optional();
+
+    const documents = z.object({
+        criminalRecord: fileValidator,
+        drugTest,
+        license,
+        passport,
+    });
 
     return {
         fields: {
@@ -54,7 +110,10 @@ const useZod = () => {
             nickname,
             address,
             national,
+        },
+        validations: {
             fileValidator,
+            dateValidator,
         },
         schemas: {
             loginSchema: z.object({ phone, password }),
@@ -62,12 +121,17 @@ const useZod = () => {
                 email,
                 fullName,
                 nickname,
-                image,
+                image: fileValidator,
             }),
             userSchema: z.object({
                 phone,
                 role,
                 nationalIdNumber,
+            }),
+            driverSchema: z.object({
+                driverType,
+                grade,
+                documents,
             }),
         },
     };

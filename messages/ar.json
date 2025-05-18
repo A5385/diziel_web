@@ -54,6 +54,8 @@
     "amount": "المبلغ",
     "id": "الرقم التعريفي",
     "created-at": "تم الإنشاء في",
+    "updated-at": "تم التعديل في",
+    "archived-at": "تم الحفظ في",
     "to": "إلى",
     "from": "من",
     "reload": "تحديث",
@@ -62,6 +64,8 @@
     "delete-title": "تأكيد الحذف",
     "delete-msg": "هل أنت متأكد من الحذف؟",
     "created-by": "تم الإنشاء بواسطة",
+    "updated-by": "تم التعديل بواسطة",
+    "archived-by": "تم الحفظ بواسطة",
     "display-columns": "عرض الأعمدة",
     "toggle-columns": "تبديل الأعمدة",
     "loading": "جاري التحميل ...",
@@ -150,5 +154,12 @@
     "comments": "ملاحظات",
     "add-another-visa": "إضافة تأشيرة أخرى",
     "national-id-face": "بطاقة الهوية ( وجه )",
-    "national-id-back": "بطاقة الهوية ( ظهر )"
+    "national-id-back": "بطاقة الهوية ( ظهر )",
+    "driver-info": "بيانات السائق",
+    "driver-step-basic": "بيانات السائق",
+    "driver-step-drug": "اختبار المخدرات",
+    "driver-step-license": "رخصة قيادة السائق",
+    "driver-step-passport": "جواز سفر السائق",
+    "driver-step-visas": "تأشيرات السائق",
+    "audit": "السجل"
 }

@@ -37,7 +37,7 @@ const UserData = ({
     columns: ColumnDef<UserSchema>[];
     queryState: ReturnType<typeof useQueryState<UserSchema>>;
     moduleState: ReturnType<typeof useModuleState>;
-    userData: UseQueryResult<UseGetTableResponseType<UserSchema>>;
+    userData: UseQueryResult<UseGetTableResponseType<UserSchema> | undefined>;
     customFilter: ReactNode;
     reset: () => void;
     title: string;

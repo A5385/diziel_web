@@ -1,11 +1,11 @@
 'use client';
 import { UploadNationalImages } from '@/api-service/data-service/ProfileService';
-import { AKForm } from '@/components/my-components/AKForm';
-import { AKFormInput } from '@/components/my-components/AKFormInput';
+import { AKForm } from '@/components/my-components/form/AKForm';
+import { AKFormInput } from '@/components/my-components/form/AKFormInput';
 import AppConfig from '@/constants/AppSettings';
 import useZod from '@/hooks/useZod';
 import { useDialog } from '@/providers/DialogProvider';
-import { NationalIdentitySchema } from '@/types/schema';
+import { ProfileSchema } from '@/types/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -13,7 +13,7 @@ import { z } from 'zod';
 import FormNavigation from './FormNavigation';
 import { useUserForm } from './UserFormContext';
 
-const NationalIdForm = ({ data }: { data?: NationalIdentitySchema | undefined }) => {
+const NationalIdForm = ({ profileData }: { profileData?: ProfileSchema | undefined }) => {
     const { setStep, profileId, role, reset } = useUserForm();
     const { handleCloseDialog } = useDialog();
     const t = useTranslations();
@@ -32,12 +32,14 @@ const NationalIdForm = ({ data }: { data?: NationalIdentitySchema | undefined })
     });
     const stopStep =
         role === 'driver' || role === 'agency' || role === 'agencyAgent' || role === 'employee';
+
     const uploadNationalImages = UploadNationalImages();
     const submit: SubmitHandler<FormType> = async (data) => {
-        if (profileId) {
+        const id = profileData?.id ?? profileId;
+        if (id) {
             const res = await uploadNationalImages.mutateAsync({
                 data: { nationalFace: data?.face, nationalBack: data?.back },
-                id: profileId,
+                id,
             });
             if (res) {
                 if (stopStep) {
@@ -54,11 +56,18 @@ const NationalIdForm = ({ data }: { data?: NationalIdentitySchema | undefined })
             <AKForm
                 form={form}
                 submit={submit}
-                submitButtonTitle={!stopStep ? 'finish' : 'next'}
                 columns={2}
-                actionItemPosition='end'
                 title='national-id-info'
-                submitButtonFullWidth
+                formButtons={
+                    <FormNavigation
+                        show={profileData !== undefined}
+                        submitProps={{
+                            fullWidth: true,
+                            title: profileData ? 'update' : stopStep ? 'next' : 'finish',
+                            form,
+                        }}
+                    />
+                }
             >
                 <AKFormInput
                     inputType='upload-file'
@@ -66,7 +75,7 @@ const NationalIdForm = ({ data }: { data?: NationalIdentitySchema | undefined })
                     form={form}
                     descStyle='text-center'
                     control={form.control}
-                    src='/avatar/national-identity-avatar.png'
+                    src={profileData?.national?.face ?? '/avatar/national-identity-avatar.png'}
                     label={t('national-id-face')}
                     shape='square-horizontal'
                     accept='.jpeg,.jpg,.png,web'
@@ -78,13 +87,12 @@ const NationalIdForm = ({ data }: { data?: NationalIdentitySchema | undefined })
                     form={form}
                     descStyle='text-center'
                     control={form.control}
-                    src='/avatar/national-identity-avatar.png'
+                    src={profileData?.national?.back ?? '/avatar/national-identity-avatar.png'}
                     label={t('national-id-back')}
                     shape='square-horizontal'
                     accept='.jpeg,.jpg,.png,web'
                     required
                 />
-                <FormNavigation show={data !== undefined} />
             </AKForm>
         </>
     );
