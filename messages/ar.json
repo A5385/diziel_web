@@ -161,5 +161,16 @@
     "driver-step-license": "رخصة قيادة السائق",
     "driver-step-passport": "جواز سفر السائق",
     "driver-step-visas": "تأشيرات السائق",
-    "audit": "السجل"
+    "audit": "السجل",
+    "actions": "إجراءات",
+    "driver-documents": "مستندات السائق",
+    "close": "اغلاق",
+    "grade": "الدرجة",
+    "documents": "المستندات",
+    "license": "الرخصة",
+    "show": "عرض",
+    "hide": "إخفاء",
+    "driver-license": "رخصة السائق",
+    "driver-passport": "جواز سفر السائق",
+    "drug-test": "اختبار المخدرات"
 }

@@ -113,15 +113,25 @@ const DriverForm = ({ driverData }: { driverData?: DriverSchema | undefined }) =
     const submit = async (data: FormType) => {
         if (!profileId) return;
 
-        const { documents, driverType, ...rest } = data;
+        const { documents, driverType, grade } = data;
 
         // 1️⃣  save/update driver profile (no files yet)
         const sendProfileData = {
-            ...rest,
-            profileId,
+            grade,
             driverType,
+            ...(!driverData && { profileId }),
             documents: {
-                ...documents,
+                drugTest: {
+                    testDate: documents?.drugTest?.testDate,
+                    result: documents?.drugTest?.result,
+                },
+                license: {
+                    number: documents?.license?.number,
+                    startDate: documents?.license?.startDate,
+                    endDate: documents?.license?.endDate,
+                    traffic_unit: documents?.license?.traffic_unit,
+                    type: documents?.license?.type,
+                },
                 passport:
                     driverType !== 'national' ? { number: documents.passport?.number } : undefined,
             },
@@ -192,18 +202,27 @@ const DriverForm = ({ driverData }: { driverData?: DriverSchema | undefined }) =
             // visas
             if (documents.passport?.visas?.length) {
                 const visaTasks = documents.passport.visas.map(async (v) => {
-                    // create or update visa row
+                    const id = v?.id;
+                    const image = v?.image;
+
+                    const sendData = {
+                        country: v?.country,
+                        startDate: v?.startDate,
+                        endDate: v?.endDate,
+                        comments: v?.comments,
+                        ...(id ? { id } : { passportId: doc.passport!.id }),
+                    };
                     const visaRes = v?.id
-                        ? await updateVisa.mutateAsync({ id: v.id, data: { dto: v } })
+                        ? await updateVisa.mutateAsync({ id, data: sendData })
                         : await createVisa.mutateAsync({
-                              data: { dto: { ...v, passportId: doc.passport!.id } },
+                              data: sendData,
                           });
 
                     // upload visa image (if any)
-                    if (visaRes && v?.image) {
+                    if (visaRes && image) {
                         await uploadVisaImage.mutateAsync({
                             id: visaRes.id,
-                            data: { file: v?.image },
+                            data: { file: image },
                         });
                     }
                 });

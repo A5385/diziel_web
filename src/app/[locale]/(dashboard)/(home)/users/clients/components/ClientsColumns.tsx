@@ -117,15 +117,7 @@ const ClientsColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserS
             enableSorting: false,
             cell: ({ row }) => {
                 const item = row.original;
-                return (
-                    <ActionMenu
-                        commonMenuProps={{
-                            itemId: item?.id ?? '',
-                            editType: 'edit-user',
-                            dialogSize: '5xl',
-                        }}
-                    />
-                );
+                return <ActionMenu itemId={item?.id ?? ''} editType='edit-user' dialogSize='3xl' />;
             },
         },
     ];

@@ -29,6 +29,8 @@ const AllUserColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserS
         {
             accessorKey: 'image',
             header: t('image'),
+            enableColumnFilter: false,
+            enableSorting: false,
             cell: ({ row }) => {
                 const user = row.original;
                 return <UserAvatar user={user} />;
@@ -71,6 +73,7 @@ const AllUserColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserS
             accessorKey: 'role',
             header: t('role'),
             enableColumnFilter: false,
+            enableSorting: false,
             cell: ({ row }) => {
                 const role = row?.original?.role;
                 const mapRoleColor: Record<UserRole, string> = {
@@ -113,19 +116,12 @@ const AllUserColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserS
         ...Object.values(commonColumns),
         {
             id: 'actions',
+            header: t('actions'),
             enableColumnFilter: false,
             enableSorting: false,
             cell: ({ row }) => {
                 const item = row.original;
-                return (
-                    <ActionMenu
-                        commonMenuProps={{
-                            itemId: item?.id ?? '',
-                            editType: 'edit-user',
-                            dialogSize: '3xl',
-                        }}
-                    />
-                );
+                return <ActionMenu itemId={item?.id ?? ''} editType='edit-user' dialogSize='3xl' />;
             },
         },
     ];

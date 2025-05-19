@@ -87,8 +87,9 @@ ActionSectionProps<T>) => {
                 <AKButton
                     size='icon'
                     type='button'
-                    variant={'outline'}
+                    // variant={'outline'}
                     iconBefore={<FilterIcon {...iconProps} />}
+                    color='gray'
                     onClick={() => setOpenFilter?.(!openFilter)}
                 />
                 {reset && (

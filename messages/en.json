@@ -161,5 +161,16 @@
     "driver-step-license": "Driver License",
     "driver-step-passport": "Driver Passport",
     "driver-step-visas": "Driver Visas",
-    "audit": "Audit"
+    "audit": "Audit",
+    "actions": "Actions",
+    "driver-documents": "Driver Documents",
+    "close": "Close",
+    "grade": "Grade",
+    "documents": "Documents",
+    "license": "License",
+    "show": "Show",
+    "hide": "Hide",
+    "driver-license": "Driver License",
+    "driver-passport": "Driver passport",
+    "drug-test": "Drug Test"
 }

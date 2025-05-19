@@ -1,15 +1,26 @@
 'use client';
 
 import ActionMenu from '@/components/layout/ActionMenu';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from '@/components/ui/sheet';
 import { formatPhone } from '@/helpers/formatPhone';
 import { useCommonTableColumns } from '@/hooks/CommonTableColumns';
 import { cn } from '@/lib/utils';
-import { UserRole } from '@/types/prisma';
 import { UserSchema } from '@/types/schema';
 import { ColumnsProps } from '@/types/ui';
 import { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
+import { IoDocumentsOutline } from 'react-icons/io5';
+import UserAvatar from '../../components/UserAvatar';
+import DriverDocuments from './DriverDocuments';
 
 const DriversColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserSchema>[] => {
     const t = useTranslations();
@@ -26,6 +37,16 @@ const DriversColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserS
         selectColumn,
         idColumn,
         {
+            accessorKey: 'image',
+            header: t('image'),
+            enableColumnFilter: false,
+            enableSorting: false,
+            cell: ({ row }) => {
+                const user = row.original;
+                return <UserAvatar user={user} />;
+            },
+        },
+        {
             accessorKey: 'phone',
             header: t('phone'),
             cell: ({ row }) => {
@@ -39,6 +60,59 @@ const DriversColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserS
                 );
             },
         },
+        {
+            accessorKey: 'driverType',
+            header: t('driver-type'),
+            cell: ({ row }) => {
+                return (
+                    <div className='flex flex-col font-semibold text-neutral-700 tabular-nums'>
+                        {formatPhone(row.getValue('driverType'))}
+                    </div>
+                );
+            },
+        },
+        {
+            accessorKey: 'grade',
+            header: t('grade'),
+            cell: ({ row }) => {
+                return (
+                    <div className='flex flex-col font-semibold text-neutral-700 tabular-nums'>
+                        {formatPhone(row.getValue('grade'))}
+                    </div>
+                );
+            },
+        },
+        {
+            accessorKey: 'documents',
+            header: t('documents'),
+            cell: ({ row }) => {
+                const documents = row.original?.profile?.driver?.documents;
+
+                return (
+                    <Sheet>
+                        <SheetTrigger asChild>
+                            <Button variant='outline'>
+                                <IoDocumentsOutline />
+                            </Button>
+                        </SheetTrigger>
+                        <SheetContent className='sm:!max-w-3xl'>
+                            <SheetHeader className='flex w-full items-center justify-center'>
+                                <SheetTitle className='text-5xl font-bold'>
+                                    {t('driver-documents')}
+                                </SheetTitle>
+                            </SheetHeader>
+                            <DriverDocuments documents={documents} />
+                            <SheetFooter>
+                                <SheetClose asChild>
+                                    <Button type='button'>{t('close')}</Button>
+                                </SheetClose>
+                            </SheetFooter>
+                        </SheetContent>
+                    </Sheet>
+                );
+            },
+        },
+
         {
             accessorKey: 'fullName',
             header: t('fullName'),
@@ -57,35 +131,43 @@ const DriversColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserS
                 );
             },
         },
-
         {
-            accessorKey: 'role',
-            header: t('role'),
-            enableColumnFilter: false,
+            accessorKey: 'nickname',
+            header: t('nickname'),
             cell: ({ row }) => {
-                const role = row?.original?.role;
-                const mapRoleColor: Record<UserRole, string> = {
-                    admin: 'bg-red-300 text-red-700', // Important / powerful
-                    agency: 'bg-gray-300 text-gray-700', // Neutral / organizational
-                    client: 'bg-blue-200 text-blue-700', // Trustworthy / passive
-                    operator: 'bg-indigo-200 text-indigo-700', // Technical / system-related
-                    employee: 'bg-green-200 text-green-700', // Stable / active
-                    agencyAgent: 'bg-yellow-200 text-yellow-700', // Field / external rep
-                    owner: 'bg-purple-200 text-purple-700', // Executive / high-level
-                    driver: 'bg-orange-200 text-orange-700', // Active / on-the-ground
-                };
+                const name = row.original?.profile?.nickname;
+                const profileComplete = row?.original?.profile?.profileComplete;
                 return (
-                    <Badge
+                    <div
                         className={cn(
-                            mapRoleColor[role as UserRole],
-                            'flex min-w-20 flex-col items-center justify-center capitalize',
+                            profileComplete === null && 'text-sm text-red-500',
+                            'flex flex-col font-medium',
                         )}
                     >
-                        {t(role ?? 'client')}
-                    </Badge>
+                        {profileComplete ? name : t('profile-not-complete')}
+                    </div>
                 );
             },
         },
+        {
+            accessorKey: 'license',
+            header: t('license'),
+            cell: ({ row }) => {
+                const name = row.original?.profile?.nickname;
+                const profileComplete = row?.original?.profile?.profileComplete;
+                return (
+                    <div
+                        className={cn(
+                            profileComplete === null && 'text-sm text-red-500',
+                            'flex flex-col font-medium',
+                        )}
+                    >
+                        {profileComplete ? name : t('profile-not-complete')}
+                    </div>
+                );
+            },
+        },
+
         // {
         //     accessorKey: 'blocked',
         //     header: t('blocked'),
@@ -108,15 +190,7 @@ const DriversColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserS
             enableSorting: false,
             cell: ({ row }) => {
                 const item = row.original;
-                return (
-                    <ActionMenu
-                        commonMenuProps={{
-                            itemId: item?.id ?? '',
-                            editType: 'edit-user',
-                            dialogSize: '5xl',
-                        }}
-                    />
-                );
+                return <ActionMenu itemId={item?.id ?? ''} editType='edit-user' dialogSize='3xl' />;
             },
         },
     ];

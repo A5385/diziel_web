@@ -11,7 +11,7 @@
         "ts": "tsc --pretty --noEmit --incremental",
         "pre-commit": "pnpm format && pnpm lint",
         "depcheck": "npx depcheck",
-        "clean": "rm -rf .next/ node_modules/ pnpm-lock.yaml",
+        "clean": "rimraf .next/ node_modules/ pnpm-lock.yaml",
         "reset": "pnpm clean && pnpm install",
         "key-gen": "openssl rand -hex ",
         "prepare": "husky"

@@ -27,7 +27,7 @@ export const MotionSection = ({ show, children, ...props }: MotionSectionProps) 
     } = props;
 
     return (
-        <AnimatePresence>
+        <AnimatePresence mode='wait'>
             {show && (
                 <MotionDiv
                     initial={initial}
