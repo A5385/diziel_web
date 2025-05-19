@@ -568,9 +568,13 @@ var Ei = Fe((Ke) => {
     T.prototype.inspect = function () {
         let e = '',
             t = Ke.INSPECT_MAX_BYTES;
-        return ((e = this.toString('hex', 0, t)
-            .replace(/(.{2})/g, '$1 ')
-            .trim()), this.length > t && (e += ' ... '), '<Buffer ' + e + '>');
+        return (
+            (e = this.toString('hex', 0, t)
+                .replace(/(.{2})/g, '$1 ')
+                .trim()),
+            this.length > t && (e += ' ... '),
+            '<Buffer ' + e + '>'
+        );
     };
     ti && (T.prototype[ti] = T.prototype.inspect);
     T.prototype.compare = function (e, t, r, n, i) {

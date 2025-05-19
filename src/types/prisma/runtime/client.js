@@ -1085,14 +1085,14 @@ var Ql = Q((M0, qe) => {
             length: r = Vl,
             fingerprint: n = jl({ random: e }),
         } = {}) =>
-            (function() {
+            function () {
                 let o = bf(e),
                     s = Date.now().toString(36),
                     a = t().toString(36),
                     l = Yi(r, e),
                     u = `${s + l + a + n}`;
                 return `${o + ql(u).substring(1, r)}`;
-            }),
+            },
         vf = Bl(),
         Tf = (e, { minLength: t = 2, maxLength: r = hr } = {}) => {
             let n = e.length,

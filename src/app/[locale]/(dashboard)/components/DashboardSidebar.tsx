@@ -36,7 +36,7 @@ const DashboardSidebar = () => {
                     ar ? '-left-4' : '-right-4',
                     'absolute bottom-[3%] flex flex-col items-center justify-center rounded-full shadow-md',
                 )}
-                icon={<DashboardIcon color='white' />}
+                iconBefore={<DashboardIcon color='white' />}
                 onClick={() => setOpen(!open)}
             />
 

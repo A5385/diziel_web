@@ -38,7 +38,7 @@ const Error: FC<ErrorPropsType> = ({ error, reset }: ErrorPropsType) => {
                     <AKButton
                         type='button'
                         variant='outline'
-                        icon={<GoBackIcon size={16} />}
+                        iconBefore={<GoBackIcon size={16} />}
                         title={t('go-back')}
                         onClick={() => back()}
                         // className='!w-full'
@@ -46,7 +46,7 @@ const Error: FC<ErrorPropsType> = ({ error, reset }: ErrorPropsType) => {
                     <AKButton
                         type='button'
                         variant='outline'
-                        icon={<ResetIcon size={16} />}
+                        iconBefore={<ResetIcon size={16} />}
                         title={t('try-again')}
                         onClick={reload}
                         // className='!w-full'

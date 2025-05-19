@@ -6,11 +6,9 @@ import { ReactNode, useEffect, useRef } from 'react';
 import { cn } from '../../lib/utils';
 import { useDialog } from '../../providers/DialogProvider';
 import { CloseIcon } from '../../styles/icons';
-import { BtnPropsType } from './AKButton';
 import { MotionSection } from './MotionSection';
 
 export type AKDialogType = {
-    buttonProps?: BtnPropsType;
     titleDialog?: string;
     descDialog?: string;
     children?: ReactNode;

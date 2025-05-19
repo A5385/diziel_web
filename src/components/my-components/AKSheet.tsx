@@ -12,7 +12,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '../ui/sheet';
-import { AKButton, BtnPropsType } from './AKButton';
+import { AKButton, BtnProps } from './AKButton';
 
 export type AKSheetPropsType = {
     buttonTitle?: string;
@@ -42,7 +42,7 @@ const AKSheet: FC<AKSheetPropsType> = ({
     const size: BtnSize = buttonTitle ? 'default' : 'icon';
     const type: btnType = 'button';
 
-    const btnProps: BtnPropsType = {
+    const btnProps: BtnProps = {
         type,
         size,
         title: buttonTitle,
@@ -50,7 +50,7 @@ const AKSheet: FC<AKSheetPropsType> = ({
         ...restOfProps,
     };
 
-    const closeBtnProps: BtnPropsType = {
+    const closeBtnProps: BtnProps = {
         title: 'Close',
         type,
         onClick: () => toggleDrawer(false),

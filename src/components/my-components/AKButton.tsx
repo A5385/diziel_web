@@ -7,7 +7,7 @@ import { ReloadIcon } from '@radix-ui/react-icons';
 import { VariantProps } from 'class-variance-authority';
 import { forwardRef, ReactNode } from 'react';
 
-type BtnProps = React.ComponentProps<'button'> &
+export type BtnProps = React.ComponentProps<'button'> &
     VariantProps<typeof buttonVariants> & {
         asChild?: boolean;
         title?: string;

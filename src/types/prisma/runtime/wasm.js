@@ -28,7 +28,11 @@ var nt = (t, e, r) => (
 function xr(t, e) {
     if (((e = e.toLowerCase()), e === 'utf8' || e === 'utf-8')) return new y(os.encode(t));
     if (e === 'base64' || e === 'base64url')
-        return ((t = t.replace(/-/g, '+').replace(/_/g, '/')), (t = t.replace(/[^A-Za-z0-9+/]/g, '')), new y([...atob(t)].map((r) => r.charCodeAt(0))));
+        return (
+            (t = t.replace(/-/g, '+').replace(/_/g, '/')),
+            (t = t.replace(/[^A-Za-z0-9+/]/g, '')),
+            new y([...atob(t)].map((r) => r.charCodeAt(0)))
+        );
     if (e === 'binary' || e === 'ascii' || e === 'latin1' || e === 'latin-1')
         return new y([...t].map((r) => r.charCodeAt(0)));
     if (e === 'ucs2' || e === 'ucs-2' || e === 'utf16le' || e === 'utf-16le') {
@@ -50,20 +54,27 @@ function rs(t) {
         ),
         n = r.map((a) => a.replace('get', 'read').replace('set', 'write')),
         i = (a, f) =>
-            (function(h = 0) {
+            function (h = 0) {
                 return (
                     B(h, 'offset'),
                     Y(h, 'offset'),
                     V(h, 'offset', this.length - 1),
                     new DataView(this.buffer)[r[a]](h, f)
                 );
-            }),
+            },
         o = (a, f) =>
-            (function(h, T = 0) {
+            function (h, T = 0) {
                 let C = r[a].match(/set(\w+\d+)/)[1].toLowerCase(),
                     k = is[C];
-                return (B(T, 'offset'), Y(T, 'offset'), V(T, 'offset', this.length - 1), ns(h, 'value', k[0], k[1]), new DataView(this.buffer)[r[a]](T, h, f), T + parseInt(r[a].match(/\d+/)[0]) / 8);
-            }),
+                return (
+                    B(T, 'offset'),
+                    Y(T, 'offset'),
+                    V(T, 'offset', this.length - 1),
+                    ns(h, 'value', k[0], k[1]),
+                    new DataView(this.buffer)[r[a]](T, h, f),
+                    T + parseInt(r[a].match(/\d+/)[0]) / 8
+                );
+            },
         s = (a) => {
             a.forEach((f) => {
                 f.includes('Uint') && (t[f.replace('Uint', 'UInt')] = t[f]),

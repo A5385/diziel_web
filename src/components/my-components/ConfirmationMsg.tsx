@@ -37,7 +37,7 @@ const ConfirmationMsg: React.FC<ConfirmMsgType> = ({
                 <AKButton
                     title={confirmLabel}
                     color={confirmColor}
-                    icon={<CheckIcon />}
+                    iconBefore={<CheckIcon />}
                     onClick={confirmAction}
                     {...commonProps}
                 />

@@ -15,7 +15,7 @@ export const ResetButton: React.FC<RefetchDataType> = ({ reset, hideResetIcon })
             size='icon'
             color='gray'
             onClick={reset}
-            icon={hideResetIcon ? <></> : <ResetIcon size={20} />}
+            iconBefore={hideResetIcon ? <></> : <ResetIcon size={20} />}
         />
     );
 };

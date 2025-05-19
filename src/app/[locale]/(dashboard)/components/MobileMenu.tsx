@@ -33,7 +33,7 @@ const MobileMenu = () => {
                 <AKButton
                     variant={'outline'}
                     size='icon'
-                    icon={<DashboardIcon />}
+                    iconBefore={<DashboardIcon />}
                     type='button'
                     dir={ar ? 'rtl' : 'ltr'}
                 />

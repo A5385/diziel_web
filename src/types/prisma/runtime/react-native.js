@@ -580,9 +580,13 @@ var Pi = Ae((rt) => {
     T.prototype.inspect = function () {
         let e = '',
             t = rt.INSPECT_MAX_BYTES;
-        return ((e = this.toString('hex', 0, t)
-            .replace(/(.{2})/g, '$1 ')
-            .trim()), this.length > t && (e += ' ... '), '<Buffer ' + e + '>');
+        return (
+            (e = this.toString('hex', 0, t)
+                .replace(/(.{2})/g, '$1 ')
+                .trim()),
+            this.length > t && (e += ' ... '),
+            '<Buffer ' + e + '>'
+        );
     };
     ii && (T.prototype[ii] = T.prototype.inspect);
     T.prototype.compare = function (e, t, r, n, i) {

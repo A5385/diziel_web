@@ -2,6 +2,7 @@
 node_modules
 .next
 .turbo
+/src/types/prisma
 
 # Ignore environment files
 *.env.local
