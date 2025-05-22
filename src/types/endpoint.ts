@@ -35,6 +35,12 @@ type DriverEndpoints =
     | 'driver/upload-visa-image'
     | 'driver/upload-driver-passport';
 
-export interface EndpointsType {
-    endpoint: AuthEndpoints | UserEndpoints | CountEndpoint | ProfileEndpoints | DriverEndpoints;
-}
+type TrucksEndpoints = 'truck/create' | 'truck/update' | 'truck/delete' | 'truck/find-all';
+
+export type EndpointsType =
+    | AuthEndpoints
+    | UserEndpoints
+    | CountEndpoint
+    | ProfileEndpoints
+    | DriverEndpoints
+    | TrucksEndpoints;

@@ -13,12 +13,12 @@ const AgencyForm = lazy(() => import('./AgencyForm'));
 const AgencyAgentForm = lazy(() => import('./AgencyAgentForm'));
 const EmployeeForm = lazy(() => import('./EmployeeForm'));
 
-const UserForm = ({ user }: { user?: UserSchema }) => {
+const UserForm = ({ editUser }: { editUser?: UserSchema }) => {
     // console.log('🚀 >  UserForm >  user:', user);
 
     return (
         <UserFormProvider>
-            <RenderForms user={user} />
+            <RenderForms user={editUser} />
         </UserFormProvider>
     );
 };

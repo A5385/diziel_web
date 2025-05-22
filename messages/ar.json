@@ -172,5 +172,22 @@
     "hide": "إخفاء",
     "driver-license": "رخصة السائق",
     "driver-passport": "جواز سفر السائق",
-    "drug-test": "اختبار المخدرات"
+    "drug-test": "اختبار المخدرات",
+    "plate-number": "رقم اللوحة",
+    "plate-number-ph": "أدخل رقم لوحة الشاحنة",
+    "type-ph": "إدخل النوع",
+    "brand": "الماركة",
+    "brand-ph": "أدخل ماركة الشاحنة",
+    "axle-count": "عدد المحاور",
+    "model-year": "سنة الصنع",
+    "cargo-type": "نوع الحمولة",
+    "cargo-type-ph": "أدخل نوع حمولة الشاحنة",
+    "max-load": "الحمولة القصوى",
+    "safety-equipment": "معدات السلامة",
+    "safety-equipment-ph": "أدخل معدات السلامة للشاحنة",
+    "chassis-number": "رقم الهيكل",
+    "chassis-number-ph": "أدخل رقم هيكل الشاحنة",
+    "engine-number": "رقم المحرك",
+    "engine-number-ph": "أدخل رقم محرك الشاحنة",
+    "license-number-ph": "إدخل رقم اللوحة"
 }

@@ -1,5 +1,5 @@
-const TrucksPage = () => {
-    return <div>TrucksPage</div>;
-};
+import TruckData from './components/TruckData';
+
+const TrucksPage = () => <TruckData />;
 
 export default TrucksPage;

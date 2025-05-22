@@ -172,5 +172,22 @@
     "hide": "Hide",
     "driver-license": "Driver License",
     "driver-passport": "Driver passport",
-    "drug-test": "Drug Test"
+    "drug-test": "Drug Test",
+    "plate-number": "Plate Number",
+    "plate-number-ph": "Enter truck plate number",
+    "type-ph": "Enter type",
+    "brand": "Brand",
+    "brand-ph": "Enter truck brand",
+    "axle-count": "Axle Count",
+    "model-year": "Model Year",
+    "cargo-type": "Cargo Type",
+    "cargo-type-ph": "Enter truck cargo type",
+    "max-load": "Max Load",
+    "safety-equipment": "Safety Equipment",
+    "safety-equipment-ph": "Enter truck safety equipment",
+    "chassis-number": "Chassis Number",
+    "chassis-number-ph": "Enter truck chassis number",
+    "engine-number": "Engine Number",
+    "engine-number-ph": "Enter truck engine number",
+    "license-number-ph": "Enter License number"
 }

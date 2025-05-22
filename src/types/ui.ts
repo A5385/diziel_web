@@ -49,7 +49,7 @@ export type ColumnsProps<T extends object> = {
 export interface TanstackTableProps<TValue> {
     // table data
     loadingData?: boolean | undefined;
-    tableData?: UseGetTableResponseType<TValue>;
+    tableData?: UseGetTableResponseType<TValue> | null | undefined;
     columns?: ColumnDef<TValue>[];
 
     // pagination

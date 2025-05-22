@@ -13,6 +13,8 @@ const useZod = () => {
 
     const fileValidator = z.custom<File>((v) => v instanceof File).optional();
     const dateValidator = z.date().optional();
+    const optionalString = z.string().optional();
+    const optionalNumber = z.number().optional();
 
     const mandatoryString = (min = 3, field = 'field') => {
         return z
@@ -20,6 +22,7 @@ const useZod = () => {
             .trim()
             .min(min, { message: t('field-required', { field }) });
     };
+
     const phone = z.string().min(3);
     // .regex(/^(?:\+20|0)?(10|11|12|15)\d{8}$/, t('phone-validation'));
     const role = z.nativeEnum(UserRole);
@@ -99,6 +102,20 @@ const useZod = () => {
         passport,
     });
 
+    const truckSchema = z.object({
+        plateNumber: mandatoryString(3, t('plate-number')),
+        licenseNumber: mandatoryString(3, t('license-number')),
+        type: optionalString,
+        brand: optionalString,
+        axleCount: optionalNumber,
+        modelYear: optionalNumber,
+        cargoType: optionalString,
+        maxLoad: optionalNumber,
+        safetyEquipment: optionalString,
+        chassisNumber: optionalString,
+        engineNumber: optionalString,
+    });
+
     return {
         fields: {
             phone,
@@ -133,6 +150,7 @@ const useZod = () => {
                 grade,
                 documents,
             }),
+            truckSchema,
         },
     };
 };

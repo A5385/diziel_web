@@ -2,7 +2,7 @@
 
 import { useDialog } from '@/providers/DialogProvider';
 import { DialogType } from '@/types/dialog';
-import { UserSchema } from '@/types/schema';
+import { TruckSchema, UserSchema } from '@/types/schema';
 import { DataType } from '@/types/ui';
 import { useTranslations } from 'next-intl';
 import { lazy, ReactNode } from 'react';
@@ -10,6 +10,9 @@ import { lazy, ReactNode } from 'react';
 const ConfirmationMsg = lazy(() => import('../ConfirmationMsg'));
 const UserForm = lazy(
     () => import('@/app/[locale]/(dashboard)/(home)/users/components/forms/UserForm'),
+);
+const TruckForm = lazy(
+    () => import('@/app/[locale]/(dashboard)/(home)/trucks/components/TruckForm'),
 );
 
 type ModuleModalProps<TData> = {
@@ -53,7 +56,9 @@ const ModuleModal = <TData,>({
         ),
 
         'new-user': <UserForm />,
-        'edit-user': <UserForm user={data as UserSchema | undefined} />,
+        'edit-user': <UserForm editUser={data as UserSchema | undefined} />,
+        'new-truck': <TruckForm />,
+        'edit-truck': <TruckForm editTruck={data as TruckSchema | undefined} />,
     };
 
     return content[dialogType ?? ''];

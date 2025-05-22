@@ -34,7 +34,7 @@ export type PFSProps = {
 
 export type CommonAxiosType = {
     queryParams?: PFSProps;
-    endpoint: EndpointsType['endpoint'];
+    endpoint: EndpointsType;
     id?: string | null;
     data?: object;
     headerType?: HeaderType;
@@ -52,7 +52,7 @@ export type NotifyMsgType = {
 };
 
 type CommonProps = {
-    endpoint: EndpointsType['endpoint'];
+    endpoint: EndpointsType;
     queryKey: QueryKey;
 };
 export type QueryPropsType = CommonProps & {

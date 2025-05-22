@@ -40,4 +40,11 @@ export type DialogSizeType =
     | '7xl'
     | 'full';
 
-export type DialogType = '' | 'delete' | 'delete-many' | 'new-user' | 'edit-user';
+export type DialogType =
+    | ''
+    | 'delete'
+    | 'delete-many'
+    | 'new-user'
+    | 'edit-user'
+    | 'new-truck'
+    | 'edit-truck';

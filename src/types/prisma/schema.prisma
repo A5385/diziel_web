@@ -220,7 +220,7 @@ model Driver {
   driverType      DriverType
   grade           DriverGrade
   /////////////////////////////
-  profile         Profile          @relation(fields: [profileId], references: [id])
+  profile         Profile          @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   profileId       String           @unique
   driverTruck     DriverTruck[]
   /**
@@ -379,7 +379,7 @@ model Visa {
 
 model AgencyAgent {
   id           String                  @id @default(cuid())
-  profile      Profile                 @relation(fields: [profileId], references: [id])
+  profile      Profile                 @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   profileId    String                  @unique
   delegations  AgencyAgentDelegation[]
   // audit fields
@@ -419,7 +419,7 @@ model Agency {
   phone2             String?
   phone3             String?
   email              String?
-  profile            Profile   @relation(fields: [profileId], references: [id])
+  profile            Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   profileId          String    @unique
   // audit fields
   createdAt          DateTime  @default(now())
@@ -436,7 +436,7 @@ model Agency {
 model Employee {
   id           String    @id @default(cuid())
   cv           String?
-  profile      Profile   @relation(fields: [profileId], references: [id])
+  profile      Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   profileId    String    @unique
   // audit fields
   createdAt    DateTime  @default(now())
@@ -457,11 +457,11 @@ model Employee {
 
 model Truck {
   id              String          @id @default(cuid())
-  plateNumber     String          @unique
-  type            String
-  brand           String
-  axleCount       Int
-  modelYear       Int
+  plateNumber     String?         @unique
+  type            String?
+  brand           String?
+  axleCount       Int?
+  modelYear       Int?
   cargoType       String?
   maxLoad         Float?
   safetyEquipment String?

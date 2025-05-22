@@ -85,6 +85,8 @@ const DriversColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserS
         {
             accessorKey: 'documents',
             header: t('documents'),
+            enableColumnFilter: false,
+            enableSorting: false,
             cell: ({ row }) => {
                 const documents = row.original?.profile?.driver?.documents;
 
