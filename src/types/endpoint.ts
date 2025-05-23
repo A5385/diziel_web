@@ -44,10 +44,19 @@ type TrucksEndpoints =
     | 'truck/upload-license-image'
     | 'truck/upload-truck-image';
 
+type TrailerEndpoints =
+    | 'trailer/create'
+    | 'trailer/update'
+    | 'trailer/delete'
+    | 'trailer/find-all'
+    | 'trailer/upload-license-image'
+    | 'trailer/upload-trailer-image';
+
 export type EndpointsType =
     | AuthEndpoints
     | UserEndpoints
     | CountEndpoint
     | ProfileEndpoints
     | DriverEndpoints
-    | TrucksEndpoints;
+    | TrucksEndpoints
+    | TrailerEndpoints;

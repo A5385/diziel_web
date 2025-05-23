@@ -47,4 +47,6 @@ export type DialogType =
     | 'new-user'
     | 'edit-user'
     | 'new-truck'
-    | 'edit-truck';
+    | 'edit-truck'
+    | 'new-trailer'
+    | 'edit-trailer';

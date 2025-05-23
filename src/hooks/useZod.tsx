@@ -125,6 +125,28 @@ const useZod = () => {
             right: fileValidator,
         }),
     });
+    const trailerSchema = z.object({
+        plateNumber: mandatoryString(3, t('plate-number')),
+        licenseNumber: mandatoryString(3, t('license-number')),
+        type: optionalString,
+        brand: optionalString,
+        axleCount: optionalNumber,
+        modelYear: optionalNumber,
+        cargoType: optionalString,
+        maxLoad: optionalNumber,
+        safetyEquipment: optionalString,
+        chassisNumber: optionalString,
+        licenseImage: z.object({
+            face: fileValidator,
+            back: fileValidator,
+        }),
+        truckImage: z.object({
+            front: fileValidator,
+            back: fileValidator,
+            left: fileValidator,
+            right: fileValidator,
+        }),
+    });
 
     return {
         fields: {
@@ -161,6 +183,7 @@ const useZod = () => {
                 documents,
             }),
             truckSchema,
+            trailerSchema,
         },
     };
 };

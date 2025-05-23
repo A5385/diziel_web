@@ -1,8 +1,9 @@
 'use client';
 
+import TrailerForm from '@/app/[locale]/(dashboard)/(home)/trailers/components/TrailerForm';
 import { useDialog } from '@/providers/DialogProvider';
 import { DialogType } from '@/types/dialog';
-import { TruckSchema, UserSchema } from '@/types/schema';
+import { TrailerSchema, TruckSchema, UserSchema } from '@/types/schema';
 import { DataType } from '@/types/ui';
 import { useTranslations } from 'next-intl';
 import { lazy, ReactNode } from 'react';
@@ -59,6 +60,8 @@ const ModalContent = <TData,>({
         'edit-user': <UserForm editUser={data as UserSchema | undefined} />,
         'new-truck': <TruckForm />,
         'edit-truck': <TruckForm editTruck={data as TruckSchema | undefined} />,
+        'new-trailer': <TrailerForm />,
+        'edit-trailer': <TrailerForm editTrailer={data as TrailerSchema | undefined} />,
     };
 
     return content[dialogType ?? ''];
