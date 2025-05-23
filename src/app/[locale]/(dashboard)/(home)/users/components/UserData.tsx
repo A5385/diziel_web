@@ -21,7 +21,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
 import { lazy, ReactNode, useCallback } from 'react';
 
-const ModuleModal = lazy(() => import('@/components/my-components/module/ModuleModal'));
+const ModalContent = lazy(() => import('@/components/my-components/module/ModalContent'));
 
 const UserData = ({
     columns,
@@ -37,7 +37,7 @@ const UserData = ({
     columns: ColumnDef<UserSchema>[];
     queryState: ReturnType<typeof useQueryState<UserSchema>>;
     moduleState: ReturnType<typeof useModuleState>;
-    userData: UseQueryResult<UseGetTableResponseType<UserSchema> | undefined>;
+    userData: UseQueryResult<UseGetTableResponseType<UserSchema> | null>;
     customFilter: ReactNode;
     reset: () => void;
     title: string;
@@ -91,7 +91,7 @@ const UserData = ({
                     customFilters={customFilter}
                 />
                 <AKDialog open={openDialog} size={dialogSize}>
-                    <ModuleModal data={editEntity} {...moduleAction} />
+                    <ModalContent data={editEntity} {...moduleAction} />
                 </AKDialog>
             </ModuleTableContainer>
         </ModuleContainer>

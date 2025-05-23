@@ -189,5 +189,9 @@
     "chassis-number-ph": "Enter truck chassis number",
     "engine-number": "Engine Number",
     "engine-number-ph": "Enter truck engine number",
-    "license-number-ph": "Enter License number"
+    "license-number-ph": "Enter License number",
+    "front-image": "Front Image",
+    "back-image": "Back Image",
+    "left-image": "Left Image",
+    "right-image": "Right Image"
 }

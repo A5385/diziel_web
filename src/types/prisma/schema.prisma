@@ -492,8 +492,8 @@ model TruckImage {
   left         String?
   right        String?
   /////////////////////////////
-  truck        Truck     @relation(references: [id], fields: [carId], onDelete: Cascade, onUpdate: Cascade)
-  carId        String    @unique
+  truck        Truck     @relation(references: [id], fields: [truckId], onDelete: Cascade, onUpdate: Cascade)
+  truckId      String    @unique
   // audit fields
   createdAt    DateTime  @default(now())
   createdBy    User?     @relation("created", fields: [creatorId], references: [id])
@@ -511,8 +511,8 @@ model TruckLicense {
   number       String?   @unique
   face         String?
   back         String?
-  truck        Truck     @relation(references: [id], fields: [carId], onDelete: Cascade, onUpdate: Cascade)
-  carId        String    @unique
+  truck        Truck     @relation(references: [id], fields: [truckId], onDelete: Cascade, onUpdate: Cascade)
+  truckId      String    @unique
   // audit fields
   createdAt    DateTime  @default(now())
   createdBy    User?     @relation("created", fields: [creatorId], references: [id])
@@ -531,8 +531,8 @@ model TruckOwnership {
   utilityBill    String?
   profile        Profile   @relation(fields: [profileId], references: [id])
   profileId      String    @unique
-  truck          Truck     @relation(references: [id], fields: [carId], onDelete: Cascade, onUpdate: Cascade)
-  carId          String    @unique
+  truck          Truck     @relation(references: [id], fields: [truckId], onDelete: Cascade, onUpdate: Cascade)
+  truckId        String    @unique
   // audit fields
   createdAt      DateTime  @default(now())
   createdBy      User?     @relation("created", fields: [creatorId], references: [id])
@@ -549,8 +549,8 @@ model DriverTruck {
   id           String      @id @default(cuid())
   driver       Driver      @relation(fields: [driverId], references: [id])
   driverId     String
-  truck        Truck       @relation(fields: [carId], references: [id])
-  carId        String
+  truck        Truck       @relation(fields: [truckId], references: [id])
+  truckId      String
   delegation   Delegation? @relation(fields: [delegationId], references: [id])
   delegationId String?     @unique
   active       Boolean     @default(true)
@@ -729,8 +729,8 @@ model Complaint {
   id           String          @id @default(cuid())
   raisedBy     User            @relation(fields: [raisedById], references: [id])
   raisedById   String
-  relatedTruck Truck?          @relation(fields: [carId], references: [id])
-  carId        String?
+  relatedTruck Truck?          @relation(fields: [truckId], references: [id])
+  truckId      String?
   description  String
   status       ComplaintStatus @default(open)
   // audit fields

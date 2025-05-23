@@ -114,6 +114,16 @@ const useZod = () => {
         safetyEquipment: optionalString,
         chassisNumber: optionalString,
         engineNumber: optionalString,
+        licenseImage: z.object({
+            face: fileValidator,
+            back: fileValidator,
+        }),
+        truckImage: z.object({
+            front: fileValidator,
+            back: fileValidator,
+            left: fileValidator,
+            right: fileValidator,
+        }),
     });
 
     return {

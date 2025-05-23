@@ -189,5 +189,9 @@
     "chassis-number-ph": "أدخل رقم هيكل الشاحنة",
     "engine-number": "رقم المحرك",
     "engine-number-ph": "أدخل رقم محرك الشاحنة",
-    "license-number-ph": "إدخل رقم اللوحة"
+    "license-number-ph": "إدخل رقم اللوحة",
+    "front-image": "الصورة الامامية",
+    "back-image": "الصورة الخلفية",
+    "left-image": "صورة الجانب الايسر",
+    "right-image": "صورة الجانب الايمن"
 }

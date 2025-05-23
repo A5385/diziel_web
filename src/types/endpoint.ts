@@ -24,6 +24,7 @@ type ProfileEndpoints =
     | 'profile/upload-national-images';
 
 type CountEndpoint = '';
+
 type DriverEndpoints =
     | 'driver/create'
     | 'driver/update'
@@ -35,7 +36,13 @@ type DriverEndpoints =
     | 'driver/upload-visa-image'
     | 'driver/upload-driver-passport';
 
-type TrucksEndpoints = 'truck/create' | 'truck/update' | 'truck/delete' | 'truck/find-all';
+type TrucksEndpoints =
+    | 'truck/create'
+    | 'truck/update'
+    | 'truck/delete'
+    | 'truck/find-all'
+    | 'truck/upload-license-image'
+    | 'truck/upload-truck-image';
 
 export type EndpointsType =
     | AuthEndpoints

@@ -1,4 +1,4 @@
-import { TruckSchema } from '@/types/schema';
+import { TruckImageSchema, TruckSchema } from '@/types/schema';
 import { PFSProps } from '@/types/service';
 import { UseGetTableResponseType } from '@/types/ui';
 import {
@@ -37,5 +37,20 @@ export const DeleteTruck = () => {
     return useMutationDelete({
         endpoint: 'truck/delete',
         queryKey: [TruckKey.getAll],
+    });
+};
+
+export const UploadTruckImage = () => {
+    return useMutationUpdate<TruckImageSchema>({
+        endpoint: 'truck/upload-truck-image',
+        queryKey: [TruckKey.getAll],
+        headerType: 'file',
+    });
+};
+export const UploadTruckLicense = () => {
+    return useMutationUpdate<TruckImageSchema>({
+        endpoint: 'truck/upload-license-image',
+        queryKey: [TruckKey.getAll],
+        headerType: 'file',
     });
 };

@@ -1,7 +1,13 @@
-import { CreateTruck, UpdateTruck } from '@/api-service/data-service/TruckService';
+import {
+    CreateTruck,
+    UpdateTruck,
+    UploadTruckImage,
+    UploadTruckLicense,
+} from '@/api-service/data-service/TruckService';
 import { AKForm } from '@/components/my-components/form/AKForm';
 import { AKFormInput } from '@/components/my-components/form/AKFormInput';
 import SubmitButton from '@/components/my-components/form/SubmitButton';
+import GridWrapper from '@/components/my-components/GridWrapper';
 import AppConfig from '@/constants/AppSettings';
 import useZod from '@/hooks/useZod';
 import { useDialog } from '@/providers/DialogProvider';
@@ -37,12 +43,18 @@ const TruckForm = ({ editTruck }: TruckFormProps) => {
             chassisNumber: editTruck?.chassisNumber ?? '',
             engineNumber: editTruck?.engineNumber ?? '',
             licenseNumber: editTruck?.license?.number ?? '',
+            truckImage: { front: undefined, back: undefined, left: undefined, right: undefined },
+            licenseImage: { face: undefined, back: undefined },
         },
     });
 
     const createTruck = CreateTruck();
     const updateTruck = UpdateTruck();
-    const submit: SubmitHandler<FormType> = async (data) => {
+
+    const uploadLicenseImage = UploadTruckLicense();
+    const uploadTruckImages = UploadTruckImage();
+
+    const submit: SubmitHandler<FormType> = async ({ truckImage, licenseImage, ...data }) => {
         const res =
             dialogType === 'new-truck'
                 ? await createTruck.mutateAsync({ data: { ...data } })
@@ -52,6 +64,38 @@ const TruckForm = ({ editTruck }: TruckFormProps) => {
                   });
 
         if (res) {
+            if (truckImage) {
+                const front = truckImage?.front,
+                    back = truckImage?.back,
+                    left = truckImage?.left,
+                    right = truckImage?.right;
+
+                if (front || back || left || right) {
+                    await uploadTruckImages?.mutateAsync({
+                        data: {
+                            ...(front && { frontImage: front }),
+                            ...(back && { backImage: back }),
+                            ...(left && { leftImage: left }),
+                            ...(right && { rightImage: right }),
+                        },
+                        id: res?.id,
+                    });
+                }
+            }
+            if (licenseImage) {
+                const face = licenseImage?.face,
+                    back = licenseImage?.back;
+
+                if (face || back) {
+                    await uploadLicenseImage?.mutateAsync({
+                        data: {
+                            ...(face && { licenseFace: face }),
+                            ...(back && { licenseBack: back }),
+                        },
+                        id: res?.id,
+                    });
+                }
+            }
             handleCloseDialog();
             form.reset();
         }
@@ -66,6 +110,82 @@ const TruckForm = ({ editTruck }: TruckFormProps) => {
                 <SubmitButton form={form} title={editTruck ? 'update' : 'create'} fullWidth />
             }
         >
+            <GridWrapper cols={4} className='col-span-3'>
+                <AKFormInput
+                    inputType='upload-file'
+                    name={'truckImage.front'}
+                    form={form}
+                    descStyle='text-center'
+                    control={form.control}
+                    src={editTruck?.images?.front ?? '/avatar/truck/front.jpg'}
+                    label={t('front-image')}
+                    shape='square-horizontal'
+                    accept='.jpeg,.jpg,.png,web'
+                    required
+                />
+                <AKFormInput
+                    inputType='upload-file'
+                    name={'truckImage.back'}
+                    form={form}
+                    descStyle='text-center'
+                    control={form.control}
+                    src={editTruck?.images?.back ?? '/avatar/truck/back.jpg'}
+                    label={t('back-image')}
+                    shape='square-horizontal'
+                    accept='.jpeg,.jpg,.png,web'
+                    required
+                />
+                <AKFormInput
+                    inputType='upload-file'
+                    name={'truckImage.left'}
+                    form={form}
+                    descStyle='text-center'
+                    control={form.control}
+                    src={editTruck?.images?.left ?? '/avatar/truck/left.jpg'}
+                    label={t('left-image')}
+                    shape='square-horizontal'
+                    accept='.jpeg,.jpg,.png,web'
+                    required
+                />
+                <AKFormInput
+                    inputType='upload-file'
+                    name={'truckImage.right'}
+                    form={form}
+                    descStyle='text-center'
+                    control={form.control}
+                    src={editTruck?.images?.right ?? '/avatar/truck/right.jpg'}
+                    label={t('right-image')}
+                    shape='square-horizontal'
+                    accept='.jpeg,.jpg,.png,web'
+                    required
+                />
+            </GridWrapper>
+            <GridWrapper cols={2} className='col-span-3'>
+                <AKFormInput
+                    inputType='upload-file'
+                    name={'licenseImage.face'}
+                    form={form}
+                    descStyle='text-center'
+                    control={form.control}
+                    src={editTruck?.license?.face ?? '/avatar/license_avatar.jpg'}
+                    label={t('license-face')}
+                    shape='square-horizontal'
+                    accept='.jpeg,.jpg,.png,web'
+                    required
+                />
+                <AKFormInput
+                    inputType='upload-file'
+                    name={'licenseImage.back'}
+                    form={form}
+                    descStyle='text-center'
+                    control={form.control}
+                    src={editTruck?.license?.back ?? '/avatar/license_avatar.jpg'}
+                    label={t('license-back')}
+                    shape='square-horizontal'
+                    accept='.jpeg,.jpg,.png,web'
+                    required
+                />
+            </GridWrapper>
             <AKFormInput
                 form={form}
                 name='plateNumber'

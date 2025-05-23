@@ -8,7 +8,6 @@ import {
     ModuleContainer,
     ModuleTableContainer,
 } from '@/components/my-components/module/ModuleContainer';
-import ModuleModal from '@/components/my-components/module/ModuleModal';
 import { BasicTable } from '@/components/my-components/table/BasicTable';
 import { Routes } from '@/constants/route';
 import { formatDate } from '@/helpers/formatDate';
@@ -18,8 +17,10 @@ import { useQueryState } from '@/hooks/useQueryState';
 import { useDialog } from '@/providers/DialogProvider';
 import { TruckSchema } from '@/types/schema';
 import { useTranslations } from 'next-intl';
-import { useCallback } from 'react';
+import { lazy, useCallback } from 'react';
 import TruckColumns from './TruckColumns';
+
+const ModalContent = lazy(() => import('@/components/my-components/module/ModalContent'));
 
 const TruckData = () => {
     const t = useTranslations();
@@ -92,7 +93,7 @@ const TruckData = () => {
                     {...activeTable}
                 />
                 <AKDialog open={openDialog} size={dialogSize}>
-                    <ModuleModal data={editEntity} {...moduleAction} />
+                    <ModalContent data={editEntity} {...moduleAction} />
                 </AKDialog>
             </ModuleTableContainer>
         </ModuleContainer>
