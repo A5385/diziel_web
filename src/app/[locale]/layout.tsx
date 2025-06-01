@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 
 import { routing } from '@/i18n/routing';
 import GlobalProviders from '@/providers/GlobalProviders';
-import { cairo, geistMono, geistSans } from '@/styles/fonts';
+import { cairo, geistSans } from '@/styles/fonts';
 import { ChildrenType } from '@/types/general';
 
 import constants from '@/constants/AppSettings';
@@ -35,7 +35,6 @@ export default async function RootLayout({ children, params }: Readonly<RootLayo
                 className={cn(
                     cairo.variable,
                     geistSans.variable,
-                    geistMono.variable,
                     locale === 'ar' ? 'font-cairo' : 'font-sans',
                     'antialiased',
                     'bg-white dark:bg-slate-900',

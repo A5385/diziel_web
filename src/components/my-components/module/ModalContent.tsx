@@ -1,19 +1,29 @@
 'use client';
 
 import TrailerForm from '@/app/[locale]/(dashboard)/(home)/trailers/components/TrailerForm';
+import { dynamicOptions } from '@/helpers/DynamicImport';
 import { useDialog } from '@/providers/DialogProvider';
 import { DialogType } from '@/types/dialog';
 import { TrailerSchema, TruckSchema, UserSchema } from '@/types/schema';
 import { DataType } from '@/types/ui';
 import { useTranslations } from 'next-intl';
-import { lazy, ReactNode } from 'react';
+import dynamic from 'next/dynamic';
+import { ReactNode } from 'react';
 
-const ConfirmationMsg = lazy(() => import('../ConfirmationMsg'));
-const UserForm = lazy(
+const ConfirmationMsg = dynamic(() => import('../ConfirmationMsg'), {
+    ...dynamicOptions,
+});
+const UserForm = dynamic(
     () => import('@/app/[locale]/(dashboard)/(home)/users/components/forms/UserForm'),
+    {
+        ...dynamicOptions,
+    },
 );
-const TruckForm = lazy(
+const TruckForm = dynamic(
     () => import('@/app/[locale]/(dashboard)/(home)/trucks/components/TruckForm'),
+    {
+        ...dynamicOptions,
+    },
 );
 
 type ModalContentProps<TData> = {

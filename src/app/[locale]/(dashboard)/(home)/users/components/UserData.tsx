@@ -1,7 +1,6 @@
 'use client';
 
 import { DeleteUser } from '@/api-service/data-service/UserService';
-import AKDialog from '@/components/my-components/AKDialog';
 import { DashboardTitle } from '@/components/my-components/module/DashboardTitle';
 import ModuleActionSection from '@/components/my-components/module/ModuleActionSection';
 import {
@@ -9,6 +8,7 @@ import {
     ModuleTableContainer,
 } from '@/components/my-components/module/ModuleContainer';
 import { BasicTable } from '@/components/my-components/table/BasicTable';
+import { dynamicOptions } from '@/helpers/DynamicImport';
 import { useEntityActions } from '@/hooks/useEntityActions';
 import { useModuleState } from '@/hooks/useModuleState';
 import { useQueryState } from '@/hooks/useQueryState';
@@ -19,9 +19,15 @@ import { UseGetTableResponseType } from '@/types/ui';
 import { UseQueryResult } from '@tanstack/react-query';
 import { ColumnDef } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
-import { lazy, ReactNode, useCallback } from 'react';
+import dynamic from 'next/dynamic';
+import { ReactNode, useCallback } from 'react';
 
-const ModalContent = lazy(() => import('@/components/my-components/module/ModalContent'));
+const AKDialog = dynamic(() => import('@/components/my-components/AKDialog'), {
+    ...dynamicOptions,
+});
+const ModalContent = dynamic(() => import('@/components/my-components/module/ModalContent'), {
+    ...dynamicOptions,
+});
 
 const UserData = ({
     columns,

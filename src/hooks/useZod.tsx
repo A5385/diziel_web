@@ -148,6 +148,15 @@ const useZod = () => {
         }),
     });
 
+    const agencySchema = z.object({
+        name: mandatoryString(3, t('agency-name')),
+        registrationRecord: optionalString,
+        phone1: optionalString,
+        phone2: optionalString,
+        phone3: optionalString,
+        email: z.string().email(),
+    });
+
     return {
         fields: {
             phone,
@@ -184,6 +193,7 @@ const useZod = () => {
             }),
             truckSchema,
             trailerSchema,
+            agencySchema,
         },
     };
 };

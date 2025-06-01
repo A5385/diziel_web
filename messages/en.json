@@ -193,5 +193,15 @@
     "front-image": "Front Image",
     "back-image": "Back Image",
     "left-image": "Left Image",
-    "right-image": "Right Image"
+    "right-image": "Right Image",
+    "agency-name": "Agency name",
+    "agency-name-ph": "Enter Agency Name",
+    "phone1": "Phone (1)",
+    "phone1-ph": "Enter first phone",
+    "phone2": "Phone (2)",
+    "phone2-ph": "Enter second phone",
+    "phone3": "Phone (3)",
+    "phone3-ph": "Enter third phone",
+    "registration-record": "Registration Record",
+    "registration-record-ph": "Enter Agency Registration Record"
 }

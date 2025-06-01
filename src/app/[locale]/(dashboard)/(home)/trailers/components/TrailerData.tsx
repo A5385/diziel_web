@@ -1,7 +1,6 @@
 'use client';
 
 import { DeleteTrailer, GetAllTrailers } from '@/api-service/data-service/TrailerService';
-import AKDialog from '@/components/my-components/AKDialog';
 import { DashboardTitle } from '@/components/my-components/module/DashboardTitle';
 import ModuleActionSection from '@/components/my-components/module/ModuleActionSection';
 import {
@@ -10,6 +9,7 @@ import {
 } from '@/components/my-components/module/ModuleContainer';
 import { BasicTable } from '@/components/my-components/table/BasicTable';
 import { Routes } from '@/constants/route';
+import { dynamicOptions } from '@/helpers/DynamicImport';
 import { formatDate } from '@/helpers/formatDate';
 import { useEntityActions } from '@/hooks/useEntityActions';
 import { useModuleState } from '@/hooks/useModuleState';
@@ -17,10 +17,16 @@ import { useQueryState } from '@/hooks/useQueryState';
 import { useDialog } from '@/providers/DialogProvider';
 import { TrailerSchema } from '@/types/schema';
 import { useTranslations } from 'next-intl';
-import { lazy, useCallback } from 'react';
+import dynamic from 'next/dynamic';
+import { useCallback } from 'react';
 import TrailerColumns from './TrailerColumns';
 
-const ModalContent = lazy(() => import('@/components/my-components/module/ModalContent'));
+const AKDialog = dynamic(() => import('@/components/my-components/AKDialog'), {
+    ...dynamicOptions,
+});
+const ModalContent = dynamic(() => import('@/components/my-components/module/ModalContent'), {
+    ...dynamicOptions,
+});
 
 const TrailerData = () => {
     const t = useTranslations();

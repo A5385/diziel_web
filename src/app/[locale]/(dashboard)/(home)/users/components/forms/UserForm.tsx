@@ -1,17 +1,34 @@
 'use client';
+import { dynamicOptions } from '@/helpers/DynamicImport';
 import { UserSchema } from '@/types/schema';
-import { lazy } from 'react';
+import dynamic from 'next/dynamic';
 import { UserFormProvider, useUserForm } from './UserFormContext';
 
-const RegisterForm = lazy(() => import('./RegisterForm'));
-const ProfileForm = lazy(() => import('./ProfileForm'));
-const AddressForm = lazy(() => import('./AddressForm'));
-const NationalIdForm = lazy(() => import('./NationalIdForm'));
+const RegisterForm = dynamic(() => import('./RegisterForm'), {
+    ...dynamicOptions,
+});
+const ProfileForm = dynamic(() => import('./ProfileForm'), {
+    ...dynamicOptions,
+});
+const AddressForm = dynamic(() => import('./AddressForm'), {
+    ...dynamicOptions,
+});
+const NationalIdForm = dynamic(() => import('./NationalIdForm'), {
+    ...dynamicOptions,
+});
 
-const DriverForm = lazy(() => import('./driver-form/DriverForm'));
-const AgencyForm = lazy(() => import('./AgencyForm'));
-const AgencyAgentForm = lazy(() => import('./AgencyAgentForm'));
-const EmployeeForm = lazy(() => import('./EmployeeForm'));
+const DriverForm = dynamic(() => import('./driver-form/DriverForm'), {
+    ...dynamicOptions,
+});
+const AgencyForm = dynamic(() => import('./AgencyForm'), {
+    ...dynamicOptions,
+});
+const AgencyAgentForm = dynamic(() => import('./AgencyAgentForm'), {
+    ...dynamicOptions,
+});
+const EmployeeForm = dynamic(() => import('./EmployeeForm'), {
+    ...dynamicOptions,
+});
 
 const UserForm = ({ editUser }: { editUser?: UserSchema }) => {
     // console.log('🚀 >  UserForm >  user:', user);

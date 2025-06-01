@@ -3,8 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "dotenv -e .env -- next dev --turbopack",
-        "start": "dotenv -e .env -- next start",
+        "dev": "next dev --turbopack -p 7073",
+        "start": "next start -p 7073",
         "build": "next build",
         "lint": "next lint",
         "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json}\" ",
@@ -46,7 +46,6 @@
         "crypto-js": "^4.2.0",
         "date-fns": "^4.1.0",
         "deepmerge": "^4.3.1",
-        "dotenv-cli": "^8.0.0",
         "framer-motion": "^12.7.4",
         "input-otp": "^1.4.2",
         "jwt-decode": "^4.0.0",
@@ -90,9 +89,7 @@
     },
     "pnpm": {
         "overrides": {
-            "react-day-picker": "^8.10.1",
-            "@types/react": "19.1.4",
-            "@types/react-dom": "19.1.5"
+            "react-day-picker": "^8.10.1"
         }
     }
 }

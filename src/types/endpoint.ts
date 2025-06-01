@@ -36,6 +36,13 @@ type DriverEndpoints =
     | 'driver/upload-visa-image'
     | 'driver/upload-driver-passport';
 
+type AgencyEndpoints =
+    | 'agency/create'
+    | 'agency/update'
+    | 'agency/delete'
+    | 'agency/find-all'
+    | 'agency/find-by-id';
+
 type TrucksEndpoints =
     | 'truck/create'
     | 'truck/update'
@@ -58,5 +65,6 @@ export type EndpointsType =
     | CountEndpoint
     | ProfileEndpoints
     | DriverEndpoints
+    | AgencyEndpoints
     | TrucksEndpoints
     | TrailerEndpoints;

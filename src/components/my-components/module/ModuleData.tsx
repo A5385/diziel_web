@@ -1,14 +1,18 @@
 'use client';
 
 import AKDialog from '@/components/my-components/AKDialog';
+import { dynamicOptions } from '@/helpers/DynamicImport';
 import { useDialog } from '@/providers/DialogProvider';
 import { TanstackTableProps } from '@/types/ui';
-import { lazy, ReactNode } from 'react';
+import dynamic from 'next/dynamic';
+import { ReactNode } from 'react';
 import { BasicTable } from '../table/BasicTable';
 import { DashboardTitle } from './DashboardTitle';
 import { ActionSectionProps } from './ModuleActionSection';
 
-const ModuleActionSection = lazy(() => import('./ModuleActionSection'));
+const ModuleActionSection = dynamic(() => import('./ModuleActionSection'), {
+    ...dynamicOptions,
+});
 
 // interface defaultState {
 //     openDialog: boolean;
