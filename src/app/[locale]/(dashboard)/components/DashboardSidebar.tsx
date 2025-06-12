@@ -1,4 +1,5 @@
 'use client';
+import { useSession } from '@/api-service/data-service/AuthService';
 import { AKButton } from '@/components/my-components/AKButton';
 import {
     Accordion,
@@ -20,6 +21,9 @@ import { NavList, NavListType } from './nav-list';
 const DashboardSidebar = () => {
     const ar = useArabic();
     const [open, setOpen] = useState(true);
+    const session = useSession();
+    const role = session?.data?.role;
+    console.log('🚀 >  DashboardSidebar >  role:', role);
 
     return (
         <div
@@ -42,10 +46,24 @@ const DashboardSidebar = () => {
 
             <div className='mt-10 flex w-full flex-col gap-4'>
                 {NavList.map((nav) => {
-                    if ('subMenu' in nav) {
-                        return <NavMenuItemWithSubmenu key={nav.id} nav={nav} open={open} />;
-                    } else {
-                        return <NavMenuItem key={nav.id} nav={nav} open={open} />;
+                    const access = nav.access;
+                    console.log('🚀 >  {NavList.map >  access:', access);
+
+                    const accessByRole = role && Array.isArray(access) && access.includes(role);
+                    console.log('🚀 >  {NavList.map >  accessByRole:', accessByRole);
+
+                    if (access === 'all') {
+                        if ('subMenu' in nav) {
+                            return <NavMenuItemWithSubmenu key={nav.id} nav={nav} open={open} />;
+                        } else {
+                            return <NavMenuItem key={nav.id} nav={nav} open={open} />;
+                        }
+                    } else if (accessByRole) {
+                        if ('subMenu' in nav) {
+                            return <NavMenuItemWithSubmenu key={nav.id} nav={nav} open={open} />;
+                        } else {
+                            return <NavMenuItem key={nav.id} nav={nav} open={open} />;
+                        }
                     }
                 })}
             </div>

@@ -1,10 +1,9 @@
 'use client';
 
-import TrailerForm from '@/app/[locale]/(dashboard)/(home)/trailers/components/TrailerForm';
 import { dynamicOptions } from '@/helpers/DynamicImport';
 import { useDialog } from '@/providers/DialogProvider';
 import { DialogType } from '@/types/dialog';
-import { TrailerSchema, TruckSchema, UserSchema } from '@/types/schema';
+import { RequestSchema, TrailerSchema, TruckSchema, UserSchema } from '@/types/schema';
 import { DataType } from '@/types/ui';
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
@@ -24,6 +23,15 @@ const TruckForm = dynamic(
     {
         ...dynamicOptions,
     },
+);
+
+const RequestForm = dynamic(
+    () => import('@/app/[locale]/(dashboard)/(home)/requests/components/RequestForm'),
+    { ...dynamicOptions },
+);
+const TrailerForm = dynamic(
+    () => import('@/app/[locale]/(dashboard)/(home)/trailers/components/TrailerForm'),
+    { ...dynamicOptions },
 );
 
 type ModalContentProps<TData> = {
@@ -72,6 +80,8 @@ const ModalContent = <TData,>({
         'edit-truck': <TruckForm editTruck={data as TruckSchema | undefined} />,
         'new-trailer': <TrailerForm />,
         'edit-trailer': <TrailerForm editTrailer={data as TrailerSchema | undefined} />,
+        'new-request': <RequestForm />,
+        'edit-request': <RequestForm editRequest={data as RequestSchema | undefined} />,
     };
 
     return content[dialogType ?? ''];

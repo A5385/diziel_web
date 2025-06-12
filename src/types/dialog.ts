@@ -49,4 +49,6 @@ export type DialogType =
     | 'new-truck'
     | 'edit-truck'
     | 'new-trailer'
-    | 'edit-trailer';
+    | 'edit-trailer'
+    | 'new-request'
+    | 'edit-request';

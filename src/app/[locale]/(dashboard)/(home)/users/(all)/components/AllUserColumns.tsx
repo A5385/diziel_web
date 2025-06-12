@@ -1,7 +1,9 @@
 'use client';
 
+import { ToggleBlockUser, ToggleVerify } from '@/api-service/data-service/UserService';
 import ActionMenu from '@/components/layout/ActionMenu';
 import { Badge } from '@/components/ui/badge';
+import { Switch } from '@/components/ui/switch';
 import { formatPhone } from '@/helpers/formatPhone';
 import { useCommonTableColumns } from '@/hooks/CommonTableColumns';
 import { cn } from '@/lib/utils';
@@ -19,9 +21,15 @@ const AllUserColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserS
         ...props,
     });
 
-    // const toggleBlock = ToggleBlockUser();
-    // const handleToggleBlock = async (userId: string) =>
-    //     await toggleBlock.mutateAsync({ id: userId });
+    const toggleBlock = ToggleBlockUser();
+    const handleToggleBlock = async (userId: string) => {
+        await toggleBlock.mutateAsync({ id: userId });
+    };
+
+    const toggleVerified = ToggleVerify();
+    const handleVerifyUser = async (userId: string) => {
+        return await toggleVerified.mutateAsync({ id: userId });
+    };
 
     return [
         selectColumn,
@@ -98,20 +106,36 @@ const AllUserColumns = ({ ...props }: ColumnsProps<UserSchema>): ColumnDef<UserS
                 );
             },
         },
-        // {
-        //     accessorKey: 'blocked',
-        //     header: t('blocked'),
-        //     enableColumnFilter: false,
-        //     cell: ({ row }) => {
-        //         const blocked = row.original.blocked ?? false;
-        //         const userId = row.original.id ?? '';
-        //         return (
-        //             <Switch checked={blocked} onCheckedChange={() => handleToggleBlock(userId)}>
-        //                 {blocked ? t('blocked') : t('Active')}
-        //             </Switch>
-        //         );
-        //     },
-        // },
+        {
+            accessorKey: 'blocked',
+            header: t('blocked'),
+            enableColumnFilter: false,
+            enableSorting: false,
+            cell: ({ row }) => {
+                const blocked = row.original.blocked ?? false;
+                const userId = row.original.id ?? '';
+                return (
+                    <Switch checked={blocked} onCheckedChange={() => handleToggleBlock(userId)}>
+                        {blocked ? t('blocked') : t('Active')}
+                    </Switch>
+                );
+            },
+        },
+        {
+            accessorKey: 'verified',
+            header: t('verified'),
+            enableColumnFilter: false,
+            enableSorting: false,
+            cell: ({ row }) => {
+                const verified = Boolean(row.original.verified);
+                const userId = row.original.id ?? '';
+                return (
+                    <Switch checked={verified} onCheckedChange={() => handleVerifyUser(userId)}>
+                        {verified ? t('verified') : t('not-verified')}
+                    </Switch>
+                );
+            },
+        },
 
         ...Object.values(commonColumns),
         {

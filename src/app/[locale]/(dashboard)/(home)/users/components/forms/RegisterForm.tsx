@@ -6,9 +6,11 @@ import { FormPhoneInput } from '@/components/my-components/form/common-form-inpu
 import AppConfig from '@/constants/AppSettings';
 import { UserRoleList } from '@/constants/enum-list';
 import useZod from '@/hooks/useZod';
+import { UserRole } from '@/types/prisma';
 import { UserSchema } from '@/types/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import FormNavigation from './FormNavigation';
@@ -17,6 +19,15 @@ import { useUserForm } from './UserFormContext';
 const RegisterForm = ({ userData }: { userData?: UserSchema | undefined }) => {
     const t = useTranslations();
     const { setPhone, setStep, setRole, setNationalIdNumber, setProfileId } = useUserForm();
+
+    const pathname = usePathname();
+    const roleBasePath = (): UserRole | undefined => {
+        if (pathname.endsWith('/agencies')) return 'agency';
+        if (pathname.endsWith('/clients')) return 'client';
+        if (pathname.endsWith('/drivers')) return 'driver';
+        if (pathname.endsWith('/owners')) return 'owner';
+    };
+
     const schema = useZod()?.schemas.userSchema;
 
     type FormType = z.infer<typeof schema>;
@@ -26,7 +37,7 @@ const RegisterForm = ({ userData }: { userData?: UserSchema | undefined }) => {
         resolver: zodResolver(schema),
         defaultValues: {
             phone: userData?.phone ?? '',
-            role: userData?.role ?? 'admin',
+            role: userData?.role || roleBasePath() || 'admin',
             nationalIdNumber: userData?.profile?.national?.nationalIdNumber ?? '',
         },
     });
@@ -72,6 +83,7 @@ const RegisterForm = ({ userData }: { userData?: UserSchema | undefined }) => {
                         label: t(item.toLowerCase()),
                         value: item,
                     }))}
+                    disabled={roleBasePath() !== undefined}
                 />
                 <AKFormInput
                     inputType='input'

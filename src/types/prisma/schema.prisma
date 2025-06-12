@@ -674,16 +674,16 @@ model Request {
   requestedById   String
   carType         String
   cargoType       String
-  unitType        UnitType
+  unitType        UnitType      @default(shipment)
   unitCount       Int
   pickupLocation  String
   dropoffLocation String
   distanceKM      Float?
   priceEstimate   Float?
-  transportType   TransportType
-  paymentOption   PaymentOption
+  transportType   TransportType @default(inclusive)
+  paymentOption   PaymentOption @default(cash)
   advancePayment  Float?
-  status          RequestStatus
+  status          RequestStatus @default(pending)
   notes           String?
   // audit fields
   createdAt       DateTime      @default(now())

@@ -113,7 +113,7 @@ export const AKForm = <T extends FieldValues>({
                 </CardTitle>
             )}
             {desc && (
-                <CardDescription className={cn(descClassName, 'mb-4 pb-4 text-center')}>
+                <CardDescription className={cn(descClassName, 'mx-auto mb-4 w-10/12 text-center')}>
                     {t(desc)}
                 </CardDescription>
             )}
@@ -122,7 +122,7 @@ export const AKForm = <T extends FieldValues>({
                     onSubmit={form.handleSubmit(submit as SubmitHandler<FieldValues>)}
                     className={cn(
                         inline ? 'flex flex-col items-end md:flex-row' : 'flex flex-col',
-                        'mx-auto w-full gap-4',
+                        'mx-auto w-full gap-8',
                     )}
                 >
                     <CardContent>

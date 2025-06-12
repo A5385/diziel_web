@@ -35,6 +35,18 @@ export const UpdateUser = () => {
         queryKey: [UserKey.GetAllUsers],
     });
 };
+export const ToggleBlockUser = () => {
+    return useMutationUpdate({
+        endpoint: 'user/toggle-block',
+        queryKey: [UserKey.GetAllUsers],
+    });
+};
+export const ToggleVerify = () => {
+    return useMutationUpdate({
+        endpoint: 'user/toggle-verify',
+        queryKey: [UserKey.GetAllUsers],
+    });
+};
 
 export const GetAllUsers = ({ queryParams }: { queryParams?: PFSProps }) =>
     useQueryData<UseGetTableResponseType<UserSchema>>({
@@ -67,3 +79,22 @@ export const FindUserById = (id?: string) =>
 export const VerifyOtp = () => useMutationPost<User>({ endpoint: 'user/verify-otp', queryKey: [] });
 export const SetPassword = () =>
     useMutationPost<User>({ endpoint: 'user/set-password', queryKey: [] });
+
+export const SetNewPassword = () => {
+    return useMutationPost({
+        endpoint: 'user/set-password',
+        queryKey: [],
+    });
+};
+export const VerifyPhone = () => {
+    return useMutationPost({
+        endpoint: 'user/verify-phone',
+        queryKey: [],
+    });
+};
+export const VerifyOTP = () => {
+    return useMutationPost({
+        endpoint: 'user/verify-otp',
+        queryKey: [],
+    });
+};

@@ -9,11 +9,14 @@ import AppConfig from '@/constants/AppSettings';
 import { Routes } from '@/constants/route';
 import useZod from '@/hooks/useZod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const LoginForm = () => {
+    const t = useTranslations();
     const param = useSearchParams();
     const phoneParam = param.get('phone') || '';
     const { push } = useRouter();
@@ -50,6 +53,12 @@ const LoginForm = () => {
                 <FormPhoneInput form={form} />
                 <FormPasswordInput form={form} />
             </AKForm>
+            <Link
+                href={Routes['verify-account'].url}
+                className='mt-4 text-sm transition-all duration-300 ease-in-out hover:text-blue-500 hover:underline'
+            >
+                {t('verify-account')}
+            </Link>
         </>
     );
 };

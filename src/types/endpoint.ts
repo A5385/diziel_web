@@ -15,6 +15,7 @@ type UserEndpoints =
     | 'user/find-user-by-id'
     | 'user/find-all'
     | 'user/toggle-block'
+    | 'user/toggle-verify'
     | 'user/delete';
 
 type ProfileEndpoints =
@@ -59,6 +60,13 @@ type TrailerEndpoints =
     | 'trailer/upload-license-image'
     | 'trailer/upload-trailer-image';
 
+type RequestEndpoints =
+    | 'request/create'
+    | 'request/update'
+    | 'request/find-all'
+    | 'request/find-by-id'
+    | 'request/delete';
+
 export type EndpointsType =
     | AuthEndpoints
     | UserEndpoints
@@ -67,4 +75,5 @@ export type EndpointsType =
     | DriverEndpoints
     | AgencyEndpoints
     | TrucksEndpoints
-    | TrailerEndpoints;
+    | TrailerEndpoints
+    | RequestEndpoints;

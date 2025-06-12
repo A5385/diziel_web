@@ -33,7 +33,10 @@ const NationalIdForm = ({ profileData }: { profileData?: ProfileSchema | undefin
     const stopStep =
         role === 'driver' || role === 'agency' || role === 'agencyAgent' || role === 'employee';
 
+    console.log('🚀 >  NationalIdForm >  stopStep:', stopStep);
+
     const uploadNationalImages = UploadNationalImages();
+
     const submit: SubmitHandler<FormType> = async (data) => {
         const id = profileData?.id ?? profileId;
         if (id) {
@@ -45,6 +48,7 @@ const NationalIdForm = ({ profileData }: { profileData?: ProfileSchema | undefin
                 if (stopStep) {
                     setStep(5);
                 } else {
+                    console.log('🚀 >  NationalIdForm >  submit > res:', res);
                     handleCloseDialog();
                     reset();
                 }

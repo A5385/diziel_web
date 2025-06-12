@@ -3,6 +3,9 @@ import {
     DriverLicenseType,
     DriverType,
     DrugTestResult,
+    PaymentOption,
+    TransportType,
+    UnitType,
     UserRole,
 } from '@/types/prisma';
 import { useTranslations } from 'next-intl';
@@ -44,6 +47,8 @@ const useZod = () => {
         country: mandatoryString(3, t('country')),
         state: mandatoryString(3, t('state')),
     });
+
+    const otp = mandatoryString(6, t('otp'));
 
     const nationalIdNumber = mandatoryString(14, t('national-number-id'));
 
@@ -157,6 +162,21 @@ const useZod = () => {
         email: z.string().email(),
     });
 
+    const requestSchema = z.object({
+        carType: mandatoryString(3, t('car-type')),
+        cargoType: mandatoryString(3, t('cargo-type')),
+        unitType: z.nativeEnum(UnitType),
+        unitCount: z.number().min(1),
+        pickupLocation: mandatoryString(3, t('pickup-location')),
+        dropoffLocation: mandatoryString(3, t('drop-off-location')),
+        distanceKM: z.number().optional(),
+        priceEstimate: z.number().min(1),
+        transportType: z.nativeEnum(TransportType),
+        paymentOption: z.nativeEnum(PaymentOption),
+        advancePayment: z.number().min(1),
+        notes: z.string().optional(),
+    });
+
     return {
         fields: {
             phone,
@@ -168,13 +188,22 @@ const useZod = () => {
             nickname,
             address,
             national,
+            otp,
         },
         validations: {
             fileValidator,
             dateValidator,
         },
         schemas: {
-            loginSchema: z.object({ phone, password }),
+            loginSchema: z.object({
+                phone,
+                password,
+            }),
+            verifyAccountSchema: z.object({
+                phone,
+                newPassword,
+                confirmPassword: mandatoryString(8, t('confirm-password')),
+            }),
             profileSchema: z.object({
                 email,
                 fullName,
@@ -194,6 +223,7 @@ const useZod = () => {
             truckSchema,
             trailerSchema,
             agencySchema,
+            requestSchema,
         },
     };
 };

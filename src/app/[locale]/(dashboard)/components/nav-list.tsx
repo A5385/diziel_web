@@ -6,10 +6,7 @@ export type NavListType = RouteProps & {
 export const NavList: NavListType[] = [
     { ...Routes.dashboard },
     {
-        title: 'users',
-        icon: Routes.users.icon,
-        id: '111',
-        url: Routes.users.url,
+        ...Routes.users,
         subMenu: [
             { ...Routes.users },
             { ...Routes.drivers },

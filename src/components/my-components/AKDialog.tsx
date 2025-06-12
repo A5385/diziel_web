@@ -108,7 +108,7 @@ const AKDialog = ({
                         handleCloseDialog();
                         if (setOpen) setOpen(false);
                     }}
-                    className='absolute -top-2 -right-2 flex aspect-square h-8 w-8 items-center justify-center rounded-full bg-white p-2 shadow-md duration-300 hover:scale-125 hover:shadow-lg dark:bg-slate-600'
+                    className='absolute -top-2 -right-2 flex aspect-square h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white p-2 shadow-md duration-300 hover:scale-125 hover:shadow-lg dark:bg-slate-600'
                     aria-label='Close'
                 >
                     <CloseIcon color={'gray'} />
