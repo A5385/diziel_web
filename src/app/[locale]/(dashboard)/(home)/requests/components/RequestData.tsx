@@ -91,7 +91,7 @@ const RequestData = () => {
                     setOpenFilter={setOpenFilter}
                     reset={resetState}
                     newDialogType='new-request'
-                    disableAddNew={role && !['owner', 'client'].includes(role)}
+                    disableAddNew={role && !['agency', 'client'].includes(role)}
                 />
                 <BasicTable
                     t={t}
